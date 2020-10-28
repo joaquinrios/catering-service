@@ -9,10 +9,13 @@ export const NewOrder = (props) => {
       <Navbar />
       <Container>
         <h1>Nuevo pedido:</h1>
+        
 
         <h2>Datos del cliente:</h2>
 
+
         <h2>Datos del pedido:</h2>
+
 
         <Row>
           <Col lg={4} md={8}>
