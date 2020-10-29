@@ -15,7 +15,7 @@ export const Home = (props) => {
             extra attention to featured content or information.
           </p>
           <p>
-            <Button variant="primary">Learn more</Button>
+            <Button variant='primary'>Learn more</Button>
           </p>
         </Jumbotron>
 

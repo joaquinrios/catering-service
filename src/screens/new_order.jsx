@@ -3,7 +3,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import { Navbar } from '../components/navbar';
 
-export const NewOrder = (props) => {
+export const NewOrder = ({props}) => {
   return (
     <>
       <Navbar />
@@ -19,10 +19,10 @@ export const NewOrder = (props) => {
 
         <Row>
           <Col lg={4} md={8}>
-            <Button variant="primary">Cancelar</Button>
+            <Button variant='primary'>Cancelar</Button>
           </Col>
           <Col lg={8} md={4}>
-            <Button variant="primary">Guardar pedido</Button>
+            <Button variant='primary'>Guardar pedido</Button>
           </Col>
         </Row>
       </Container>
