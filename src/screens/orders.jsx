@@ -14,7 +14,7 @@ export const Orders = (props) => {
           </Col>
           <Col lg={8} md={4}>
             <p>
-              <Button variant="primary">Nuevo Pedido</Button>
+              <Button variant='primary'>Nuevo Pedido</Button>
             </p>
           </Col>
         </Row>
