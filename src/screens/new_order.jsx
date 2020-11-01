@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
+import Toggle from "react-toggle";
 
 import { Navbar } from '../components/navbar';
 
@@ -35,46 +36,59 @@ export const NewOrder = ({props}) => {
 
                 <Form.Group>
                   <Form.Label>Personas</Form.Label>
-                  <FinalFormField name="number">
+                  <FinalFormField name="persons">
                     {({ input }) => <Form.Control {...input} type="number" />}
                   </FinalFormField>
                 </Form.Group>
 
                 <h2>Datos del cliente</h2>
-                <h3>[dropdown cliente nuevo]</h3>
+                <Form.Group>
+                  <FinalFormField name="newUser" type="checkbox">
+                    {({ input }) => <Toggle {...input} />}
+                  </FinalFormField>
+                  <Form.Label>¿Es nuevo cliente?</Form.Label>
+                </Form.Group>
                 <Form.Group>
                   <Form.Label>Nombre</Form.Label>
-                  <FinalFormField name="firstName">
+                  <FinalFormField name="customerName">
                     {({ input }) => <Form.Control {...input} type="text" />}
                   </FinalFormField>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Teléfono</Form.Label>
-                  <FinalFormField name="firstName">
+                  <FinalFormField name="phone">
                     {({ input }) => <Form.Control {...input} type="text" />}
                   </FinalFormField>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Correo electrónico</Form.Label>
-                  <FinalFormField name="firstName">
+                  <FinalFormField name="email">
                     {({ input }) => <Form.Control {...input} type="text" />}
                   </FinalFormField>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Evento:</Form.Label>
-                  <FinalFormField name="firstName">
+                  <FinalFormField name="eventName">
                     {({ input }) => <Form.Control {...input} type="text" />}
                   </FinalFormField>
                 </Form.Group>
-                <h3>[Recurrente: checkbox]</h3>
-                <h3>[Notas: textarea]</h3>
+                <Form.Group>
+                  <FinalFormField name="frequent" type="checkbox">
+                    {({ input }) => <Toggle {...input} />}
+                  </FinalFormField>
+                  <Form.Label>¿El evento es recurrente?</Form.Label>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Notas:</Form.Label>
+                  <FinalFormField name="eventNotes">
+                    {({ input }) => <Form.Control {...input} type="textarea" />}
+                  </FinalFormField>
+                </Form.Group>
                 <h2>Datos del pedido</h2>
-                
               </Form>
             )}
           </FinalForm>
         </Row>
-
 
         <Row>
           <Col lg={4} md={8}>
