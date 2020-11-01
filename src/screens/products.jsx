@@ -23,7 +23,11 @@ export const Products = (props) => {
             <h2>Platos fuertes:</h2>
           </Col>
         </Row>
-        
+        <Row>
+          <Col>
+            <h2>Complementos:</h2>
+          </Col>
+        </Row>
       </Container>
     </>
   );
