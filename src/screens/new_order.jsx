@@ -85,6 +85,40 @@ export const NewOrder = ({props}) => {
                   </FinalFormField>
                 </Form.Group>
                 <h2>Datos del pedido</h2>
+                <Row>
+                  <Col>
+                    <p>[autosuggest platillo]</p>
+                  </Col>
+                  <Col>
+                    <p>[toggle kg, lt, unidades]</p>
+                  </Col>
+                  <Col>
+                    <p>[precio (calculated programatically)]</p>
+                  </Col>
+                  <Col>
+                    <p>boton borrar item</p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <h3>Total:</h3>
+                  </Col>
+                  <Col>
+                    <h3>$00.00 (calculated)</h3>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Indicaciones adicionales:</Form.Label>
+                      <FinalFormField name="orderNotes">
+                        {({ input }) => (
+                          <Form.Control {...input} type="textarea" />
+                        )}
+                      </FinalFormField>
+                    </Form.Group>
+                  </Col>
+                </Row>
               </Form>
             )}
           </FinalForm>
