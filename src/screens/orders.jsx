@@ -39,7 +39,19 @@ export const Orders = (props) => {
                   </Accordion.Toggle>
                 </Card.Header>
                 <Accordion.Collapse eventKey="0">
-                  <Card.Body>Informacion p1</Card.Body>
+                  <Card.Body>
+                    <Row>
+                      <Col>
+                        <Button variant="primary">Editar</Button>
+                      </Col>
+                      <Col>
+                        <p>Total: 5 Kg</p>
+                      </Col>
+                      <Col>
+                        <p>$00.00</p>
+                      </Col>
+                    </Row>
+                  </Card.Body>
                 </Accordion.Collapse>
               </Card>
             </Accordion>
