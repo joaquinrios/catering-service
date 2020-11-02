@@ -22,22 +22,19 @@ export const Orders = (props) => {
           <Col>
             <Accordion>
               <Card>
-                <Card.Header>
+                <Accordion.Toggle as={Card.Header} eventKey="0">
                   <Row>
                     <Col>
                       <h4>Pedido 1</h4>
-                      <p>esto es un pedido</p>
-                      <p>y aquí hay algo de información at-a-glance</p>
+                      <p>aquí hay algo de información at-a-glance</p>
+                      <p>si das click, se muestran más detalles</p>
                     </Col>
                     <Col>
                       <p>Oct 11</p>
                       <p>7:00 PM</p>
                     </Col>
                   </Row>
-                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                    <p>más detalles...</p>
-                  </Accordion.Toggle>
-                </Card.Header>
+                </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                   <Card.Body>
                     <Row>
@@ -57,24 +54,33 @@ export const Orders = (props) => {
             </Accordion>
             <Accordion>
               <Card>
-                <Card.Header>
+                <Accordion.Toggle as={Card.Header} eventKey="0">
                   <Row>
                     <Col>
-                      <h4>Pedido 2</h4>
-                      <p>esto es un pedido</p>
-                      <p>y aquí hay algo de información at-a-glance</p>
+                      <h4>Pedido 1</h4>
+                      <p>aquí hay algo de información at-a-glance</p>
+                      <p>si das click, se muestran más detalles</p>
                     </Col>
                     <Col>
-                      <p>Oct 12</p>
-                      <p>2:00 PM</p>
+                      <p>Oct 11</p>
+                      <p>7:00 PM</p>
                     </Col>
                   </Row>
-                  <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                    <p>más detalles...</p>
-                  </Accordion.Toggle>
-                </Card.Header>
+                </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
-                  <Card.Body>Informacion p2</Card.Body>
+                  <Card.Body>
+                    <Row>
+                      <Col>
+                        <Button variant="primary">Editar</Button>
+                      </Col>
+                      <Col>
+                        <p>Total: 5 Kg</p>
+                      </Col>
+                      <Col>
+                        <p>$00.00</p>
+                      </Col>
+                    </Row>
+                  </Card.Body>
                 </Accordion.Collapse>
               </Card>
             </Accordion>
