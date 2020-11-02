@@ -13,8 +13,8 @@ export const Navbar = (props) => {
             <Nav className='ml-auto'>
               <Nav.Link href='/'>Dashboard</Nav.Link>
               <Nav.Link href='/orders'>Pedidos</Nav.Link>
-              <Nav.Link href='#link'>Productos</Nav.Link>
-              <Nav.Link href='#link'>Usuarios</Nav.Link>
+              <Nav.Link href='/products'>Productos</Nav.Link>
+              <Nav.Link href='/customers'>Clientes</Nav.Link>
               <NavDropdown title='Nombre Usuario' id='basic-nav-dropdown'>
                 <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
                 <NavDropdown.Item href='#action/3.2'>
