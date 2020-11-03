@@ -97,6 +97,12 @@ export const NewOrder = ({props}) => {
                         {({ input }) => <Form.Control {...input} type='text' size='lg'/>}
                       </FinalFormField>
                     </Form.Group>
+                    <Form.Group>
+                      <Form.Label>Dirección</Form.Label>
+                      <FinalFormField name='address'>
+                        {({ input }) => <Form.Control {...input} type='text' size='lg'/>}
+                      </FinalFormField>
+                    </Form.Group>
                   </>) : (<>
                     <Form.Group>
                       <Form.Label>Cliente</Form.Label>
