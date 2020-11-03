@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/toggle.css'
+import './assets/css/autosuggest.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 

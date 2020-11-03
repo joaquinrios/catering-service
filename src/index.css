@@ -15,3 +15,11 @@ code {
 .navbar {
   margin-bottom: 2rem;
 }
+
+.align-right {
+  text-align: right;
+}
+
+.cs-calendar {
+  height: 75vh;
+}

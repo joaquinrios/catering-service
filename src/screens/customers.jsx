@@ -9,81 +9,54 @@ export const Customers = (props) => {
         <Navbar />
         <Container>
           <Row>
-            <Col lg={4} md={8}>
+            <Col lg={6} md={6}>
               <h1>Clientes</h1>
             </Col>
-            <Col lg={8} md={4}>
-              <p>
-                <Button variant="primary">Nuevo Cliente</Button>
-              </p>
+            <Col lg={6} md={6} className='align-right'> 
+              <Button variant='primary' size='lg'>Nuevo cliente</Button>
             </Col>
           </Row>
+          <hr/>
           <Row>
-            <Col>
-              <Accordion>
+            <Col lg={8}>
+              <Accordion defaultActiveKey="0">
                 <Card>
                   <Accordion.Toggle as={Card.Header} eventKey="0">
                     <Row>
                       <Col>
-                        <h4>Robertito Tablas</h4>
-                        <h6>+52 1 55 5555 5555</h6>
-                        <h6>asdf@ghjkl.com</h6>
+                        <h4>Sr. Roberto Perezyera</h4>
+                        <p>Último pedido: Oct 11</p>
+                        
+                      </Col>
+                      <Col className='align-right'>
+                        <h4>21 años</h4>
                       </Col>
                     </Row>
                   </Accordion.Toggle>
                   <Accordion.Collapse eventKey="0">
                     <Card.Body>
-                      <Row>
-                        <Col>
-                          <p>dirección: dlsakfjañsldkf</p>
+                    <Row>               
+                        <Col lg={6}>
+                          <p>
+                            C. Dr. Mora 9 <br/>
+                            Centro, Cuauhtemoc <br/>
+                            06000, Ciuda de México, CDMX <br/>
+                          </p>
+                          <h4>Último evento</h4>
+                          <p>
+                            Cena familiar, Oct 11, 7:00 PM
+                          </p>
                         </Col>
-                      </Row>
-                      <Row>
-                        <Col>
-                          <h6>Eventos recurrentes</h6>
+                        <Col lg={6} className='align-right'>
+                          <p>
+                            Teléfono: 55 6892 1923 <br/>
+                            Correo: roberto@mora.com <br/>
+                            <br/>
+                          </p>
                         </Col>
-                        <Col>
-                          <Button variant="primary">Agregar evento</Button>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col>
-                          <Button variant="primary">Editar cliente</Button>
-                        </Col>
-                      </Row>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              </Accordion>
-              <Accordion>
-                <Card>
-                  <Accordion.Toggle as={Card.Header} eventKey="0">
-                    <Row>
-                      <Col>
-                        <h4>Robertito Tablas</h4>
-                        <h6>+52 1 55 5555 5555</h6>
-                        <h6>asdf@ghjkl.com</h6>
-                      </Col>
-                    </Row>
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body>
-                      <Row>
-                        <Col>
-                          <p>dirección: dlsakfjañsldkf</p>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col>
-                          <h6>Eventos recurrentes</h6>
-                        </Col>
-                        <Col>
-                          <Button variant="primary">Agregar evento</Button>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col>
-                          <Button variant="primary">Editar cliente</Button>
+                        <Col lg={12} className='align-right'>
+                          <Button variant='info' size='sm'>Añadir evento</Button>{' '}
+                          <Button variant='primary' size='sm'>Editar información</Button>
                         </Col>
                       </Row>
                     </Card.Body>
