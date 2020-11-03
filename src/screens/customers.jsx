@@ -1,32 +1,152 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Button, Accordion, Card, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Button, Accordion, Card, Modal, Form } from 'react-bootstrap';
+import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
 
 import { Navbar } from '../components/navbar';
 
 export const Customers = (props) => {
   const [modalShow, setModalShow] = useState(false);
   
+  const onSubmitCreateCustomer = (values) => {
+
+  }
+
   return (
     <>
       <Navbar />
-      <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={modalShow} onHide={() => setModalShow(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
-          </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => setModalShow(false)}>Close</Button>
-        </Modal.Footer>
-      </Modal>
+      <FinalForm onSubmit={onSubmitCreateCustomer}>
+        {({handleSubmit, submitting}) => (
+          <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={modalShow} onHide={() => setModalShow(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Añadir un nuevo cliente
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Row>
+                  <Col lg={12}><h3>Información básica</h3></Col>
+                  <Col lg={4}>
+                    <Form.Group>
+                      <Form.Label>Nombre</Form.Label>
+                      <FinalFormField name='name'>
+                        {({input }) => (
+                          <Form.Control {...input} type='text' placeholder='i.e. Juanito' />
+                        )}
+                      </FinalFormField>
+                    </Form.Group>
+                  </Col>
+
+                  <Col lg={8}>
+                    <Form.Group>
+                      <Form.Label>Apellidos</Form.Label>
+                      <FinalFormField name='lastname'>
+                        {({input }) => (
+                          <Form.Control {...input} type='text' placeholder='i.e. Alimañana' />
+                        )}
+                      </FinalFormField>
+                    </Form.Group>
+                  </Col>
+
+                  <Col lg={6}>
+                    <Form.Group>
+                      <Form.Label>Correo electrónico</Form.Label>
+                      <FinalFormField name='email'>
+                        {({input }) => (
+                          <Form.Control {...input} type='text' placeholder='i.e. juanito@alimaña.com' />
+                        )}
+                      </FinalFormField>
+                    </Form.Group>
+                  </Col>
+
+                  <Col lg={6}>
+                    <Form.Group>
+                      <Form.Label>Teléfono</Form.Label>
+                      <FinalFormField name='phone'>
+                        {({input }) => (
+                          <Form.Control {...input} type='text' placeholder='i.e. 55 5495 4928' />
+                        )}
+                      </FinalFormField>
+                    </Form.Group>
+                  </Col>
+
+                  <Col lg={12}>
+                    <Form.Group>
+                      <Form.Label>Notas / Datos adicionales</Form.Label>
+                      <FinalFormField name='notes'>
+                        {({input }) => (
+                          <Form.Control {...input} type='textarea' placeholder='i.e. Sin mucha maña' />
+                        )}
+                      </FinalFormField>
+                    </Form.Group>
+                  </Col>
+
+                  <Col lg={12}><h3>Dirección</h3></Col>
+                  <Col lg={12}>
+                    <Form.Group>
+                      <Form.Label>Calle</Form.Label>
+                      <FinalFormField name='street'>
+                        {({input }) => (
+                          <Form.Control {...input} type='text' placeholder='i.e. C Dr Mora 9' />
+                        )}
+                      </FinalFormField>
+                    </Form.Group>
+                  </Col>
+
+                  <Col lg={6}>
+                    <Form.Group>
+                      <Form.Label>Colonia</Form.Label>
+                      <FinalFormField name='neighborhood'>
+                        {({input }) => (
+                          <Form.Control {...input} type='text' placeholder='i.e. Centro' />
+                        )}
+                      </FinalFormField>
+                    </Form.Group>
+                  </Col>
+
+                  <Col lg={6}>
+                    <Form.Group>
+                      <Form.Label>Alcaldía / Municipio</Form.Label>
+                      <FinalFormField name='city'>
+                        {({input }) => (
+                          <Form.Control {...input} type='text' placeholder='i.e. Cuauhtémoc' />
+                        )}
+                      </FinalFormField>
+                    </Form.Group>
+                  </Col>
+
+                  <Col lg={6}>
+                    <Form.Group>
+                      <Form.Label>Código postal</Form.Label>
+                      <FinalFormField name='zipcode'>
+                        {({input }) => (
+                          <Form.Control {...input} type='text' placeholder='i.e. 06000' />
+                        )}
+                      </FinalFormField>
+                    </Form.Group>
+                  </Col>
+
+                  <Col lg={6}>
+                    <Form.Group>
+                      <Form.Label>Estado</Form.Label>
+                      <FinalFormField name='state'>
+                        {({input }) => (
+                          <Form.Control {...input} type='text' placeholder='i.e. Ciudad de México' />
+                        )}
+                      </FinalFormField>
+                    </Form.Group>
+                  </Col>
+
+                </Row>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant='secondary' onClick={() => setModalShow(false)}>Cerrar</Button>
+              <Button variant='success'>Crear cliente</Button>
+            </Modal.Footer>
+          </Modal>
+        )}
+      </FinalForm>
 
       <Container>
         <Row>
