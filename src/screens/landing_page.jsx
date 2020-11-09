@@ -8,7 +8,17 @@ export const LandingPage = () => {
       <>
         <Navbar />
         <Container>
-          <h1>Hello world..!</h1>
+          <h1>Slogan e imagen</h1>
+          <hr />
+          <h1>Servicios</h1>
+          <hr/>
+          <h1>Descuentos</h1>
+          <hr/>
+          <h1>Nosotros</h1>
+          <hr/>
+          <h1>Contacto</h1>
+          <hr/>
+          <h2>Maybe some footer?</h2>
         </Container>
       </>
     );

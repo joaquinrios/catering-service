@@ -8,7 +8,7 @@ export const NewCustomerOrder = () => {
     <>
       <Navbar />
       <Container>
-        <h1>Hello world..!!</h1>
+        <h1>Hello cruel world!</h1>
       </Container>
     </>
   );
