@@ -73,10 +73,10 @@ export const LandingPage = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+
       <Container>
         <h1>Slogan e imagen</h1>
         <hr />
-        <Jumbotron fluid>
           <Card className='bg-dark text-white'>
             <Card.Img src={sloganImage} alt='Card image' />
             <Card.ImgOverlay>
@@ -100,7 +100,6 @@ export const LandingPage = () => {
               </Row>
             </Card.ImgOverlay>
           </Card>
-        </Jumbotron>
         <hr />
         <center>
           <h1>Servicios</h1>
@@ -164,6 +163,7 @@ export const LandingPage = () => {
             </Carousel>
           </Col>
         </Row>
+        <br/>
         <Row>
           <Col lg={8}>
             <h2>Cotización personalizada</h2>
