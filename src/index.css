@@ -16,10 +16,37 @@ code {
   margin-bottom: 2rem;
 }
 
+.bold {
+  font-weight: bold;
+}
+
+.no-border {
+  border: 0px !important;
+}
+
 .align-right {
   text-align: right;
 }
 
 .cs-calendar {
   height: 75vh;
+}
+
+.cs-circle-image {
+  width: 256px;
+  height: 256px !important;
+  object-fit:cover;
+}
+
+.cs-card-slogan, .align-bottom-right  {
+  position: absolute;
+  bottom: 1vh !important;
+  right: 1vh !important;
+  top: auto !important;
+  left: auto !important;
+  text-align: right;
+}
+
+.cs-card-slogan h1 {
+  font-size: 5vh;
 }

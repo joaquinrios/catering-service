@@ -35,10 +35,10 @@ export const Navbar = (props) => {
                 </>
               ) : (
                 <> 
-                  <Nav.Link href='/'>Servicios</Nav.Link>
-                  <Nav.Link href='/'>Descuentos</Nav.Link>
-                  <Nav.Link href='/'>Nosotros</Nav.Link>
-                  <Nav.Link href='/'>Contacto</Nav.Link>
+                  <Nav.Link href='#services'>Servicios</Nav.Link>
+                  <Nav.Link href='#discounts'>Descuentos</Nav.Link>
+                  <Nav.Link href='#about-us'>Nosotros</Nav.Link>
+                  <Nav.Link href='#contact'>Contacto</Nav.Link>
                 </>
               )}
             </Nav>

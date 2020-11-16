@@ -7,20 +7,30 @@ import { Orders } from '../screens/orders';
 import { NewOrder } from '../screens/new_order';
 import { Products } from '../screens/products';
 import { Customers } from '../screens/customers';
-import { LandingPage } from '../screens/landing_page';
+import { Landing } from '../screens/landing';
 import { NewCustomerOrder } from '../screens/new_customer_order';
 
+import { useAuth } from './auth_provider';
+
 export const Routing = ({ navigate }) => {
+  const user = useAuth();
   return (
     <Router>
-      <Home path='/' />
-      <Login path='/login' />
-      <Orders path='/orders' />
-      <NewOrder path='/new_order' />
-      <Products path='products' />
-      <Customers path='customers' />
-      <LandingPage path='landing_page' />
-      <NewCustomerOrder path='new_customer_order' />
+      { user ? (
+        <>
+          <Home path='/' />
+          <Login path='/login' />
+          <Orders path='/orders' />
+          <NewOrder path='/new_order' />
+          <Products path='/products' />
+          <Customers path='/customers' />
+        </>
+      ) : (
+        <>
+          <Landing path='/' />
+          <NewCustomerOrder path='/order' />
+        </>
+      )}
     </Router>
   );
 }
