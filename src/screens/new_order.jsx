@@ -193,10 +193,7 @@ export const NewOrder = ({props}) => {
               </Form>
             )}
           </FinalForm>
-          
-        </Row>
-
-        
+        </Row> 
       </Container>
     </>
   );
