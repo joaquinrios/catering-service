@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
 import Toggle from 'react-toggle';
 import Autosuggest from 'react-autosuggest';
+import { BsFillPeopleFill } from 'react-icons/bs';
 
 import { Navbar } from '../components/navbar';
 
@@ -91,7 +92,10 @@ export const NewCustomerOrder = () => {
                   </Row>
                   <Row>
                     <Col>
-                      <h4>"Para [x] personas, recomendamos [x] kilos."</h4>
+                      <h4>
+                        <BsFillPeopleFill />&nbsp;
+                        "Para [x] personas, recomendamos [x] kilos."
+                      </h4>
                     </Col>
                   </Row>
                   <hr />
@@ -150,7 +154,18 @@ export const NewCustomerOrder = () => {
                   </Row>
 
                   <h2>Forma de pago:</h2>
-                  <h3>[dropdown opciones forma de pago]</h3>
+                  <Form.Group>
+                    <Form.Label>Selecciona tu método de pago</Form.Label>
+                    <FinalFormField name="paymentMethod">
+                      {({ input }) => (
+                        <Form.Control as="select">
+                          <option>Tarjeta de débito/crédito</option>
+                          <option>PayPal</option>
+                          <option>Transferencia</option>
+                        </Form.Control>
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
 
                   <Row>
                     <Col lg={4} md={8}>

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Container, Row, Col, Button, Card, Image, Form, Jumbotron, Carousel } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Row, Col, Button, Card, Image, Form, Jumbotron, Carousel, Modal } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
-import { BsArrowRight } from 'react-icons/bs';
+import { BsArrowRight, BsX } from 'react-icons/bs';
 
 import { Navbar } from '../components/navbar';
 
@@ -26,18 +26,59 @@ const staffImage3 =
   'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
 
 export const LandingPage = () => {
+  const [modalShow, setModalShow] = useState(false);
   const onSubmitForm = (values) => {
     console.log('form submitted', values);
   };
   return (
     <>
       <Navbar />
+      <Modal
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Podemos asistirte con tu pedido de estas formas:
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Row>
+              <Col lg={6}>
+                <h4>¿Te gustaría recibir atención personalizada?</h4>
+                <p>Llámanos y nos ponemos de acuerdo en minutos.</p>
+              </Col>
+              <Col lg={6}>
+                <h4>¿O prefieres empezar tu pedido tú mismo/a?</h4>
+                <p>
+                  Ya tienes fecha, lugar, número de personas, y platillos en
+                  mente. ¡Manos a la obra!
+                </p>
+                <Button variant='success'>
+                  Vamos&nbsp;&nbsp;
+                  <BsArrowRight />
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setModalShow(false)}>
+            <BsX />
+            &nbsp;Mejor luego
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Container>
         <h1>Slogan e imagen</h1>
         <hr />
         <Jumbotron fluid>
-          <Card className='bg-dark text-white'>
-            <Card.Img src={sloganImage} alt='Card image' />
+          <Card className="bg-dark text-white">
+            <Card.Img src={sloganImage} alt="Card image" />
             <Card.ImgOverlay>
               <Row>
                 <Col>
@@ -80,9 +121,9 @@ export const LandingPage = () => {
             <Carousel>
               <Carousel.Item>
                 <img
-                  className='d-block w-100'
+                  className="d-block w-100"
                   src={carouselImage1}
-                  alt='First slide'
+                  alt="First slide"
                 />
                 <Carousel.Caption>
                   <h1>Paquetes navideños</h1>
@@ -93,9 +134,9 @@ export const LandingPage = () => {
               </Carousel.Item>
               <Carousel.Item>
                 <img
-                  className='d-block w-100'
+                  className="d-block w-100"
                   src={carouselImage2}
-                  alt='Third slide'
+                  alt="Third slide"
                 />
 
                 <Carousel.Caption>
@@ -107,9 +148,9 @@ export const LandingPage = () => {
               </Carousel.Item>
               <Carousel.Item>
                 <img
-                  className='d-block w-100'
+                  className="d-block w-100"
                   src={carouselImage3}
-                  alt='Third slide'
+                  alt="Third slide"
                 />
 
                 <Carousel.Caption>
@@ -135,7 +176,7 @@ export const LandingPage = () => {
           </Col>
           <Col lg={4}>
             <Button>
-              Ver más
+              Ver más&nbsp;&nbsp;
               <BsArrowRight />
             </Button>
           </Col>
@@ -153,7 +194,7 @@ export const LandingPage = () => {
               odit a error ratione ipsum soluta.
             </p>
             <Button>
-              Ver más
+              Ver más&nbsp;&nbsp;
               <BsArrowRight />
             </Button>
           </Col>
@@ -211,7 +252,6 @@ export const LandingPage = () => {
                   <Image src={staffImage3} roundedCircle fluid />
                 </Container>
                 <Card.Body>
-                  <Card.Title>Alvaro de goben jajasjdajdsfa</Card.Title>
                   <Card.Text>
                     Some quick example text to build on the card title and make
                     up the bulk of the card's content.
@@ -227,7 +267,9 @@ export const LandingPage = () => {
         </center>
         <Row>
           <Col>
-            <h3>El form ese</h3>
+            <h3>¿Listo/a para hacer un pedido?</h3>
+            <h5>Empieza aquí. Nos encantará atenderte.</h5>
+            <br />
             <FinalForm
               onSubmit={onSubmitForm}
               initialValues={{ newUser: true }}
@@ -236,35 +278,41 @@ export const LandingPage = () => {
                 <Form>
                   <Form.Group>
                     <Form.Label>Nombre</Form.Label>
-                    <FinalFormField name='customerName'>
+                    <FinalFormField name="customerName">
                       {({ input }) => (
-                        <Form.Control {...input} type='text' size='lg' />
+                        <Form.Control {...input} type="text" size="lg" />
                       )}
                     </FinalFormField>
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Correo electrónico</Form.Label>
-                    <FinalFormField name='email'>
+                    <FinalFormField name="email">
                       {({ input }) => (
-                        <Form.Control {...input} type='text' size='lg' />
+                        <Form.Control {...input} type="text" size="lg" />
                       )}
                     </FinalFormField>
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Evento:</Form.Label>
-                    <FinalFormField name='eventName'>
+                    <FinalFormField name="eventName">
                       {({ input }) => (
-                        <Form.Control {...input} type='text' size='lg' />
+                        <Form.Control {...input} type="text" size="lg" />
                       )}
                     </FinalFormField>
                   </Form.Group>
                 </Form>
               )}
             </FinalForm>
-            {/* ciero form antes o despues de boton??? */}
+            {/* cierro form antes o despues de boton??? */}
+            {/* estos datos tienen que capturarse, right? */}
+            <br />
             <center>
-              <Button>
-                Hacer mi pedido
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={() => setModalShow(true)}
+              >
+                Continuar&nbsp;&nbsp;
                 <BsArrowRight />
               </Button>
             </center>
