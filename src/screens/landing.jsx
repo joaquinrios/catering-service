@@ -154,7 +154,7 @@ export const Landing = () => {
           </Col>
         </Row>
 
-        <h1 className='text-center mt-3 mb-3 bold p-3' id='discounts'>Nosotros</h1>
+        <h1 className='text-center mt-3 mb-3 bold p-3' id='about-us'>Nosotros</h1>
         <hr/>
         <Row>
           <Col lg={4}>
@@ -192,7 +192,7 @@ export const Landing = () => {
           </Col>
         </Row>
         
-        <h1 className='text-center mt-3 mb-3 bold p-3' id='about-us'>Contacto</h1>
+        <h1 className='text-center mt-3 mb-3 bold p-3' id='contact'>Contacto</h1>
         <hr/>
         <Row>
           <Col lg={5}>

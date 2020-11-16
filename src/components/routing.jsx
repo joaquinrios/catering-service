@@ -19,7 +19,6 @@ export const Routing = ({ navigate }) => {
       { user ? (
         <>
           <Home path='/' />
-          <Login path='/login' />
           <Orders path='/orders' />
           <NewOrder path='/new_order' />
           <Products path='/products' />
@@ -27,6 +26,7 @@ export const Routing = ({ navigate }) => {
         </>
       ) : (
         <>
+          <Login path='/login' />
           <Landing path='/' />
           <NewCustomerOrder path='/order' />
         </>
