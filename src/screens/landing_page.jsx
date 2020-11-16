@@ -10,6 +10,7 @@ import {
   Jumbotron,
   Carousel,
 } from 'react-bootstrap';
+import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
 // import { IconName } from 'react-icons/bs';
 import { BsArrowRight } from 'react-icons/bs';
 
@@ -37,6 +38,10 @@ const staffImage3 =
   'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
 
 export const LandingPage = () => {
+
+  const onSubmitForm = (values) => {
+    console.log('form submitted', values);
+  };
   return (
     <>
       <Navbar />
@@ -49,24 +54,7 @@ export const LandingPage = () => {
             <Card.ImgOverlay>
               <Row>
                 <Col>
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
-                  <br />
+                  <h3>todo: css</h3>
                 </Col>
               </Row>
               <Row>
@@ -253,9 +241,43 @@ export const LandingPage = () => {
         <Row>
           <Col>
             <h3>El form ese</h3>
+            <FinalForm
+              onSubmit={onSubmitForm}
+              initialValues={{ newUser: true }}
+            >
+              {({ handleSubmit, submitting, values }) => (
+                <Form>
+                  <Form.Group>
+                    <Form.Label>Nombre</Form.Label>
+                    <FinalFormField name="customerName">
+                      {({ input }) => (
+                        <Form.Control {...input} type="text" size="lg" />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Correo electrónico</Form.Label>
+                    <FinalFormField name="email">
+                      {({ input }) => (
+                        <Form.Control {...input} type="text" size="lg" />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Evento:</Form.Label>
+                    <FinalFormField name="eventName">
+                      {({ input }) => (
+                        <Form.Control {...input} type="text" size="lg" />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
+                </Form>
+              )}
+            </FinalForm>
+            {/* ciero form antes o despues de boton??? */}
             <center>
               <Button>
-                Ver más
+                Hacer mi pedido
                 <BsArrowRight />
               </Button>
             </center>
