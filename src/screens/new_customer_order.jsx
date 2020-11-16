@@ -14,14 +14,14 @@ export const NewCustomerOrder = () => {
     <>
       <Navbar />
       <Modal
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
+        size='md'
+        aria-labelledby='contained-modal-title-vcenter'
         centered
         show={modalShow}
         onHide={() => setModalShow(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">¡Listo!</Modal.Title>
+          <Modal.Title id='contained-modal-title-vcenter'>¡Listo!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -30,7 +30,7 @@ export const NewCustomerOrder = () => {
                 <h5>Hemos recibido la información sobre tu pedido.</h5>
                 <p>
                   En Cocina Mary, darles a nuestros clientes la mejor
-                  experiencia es fundamental, y tu caso no es la excepción.
+                  experiencia es lo que hacemos mejor, y para ti no será la excepción.
                 </p>
                 <p>
                   Te llamaremos pronto para confirmar tu orden y platicar
@@ -41,7 +41,7 @@ export const NewCustomerOrder = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-            <Button variant="info" onClick={() => setModalShow(false)}>
+            <Button variant='info' onClick={() => setModalShow(false)}>
               De acuerdo
             </Button>
         </Modal.Footer>
@@ -61,27 +61,27 @@ export const NewCustomerOrder = () => {
                     <h2>Información del evento</h2>
                     <Form.Group>
                       <Form.Label>Fecha</Form.Label>
-                      <FinalFormField name="date">
+                      <FinalFormField name='date'>
                         {({ input }) => (
-                          <Form.Control {...input} type="date" size="lg" />
+                          <Form.Control {...input} type='date' size='lg' />
                         )}
                       </FinalFormField>
                     </Form.Group>
 
                     <Form.Group>
                       <Form.Label>Hora de llegada</Form.Label>
-                      <FinalFormField name="time">
+                      <FinalFormField name='time'>
                         {({ input }) => (
-                          <Form.Control {...input} type="time" size="lg" />
+                          <Form.Control {...input} type='time' size='lg' />
                         )}
                       </FinalFormField>
                     </Form.Group>
 
                     <Form.Group>
                       <Form.Label>Personas</Form.Label>
-                      <FinalFormField name="persons">
+                      <FinalFormField name='persons'>
                         {({ input }) => (
-                          <Form.Control {...input} type="number" size="lg" />
+                          <Form.Control {...input} type='number' size='lg' />
                         )}
                       </FinalFormField>
                     </Form.Group>
@@ -114,9 +114,9 @@ export const NewCustomerOrder = () => {
                     <Col>
                       <Form.Group>
                         <Form.Label>Indicaciones adicionales:</Form.Label>
-                        <FinalFormField name="orderNotes">
+                        <FinalFormField name='orderNotes'>
                           {({ input }) => (
-                            <Form.Control {...input} type="textarea" />
+                            <Form.Control {...input} type='textarea' />
                           )}
                         </FinalFormField>
                       </Form.Group>
@@ -126,7 +126,7 @@ export const NewCustomerOrder = () => {
                     <Col>
                       <h4>
                         <BsFillPeopleFill />
-                        &nbsp; "Para [x] personas, recomendamos [x] kilos."
+                        &nbsp; 'Para [x] personas, recomendamos [x] kilos.'
                       </h4>
                     </Col>
                   </Row>
@@ -136,49 +136,49 @@ export const NewCustomerOrder = () => {
                     <Col lg={8}>
                       <Form.Group>
                         <Form.Label>Nombre</Form.Label>
-                        <FinalFormField name="customerName">
+                        <FinalFormField name='customerName'>
                           {({ input }) => (
-                            <Form.Control {...input} type="text" size="lg" />
+                            <Form.Control {...input} type='text' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Apellidos</Form.Label>
-                        <FinalFormField name="customerName">
+                        <FinalFormField name='customerName'>
                           {({ input }) => (
-                            <Form.Control {...input} type="text" size="lg" />
+                            <Form.Control {...input} type='text' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Teléfono</Form.Label>
-                        <FinalFormField name="phone">
+                        <FinalFormField name='phone'>
                           {({ input }) => (
-                            <Form.Control {...input} type="text" size="lg" />
+                            <Form.Control {...input} type='text' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Correo electrónico</Form.Label>
-                        <FinalFormField name="email">
+                        <FinalFormField name='email'>
                           {({ input }) => (
-                            <Form.Control {...input} type="text" size="lg" />
+                            <Form.Control {...input} type='text' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Dirección</Form.Label>
-                        <FinalFormField name="address">
+                        <FinalFormField name='address'>
                           {({ input }) => (
-                            <Form.Control {...input} type="text" size="lg" />
+                            <Form.Control {...input} type='text' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Evento:</Form.Label>
-                        <FinalFormField name="eventName">
+                        <FinalFormField name='eventName'>
                           {({ input }) => (
-                            <Form.Control {...input} type="text" size="lg" />
+                            <Form.Control {...input} type='text' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
@@ -188,9 +188,9 @@ export const NewCustomerOrder = () => {
                   <h2>Forma de pago:</h2>
                   <Form.Group>
                     <Form.Label>Selecciona tu método de pago</Form.Label>
-                    <FinalFormField name="paymentMethod">
+                    <FinalFormField name='paymentMethod'>
                       {({ input }) => (
-                        <Form.Control as="select">
+                        <Form.Control as='select'>
                           <option>Tarjeta de débito/crédito</option>
                           <option>PayPal</option>
                           <option>Transferencia</option>
@@ -201,10 +201,10 @@ export const NewCustomerOrder = () => {
 
                   <Row>
                     <Col lg={4} md={8}>
-                      <Button variant="primary">Cancelar</Button>
+                      <Button variant='primary'>Cancelar</Button>
                     </Col>
                     <Col lg={8} md={4}>
-                      <Button variant="primary" onClick={handleSubmit}>
+                      <Button variant='primary' onClick={handleSubmit}>
                         Guardar pedido
                       </Button>
                     </Col>

@@ -34,14 +34,14 @@ export const LandingPage = () => {
     <>
       <Navbar />
       <Modal
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
+        size='lg'
+        aria-labelledby='contained-modal-title-vcenter'
         centered
         show={modalShow}
         onHide={() => setModalShow(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+          <Modal.Title id='contained-modal-title-vcenter'>
             Podemos asistirte con tu pedido de estas formas:
           </Modal.Title>
         </Modal.Header>
@@ -67,7 +67,7 @@ export const LandingPage = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setModalShow(false)}>
+          <Button variant='secondary' onClick={() => setModalShow(false)}>
             <BsX />
             &nbsp;Mejor luego
           </Button>
@@ -77,8 +77,8 @@ export const LandingPage = () => {
         <h1>Slogan e imagen</h1>
         <hr />
         <Jumbotron fluid>
-          <Card className="bg-dark text-white">
-            <Card.Img src={sloganImage} alt="Card image" />
+          <Card className='bg-dark text-white'>
+            <Card.Img src={sloganImage} alt='Card image' />
             <Card.ImgOverlay>
               <Row>
                 <Col>
@@ -121,9 +121,9 @@ export const LandingPage = () => {
             <Carousel>
               <Carousel.Item>
                 <img
-                  className="d-block w-100"
+                  className='d-block w-100'
                   src={carouselImage1}
-                  alt="First slide"
+                  alt='First slide'
                 />
                 <Carousel.Caption>
                   <h1>Paquetes navideños</h1>
@@ -134,9 +134,9 @@ export const LandingPage = () => {
               </Carousel.Item>
               <Carousel.Item>
                 <img
-                  className="d-block w-100"
+                  className='d-block w-100'
                   src={carouselImage2}
-                  alt="Third slide"
+                  alt='Third slide'
                 />
 
                 <Carousel.Caption>
@@ -148,9 +148,9 @@ export const LandingPage = () => {
               </Carousel.Item>
               <Carousel.Item>
                 <img
-                  className="d-block w-100"
+                  className='d-block w-100'
                   src={carouselImage3}
-                  alt="Third slide"
+                  alt='Third slide'
                 />
 
                 <Carousel.Caption>
@@ -278,25 +278,25 @@ export const LandingPage = () => {
                 <Form>
                   <Form.Group>
                     <Form.Label>Nombre</Form.Label>
-                    <FinalFormField name="customerName">
+                    <FinalFormField name='customerName'>
                       {({ input }) => (
-                        <Form.Control {...input} type="text" size="lg" />
+                        <Form.Control {...input} type='text' size='lg' />
                       )}
                     </FinalFormField>
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Correo electrónico</Form.Label>
-                    <FinalFormField name="email">
+                    <FinalFormField name='email'>
                       {({ input }) => (
-                        <Form.Control {...input} type="text" size="lg" />
+                        <Form.Control {...input} type='text' size='lg' />
                       )}
                     </FinalFormField>
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Evento:</Form.Label>
-                    <FinalFormField name="eventName">
+                    <FinalFormField name='eventName'>
                       {({ input }) => (
-                        <Form.Control {...input} type="text" size="lg" />
+                        <Form.Control {...input} type='text' size='lg' />
                       )}
                     </FinalFormField>
                   </Form.Group>
@@ -308,8 +308,8 @@ export const LandingPage = () => {
             <br />
             <center>
               <Button
-                variant="primary"
-                size="lg"
+                variant='primary'
+                size='lg'
                 onClick={() => setModalShow(true)}
               >
                 Continuar&nbsp;&nbsp;
@@ -318,7 +318,7 @@ export const LandingPage = () => {
             </center>
           </Col>
           <Col>
-            <h3>Mapita</h3>
+            <h3>Dónde estamos</h3>
           </Col>
         </Row>
         <hr />
