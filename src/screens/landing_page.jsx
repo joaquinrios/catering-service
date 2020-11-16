@@ -1,23 +1,11 @@
 import React from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Card,
-  Image,
-  Form,
-  Jumbotron,
-  Carousel,
-} from 'react-bootstrap';
+import { Container, Row, Col, Button, Card, Image, Form, Jumbotron, Carousel } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
-// import { IconName } from 'react-icons/bs';
 import { BsArrowRight } from 'react-icons/bs';
 
 import { Navbar } from '../components/navbar';
 
-const imgUrl =
-  'https://s.itl.cat/pngfile/s/13-134823_ipad-windows-xp-wallpaper-1080p.jpg';
+
 const headingImage =
   'https://images.pexels.com/photos/3184183/pexels-photo-3184183.jpeg?cs=srgb&dl=pexels-fauxels-3184183.jpg&fm=jpg';
 const sloganImage =
@@ -38,7 +26,6 @@ const staffImage3 =
   'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
 
 export const LandingPage = () => {
-
   const onSubmitForm = (values) => {
     console.log('form submitted', values);
   };
@@ -49,8 +36,8 @@ export const LandingPage = () => {
         <h1>Slogan e imagen</h1>
         <hr />
         <Jumbotron fluid>
-          <Card className="bg-dark text-white">
-            <Card.Img src={sloganImage} alt="Card image" />
+          <Card className='bg-dark text-white'>
+            <Card.Img src={sloganImage} alt='Card image' />
             <Card.ImgOverlay>
               <Row>
                 <Col>
@@ -66,7 +53,7 @@ export const LandingPage = () => {
                   </Card.Text>
                   <Card.Text>Last updated 3 mins ago</Card.Text>
                   <Card.Title>
-                    <h1>"Slogan chido va aqui"</h1>
+                    <h1>'Slogan chido va aqui'</h1>
                   </Card.Title>
                 </Col>
               </Row>
@@ -93,9 +80,9 @@ export const LandingPage = () => {
             <Carousel>
               <Carousel.Item>
                 <img
-                  className="d-block w-100"
+                  className='d-block w-100'
                   src={carouselImage1}
-                  alt="First slide"
+                  alt='First slide'
                 />
                 <Carousel.Caption>
                   <h1>Paquetes navideños</h1>
@@ -106,9 +93,9 @@ export const LandingPage = () => {
               </Carousel.Item>
               <Carousel.Item>
                 <img
-                  className="d-block w-100"
+                  className='d-block w-100'
                   src={carouselImage2}
-                  alt="Third slide"
+                  alt='Third slide'
                 />
 
                 <Carousel.Caption>
@@ -120,9 +107,9 @@ export const LandingPage = () => {
               </Carousel.Item>
               <Carousel.Item>
                 <img
-                  className="d-block w-100"
+                  className='d-block w-100'
                   src={carouselImage3}
-                  alt="Third slide"
+                  alt='Third slide'
                 />
 
                 <Carousel.Caption>
@@ -249,25 +236,25 @@ export const LandingPage = () => {
                 <Form>
                   <Form.Group>
                     <Form.Label>Nombre</Form.Label>
-                    <FinalFormField name="customerName">
+                    <FinalFormField name='customerName'>
                       {({ input }) => (
-                        <Form.Control {...input} type="text" size="lg" />
+                        <Form.Control {...input} type='text' size='lg' />
                       )}
                     </FinalFormField>
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Correo electrónico</Form.Label>
-                    <FinalFormField name="email">
+                    <FinalFormField name='email'>
                       {({ input }) => (
-                        <Form.Control {...input} type="text" size="lg" />
+                        <Form.Control {...input} type='text' size='lg' />
                       )}
                     </FinalFormField>
                   </Form.Group>
                   <Form.Group>
                     <Form.Label>Evento:</Form.Label>
-                    <FinalFormField name="eventName">
+                    <FinalFormField name='eventName'>
                       {({ input }) => (
-                        <Form.Control {...input} type="text" size="lg" />
+                        <Form.Control {...input} type='text' size='lg' />
                       )}
                     </FinalFormField>
                   </Form.Group>
