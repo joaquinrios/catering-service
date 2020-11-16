@@ -1,19 +1,51 @@
-import React from 'react';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
-import Toggle from 'react-toggle';
-import Autosuggest from 'react-autosuggest';
 import { BsFillPeopleFill } from 'react-icons/bs';
 
 import { Navbar } from '../components/navbar';
 
 export const NewCustomerOrder = () => {
+  const [modalShow, setModalShow] = useState(false);
   const onSubmitForm = (values) => {
     console.log('form submitted', values);
   };
   return (
     <>
       <Navbar />
+      <Modal
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">¡Listo!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Row>
+              <Col lg={8}>
+                <h5>Hemos recibido la información sobre tu pedido.</h5>
+                <p>
+                  En Cocina Mary, darles a nuestros clientes la mejor
+                  experiencia es fundamental, y tu caso no es la excepción.
+                </p>
+                <p>
+                  Te llamaremos pronto para confirmar tu orden y platicar
+                  detalles adicionales.
+                </p>
+              </Col>
+            </Row>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+            <Button variant="info" onClick={() => setModalShow(false)}>
+              De acuerdo
+            </Button>
+        </Modal.Footer>
+      </Modal>
       <Container>
         <Container>
           <h1>Nuevo pedido</h1>
@@ -93,8 +125,8 @@ export const NewCustomerOrder = () => {
                   <Row>
                     <Col>
                       <h4>
-                        <BsFillPeopleFill />&nbsp;
-                        "Para [x] personas, recomendamos [x] kilos."
+                        <BsFillPeopleFill />
+                        &nbsp; "Para [x] personas, recomendamos [x] kilos."
                       </h4>
                     </Col>
                   </Row>
@@ -174,6 +206,14 @@ export const NewCustomerOrder = () => {
                     <Col lg={8} md={4}>
                       <Button variant="primary" onClick={handleSubmit}>
                         Guardar pedido
+                      </Button>
+                    </Col>
+                  </Row>
+                  {/* TODO: mover logica para mostrar modal y quitar esto */}
+                  <Row>
+                    <Col>
+                      <Button onClick={() => setModalShow(true)}>
+                        prueba modal
                       </Button>
                     </Col>
                   </Row>
