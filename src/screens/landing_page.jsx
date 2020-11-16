@@ -13,6 +13,7 @@ import { Navbar } from '../components/navbar';
 
 // import { IconName } from 'react-icons/bs';
 // import { BsBatteryFull } from 'react-icons/bs';
+import { BsArrowRight } from 'react-icons/bs';
 
 const imgUrl =
   'https://s.itl.cat/pngfile/s/13-134823_ipad-windows-xp-wallpaper-1080p.jpg';
@@ -95,7 +96,9 @@ export const LandingPage = () => {
             </p>
           </Col>
           <Col lg={4}>
-            <Button>[arrow icon i guess]</Button>
+            <Button>
+              <BsArrowRight />
+            </Button>
           </Col>
         </Row>
         <hr />
