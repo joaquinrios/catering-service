@@ -184,19 +184,16 @@ export const NewOrder = ({props}) => {
 
                 <Row>
                   <Col lg={4} md={8}>
-                    <Button variant="primary">Cancelar</Button>
+                    <Button variant='primary'>Cancelar</Button>
                   </Col>
                   <Col lg={8} md={4}>
-                    <Button variant="primary" onClick={handleSubmit }>Guardar pedido</Button>
+                    <Button variant='primary' onClick={handleSubmit }>Guardar pedido</Button>
                   </Col>
                 </Row>
               </Form>
             )}
           </FinalForm>
-          
-        </Row>
-
-        
+        </Row> 
       </Container>
     </>
   );
