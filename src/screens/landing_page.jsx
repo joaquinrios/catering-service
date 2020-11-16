@@ -1,19 +1,10 @@
 import React from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Card,
-  Image,
-  Form,
-} from 'react-bootstrap';
+import { Container, Row, Col, Button, Card, Image, Form } from 'react-bootstrap';
+// import { IconName } from 'react-icons/bs';
+import { BsArrowRight } from 'react-icons/bs';
 
 import { Navbar } from '../components/navbar';
 
-// import { IconName } from 'react-icons/bs';
-// import { BsBatteryFull } from 'react-icons/bs';
-import { BsArrowRight } from 'react-icons/bs';
 
 const imgUrl =
   'https://s.itl.cat/pngfile/s/13-134823_ipad-windows-xp-wallpaper-1080p.jpg';
@@ -41,7 +32,7 @@ export const LandingPage = () => {
         <Row>
           <Col lg={4}>
             <Card style={{ width: '20rem' }}>
-              <Card.Img variant="top" src={imgUrl} />
+              <Card.Img variant='top' src={imgUrl} />
               <Card.Body>
                 <Card.Title>Card Title</Card.Title>
                 <Card.Text>
@@ -49,14 +40,14 @@ export const LandingPage = () => {
                   the bulk of the card's content.
                 </Card.Text>
                 <center>
-                  <Button variant="primary">Ver más...</Button>
+                  <Button variant='primary'>Ver más...</Button>
                 </center>
               </Card.Body>
             </Card>
           </Col>
           <Col lg={4}>
             <Card style={{ width: '20rem' }}>
-              <Card.Img variant="top" src={imgUrl} />
+              <Card.Img variant='top' src={imgUrl} />
               <Card.Body>
                 <Card.Title>Card Title</Card.Title>
                 <Card.Text>
@@ -64,14 +55,14 @@ export const LandingPage = () => {
                   the bulk of the card's content.
                 </Card.Text>
                 <center>
-                  <Button variant="primary">Ver más...</Button>
+                  <Button variant='primary'>Ver más...</Button>
                 </center>
               </Card.Body>
             </Card>
           </Col>
           <Col lg={4}>
             <Card style={{ width: '20rem' }}>
-              <Card.Img variant="top" src={imgUrl} />
+              <Card.Img variant='top' src={imgUrl} />
               <Card.Body>
                 <Card.Title>Card Title</Card.Title>
                 <Card.Text>
@@ -79,7 +70,7 @@ export const LandingPage = () => {
                   the bulk of the card's content.
                 </Card.Text>
                 <center>
-                  <Button variant="primary">Ver más...</Button>
+                  <Button variant='primary'>Ver más...</Button>
                 </center>
               </Card.Body>
             </Card>
@@ -132,7 +123,7 @@ export const LandingPage = () => {
           <Col lg={4}>
             <Card style={{ width: '20rem' }}>
               <center>
-                {/* <Card.Img variant="top" src={imgUrl} /> */}
+                {/* <Card.Img variant='top' src={imgUrl} /> */}
                 <Image src={imgUrl} roundedCircle fluid />
                 <Card.Body>
                   <Card.Text>
@@ -146,7 +137,7 @@ export const LandingPage = () => {
           <Col lg={4}>
             <Card style={{ width: '20rem' }}>
               <center>
-                {/* <Card.Img variant="top" src={imgUrl} /> */}
+                {/* <Card.Img variant='top' src={imgUrl} /> */}
                 <Image src={imgUrl} roundedCircle fluid />
                 <Card.Body>
                   <Card.Text>
@@ -160,7 +151,7 @@ export const LandingPage = () => {
           <Col lg={4}>
             <Card style={{ width: '20rem' }}>
               <center>
-                {/* <Card.Img variant="top" src={imgUrl} /> */}
+                {/* <Card.Img variant='top' src={imgUrl} /> */}
                 <Image src={imgUrl} roundedCircle fluid />
                 <Card.Body>
                   <Card.Text>
