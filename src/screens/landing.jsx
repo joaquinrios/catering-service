@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Button, Card, Image, Form, Jumbotron, Carousel, Modal } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
 import { BsArrowRight, BsX } from 'react-icons/bs';
+import axios from 'axios';
 
 import { Navbar } from '../components/navbar';
+
+
 
 
 const headingImage =
@@ -29,6 +32,35 @@ export const Landing = () => {
   const [modalShow, setModalShow] = useState(false);
   const onSubmitForm = (values) => {
     console.log('form submitted', values);
+    const options = {
+      // TODO: URL
+      url: 'https://us-central1-firebasics-85a90.cloudfunctions.net/helloWorld',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+      data: values,
+    };
+    axios(options).then((response) => {
+      console.log(response);
+      setModalShow(true);
+      // setResponse() ya no va, o sí??
+    }).catch((error) => {
+      if (error.response) {
+        // this the right way to do it?
+        console.log(error.response);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
+    });
   };
 
   return (
@@ -219,6 +251,14 @@ export const Landing = () => {
                     </FinalFormField>
                   </Form.Group>
                   <Form.Group>
+                    <Form.Label>Apellidos</Form.Label>
+                    <FinalFormField name='customerLastName'>
+                      {({ input }) => (
+                        <Form.Control {...input} type='text' size='lg' />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
+                  <Form.Group>
                     <Form.Label>Correo electrónico</Form.Label>
                     <FinalFormField name='email'>
                       {({ input }) => (
@@ -227,15 +267,15 @@ export const Landing = () => {
                     </FinalFormField>
                   </Form.Group>
                   <Form.Group>
-                    <Form.Label>Evento:</Form.Label>
-                    <FinalFormField name='eventName'>
+                    <Form.Label>Teléfono</Form.Label>
+                    <FinalFormField name='customerPhone'>
                       {({ input }) => (
-                        <Form.Control {...input} type='text' size='lg' />
+                        <Form.Control {...input} type='number' size='lg' />
                       )}
                     </FinalFormField>
                   </Form.Group>
 
-                  <Button variant='primary' size='lg'> Continuar&nbsp;&nbsp; <BsArrowRight /> </Button>
+                  <Button variant='primary' size='lg' onClick={() => onSubmitForm(values)}> Continuar&nbsp;&nbsp; <BsArrowRight /> </Button>
                 </Form>
               )}
             </FinalForm>

@@ -4,6 +4,9 @@ import { Container, Row, Col, Button, Accordion, Card } from 'react-bootstrap';
 import { Navbar } from '../components/navbar';
 
 export const Orders = (props) => {
+  
+  // TODO - get the orders here
+
   return (
     <>
       <Navbar />
