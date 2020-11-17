@@ -82,10 +82,12 @@ export const Landing = () => {
         <Row>
           <Col lg={10}>
             <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere
-              recusandae, ipsam veritatis nihil earum sint libero, temporibus
-              consequuntur praesentium quibusdam consequatur dicta ullam ea,
-              odit a error ratione ipsum soluta.
+              Aquí te podríamos platicar qué nos hace un servico de banquetería único en la ciudad,
+              pero nosotros siempre nos hemos visto como un integrante más en tu mesa, un ser querido
+              cuya compañía hace cada evento único y especial.<br/>
+              La calidez y la cercanía son los ingredientes básicos desde que empezamos a ponernos de
+              acuerdo contigo hasta que tú y tus familiares o amigos hablan de lo singular que fue
+              esta reunión y la comida cuando llega la hora de despedirse.
             </p>
           </Col>
         </Row>
@@ -97,23 +99,29 @@ export const Landing = () => {
                 <Image src={carouselImage1} className='d-block w-100' />
                 <Carousel.Caption>
                   <h1 className='bold'>Paquetes navideños</h1>
-                  <p> Nulla vitae elit libero, a pharetra augue mollis interdum. </p>
+                  <p>
+                    Porque pocas cosas se comparan con gozar de una buena comida o cena en compañía
+                    de la familia esta época decembrina.
+                  </p>
                 </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
                 <Image src={carouselImage2} className='d-block w-100' />
                 <Carousel.Caption>
-                  <h3 className='bold'>Second slide label</h3>
-                  <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                  <h3 className='bold'>Reuniones familiares</h3>
+                  <p>
+                    Muchos o pocos, estaremos más que felices de cocinar para todos.<br/>
+                    Explora o pregunta por las opciones.
+                  </p>
                 </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
                 <Image src={carouselImage3} className='d-block w-100' />
                 <Carousel.Caption>
-                  <h3 className='bold'>Third slide label</h3>
+                  <h3 className='bold'>¿Celebrando aniversario en casa?</h3>
                   <p>
-                    Praesent commodo cursus magna, vel scelerisque nisl
-                    consectetur.
+                    Elijan la opción de su agrado y permítanos acompañarlos.<br/>
+                    Una grandiosa experiencia sin tener que salir de casa.
                   </p>
                 </Carousel.Caption>
               </Carousel.Item>
@@ -125,10 +133,9 @@ export const Landing = () => {
         <Row>
           <Col lg={8}>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est,
-              fuga? Nisi, quasi iste praesentium dolores voluptatem ipsa? Earum
-              ipsa porro quas. In saepe eaque quaerat alias praesentium odio
-              veritatis dicta!
+              Con más de quince años de trayectoria, nos ajustamos a toda clase de evento, prespuesto y paladar.
+              Nuestra satisfacción viene de conocerte y ayudarte a encontrar las mejores opciones para que tú y tus
+              invitados queden deleitados al final de cada comida en la que estemos presentes. ¿Te animas a empezar a explorar?
             </p>
           </Col>
           <Col lg={4} className='align-right'>
@@ -141,10 +148,9 @@ export const Landing = () => {
         <Row>
           <Col lg={8}>
             <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere
-              recusandae, ipsam veritatis nihil earum sint libero, temporibus
-              consequuntur praesentium quibusdam consequatur dicta ullam ea,
-              odit a error ratione ipsum soluta.
+              Nuestra meta es llevar deleite con nuestro sazón a boca de todos, y sabemos que tú y tus acompañantes
+              son clave para alcanzar más y más personas. Conoce cómo recomendarnos con tus amigos puede traerte
+              beneficios para la siguiente vez que decidas invitarnos a tu evento.
             </p>
             <Button size='lg'> Ver más&nbsp;&nbsp; <BsArrowRight />
             </Button>
@@ -162,8 +168,9 @@ export const Landing = () => {
               <Container> <Image src={staffImage1} roundedCircle fluid className='cs-circle-image'/> </Container>
               <Card.Body>
                 <Card.Text>
-                  Some quick example text to build on the card title and make
-                  up the bulk of the card's content.
+                  Nuestra cocina está conformada por el más experimentado personal,
+                  que entiende que una comida sabrosa es el pilar de toda reunión,
+                  en toda ocasión.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -173,8 +180,9 @@ export const Landing = () => {
               <Container> <Image src={staffImage2} roundedCircle fluid className='cs-circle-image'/> </Container>
               <Card.Body>
                 <Card.Text>
-                  Some quick example text to build on the card title and make
-                  up the bulk of the card's content.
+                  Cuando disfrutas de nuestros platillos, estás disfrutando de nuestra
+                  compañía. Desde hace más de quince años, nos hemos posicionado como un
+                  valioso integrante más en tus eventos.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -184,8 +192,9 @@ export const Landing = () => {
               <Container> <Image src={staffImage3} roundedCircle fluid className='cs-circle-image'/> </Container>
               <Card.Body>
                 <Card.Text>
-                  Some quick example text to build on the card title and make
-                  up the bulk of the card's content.
+                  Un equipo de atención completamente orientado a ti, apasionado por entender
+                  tus necesidades y feliz de orientarte para exceder las expectativas de tus
+                  familiares o amigos.
                 </Card.Text>
               </Card.Body>
             </Card>
