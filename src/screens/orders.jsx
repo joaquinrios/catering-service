@@ -1,13 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Accordion, Card } from 'react-bootstrap';
+import axios from 'axios';
 
 import { Navbar } from '../components/navbar';
 
-export const Orders = (props) => {
-  
-  // TODO - get the orders here
+const options = {
+  url: '/api/orders/',
+  method: 'GET',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8',
+  },
+};
 
-  return (
+export const Orders = (props) => {
+  const [ready, setReady] = useState(false);
+  const [orders, setOrders] = useState(null);
+
+  useEffect(() => {
+    axios(options).then(response => {
+      const _orders = response.data.orders;
+      setOrders(_orders)
+      setReady(true);
+    }).catch(error => {
+      setReady(true);
+    });
+
+    setReady(true);
+  }, [])
+
+  return ready && (
     <>
       <Navbar />
       <Container>
@@ -23,50 +45,52 @@ export const Orders = (props) => {
         <Row>
           <Col lg={8}>
             <Accordion defaultActiveKey="0">
-              <Card>
-                <Accordion.Toggle as={Card.Header} eventKey="0">
-                  <Row>
-                    <Col>
-                      <h4>Pedido # 182</h4>
-                      <p>Sr. Roberto Perezyera</p>
-                      <p>
-                        C. Dr. Mora 9 <br/>
-                        Centro, Cuauhtemoc <br/>
-                        06000, Ciuda de México, CDMX <br/>
-                      </p>
-                    </Col>
-                    <Col className='align-right'>
-                      <h4>Oct 11, 7:00 PM</h4>
-                    </Col>
-                  </Row>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body>
-                   <Row>               
-                      <Col lg={6}>
+              { orders && orders.map((order, index) => (
+                <Card>
+                  <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
+                    <Row>
+                      <Col>
+                        <h4>Pedido # {order.order_id}</h4>
+                        <p>{order.first_name} {order.last_name}</p>
                         <p>
-                          Producto 1, 5 kg <br/>
-                          Producto 2, 2 L, <br/>
-                          Producto 3, 2 órdenes
+                          {order.street} <br/>
+                          {order.county}, {order.city} <br/>
+                          {order.zip_code}, {order.state} <br/>
                         </p>
-                        <h4>Total:</h4>
                       </Col>
-                      <Col lg={6} className='align-right'>
-                        <p>
-                          $ 700.00 <br/>
-                          $ 600.00 <br/>
-                          $ 100.00 <br/>
-                        </p>
-                        <h4>$ 1,400.00</h4>
-                      </Col>
-                      <Col lg={12} className='align-right'>
-                        <Button variant='primary' size='sm'>Editar pedido</Button>
+                      <Col className='align-right'>
+                        <h4>Oct 11, 7:00 PM</h4>
                       </Col>
                     </Row>
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Card>
-              </Accordion>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey={`${index}`}>
+                    <Card.Body>
+                    <Row>               
+                        <Col lg={6}>
+                          <p>
+                            Producto 1, 5 kg <br/>
+                            Producto 2, 2 L, <br/>
+                            Producto 3, 2 órdenes
+                          </p>
+                          <h4>Total:</h4>
+                        </Col>
+                        <Col lg={6} className='align-right'>
+                          <p>
+                            $ 700.00 <br/>
+                            $ 600.00 <br/>
+                            $ 100.00 <br/>
+                          </p>
+                          <h4>$ {order.total_price}</h4>
+                        </Col>
+                        <Col lg={12} className='align-right'>
+                          <Button variant='primary' size='sm'>Editar pedido</Button>
+                        </Col>
+                      </Row>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              ))}
+            </Accordion>
           </Col>
         </Row>
       </Container>

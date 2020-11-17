@@ -1,17 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Accordion, Card, Modal, Form } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
+import axios from 'axios';
 
 import { Navbar } from '../components/navbar';
 
+const options = {
+  url: '/api/customers/',
+  method: 'GET',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8',
+  },
+};
+
 export const Customers = (props) => {
   const [modalShow, setModalShow] = useState(false);
+  const [ready, setReady] = useState(true);
+  const [customers, setCustomers] = useState(false);
   
   const onSubmitCreateCustomer = (values) => {
-
+    
   }
 
-  return (
+  useEffect(() => {
+    axios(options).then(response => {
+      const _customers = response.data.customers;
+      setCustomers(_customers)
+      setReady(true);
+    }).catch(error => {
+      setReady(true);
+    });
+
+  }, []);
+
+  return ready && (
     <>
       <Navbar />
       <FinalForm onSubmit={onSubmitCreateCustomer}>
@@ -160,38 +183,39 @@ export const Customers = (props) => {
         <hr/>
         <Row>
           <Col lg={8}>
-            <Accordion defaultActiveKey="0">
+            <Accordion defaultActiveKey='0'>
+            { customers && customers.map((customer, index) => (
               <Card>
-                <Accordion.Toggle as={Card.Header} eventKey="0">
+                <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
                   <Row>
                     <Col>
-                      <h4>Sr. Roberto Perezyera</h4>
-                      <p>Último pedido: Oct 11</p>
+                      <h4>{`${customer.first_name} ${customer.last_name}`}</h4>
+                      <p>Último pedido: Oct 11 [TODO]</p>
                       
                     </Col>
                     <Col className='align-right'>
-                      <h4>21 años</h4>
+                      <h4></h4>
                     </Col>
                   </Row>
                 </Accordion.Toggle>
-                <Accordion.Collapse eventKey="0">
+                <Accordion.Collapse eventKey={`${index}`}>
                   <Card.Body>
                   <Row>               
                       <Col lg={6}>
                         <p>
-                          C. Dr. Mora 9 <br/>
-                          Centro, Cuauhtemoc <br/>
-                          06000, Ciuda de México, CDMX <br/>
+                          {customer.street}<br/>
+                          {customer.city} <br/>
+                          {customer.zip_code}, {customer.county} <br/>
                         </p>
                         <h4>Último evento</h4>
                         <p>
-                          Cena familiar, Oct 11, 7:00 PM
+                          Cena familiar, Oct 11, 7:00 PM [TODO]
                         </p>
                       </Col>
                       <Col lg={6} className='align-right'>
                         <p>
-                          Teléfono: 55 6892 1923 <br/>
-                          Correo: roberto@mora.com <br/>
+                          Teléfono: {customer.phone} <br/>
+                          Correo: {customer.email} <br/>
                           <br/>
                         </p>
                       </Col>
@@ -203,6 +227,7 @@ export const Customers = (props) => {
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
+            ))}
             </Accordion>
           </Col>
         </Row>

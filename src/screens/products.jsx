@@ -1,15 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Accordion, Card, Modal, Form } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
+import axios from 'axios';
 
 import { Navbar } from '../components/navbar';
 
+const options = {
+  url: '/api/products/',
+  method: 'GET',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8',
+  },
+};
+
 export const Products = () => {
   const [modalShow, setModalShow] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [products, setProducts] = useState(null);
 
   const onSubmitCreateProduct = (values) => {};
 
-  return (
+  useEffect(() => {
+    axios(options).then(response => {
+      const _products = response.data.products;
+      setProducts(_products)
+      setReady(true);
+    }).catch(error => {
+      setReady(true);
+    });
+
+  }, []);
+
+
+  return ready && (
     <>
       <Navbar />
       <FinalForm onSubmit={onSubmitCreateProduct}>
@@ -124,11 +148,7 @@ export const Products = () => {
             <h1>Productos</h1>
           </Col>
           <Col lg={6} md={6} className='align-right'>
-            <Button
-              variant='primary'
-              size='lg'
-              onClick={() => setModalShow(true)}
-            >
+            <Button variant='primary' size='lg' onClick={() => setModalShow(true)}>
               Nuevo producto
             </Button>
           </Col>
@@ -138,49 +158,48 @@ export const Products = () => {
           <Col lg={8}>
             <h3>Platos fuertes</h3>
             <Accordion defaultActiveKey='0'>
-              <Card>
-                <Accordion.Toggle as={Card.Header} eventKey='0'>
-                  <Row>
-                    <Col>
-                      <h4>Plato fuerte # 12</h4>
-                    </Col>
-                    <Col className='align-right'>
-                      <h4>kg</h4>
-                    </Col>
-                  </Row>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey='0'>
-                  <Card.Body>
+              { products && products.map((product, index) => (
+                <Card>
+                  <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
                     <Row>
-                      <Col lg={6}>
-                        <p>
-                          Este plato consiste de un plato, es fuerte y suele
-                          estar en kg. Esta información claramente se puede
-                          cambiar
-                        </p>
+                      <Col>
+                        <h4>{product.product_name}</h4>
                       </Col>
-                      <Col lg={6} className='align-right'>
-                        <p>
-                          Teléfono: 55 6892 1923 <br />
-                          Correo: roberto@mora.com <br />
-                          <br />
-                        </p>
-                      </Col>
-                      <Col lg={6}>
-                        <h4>Precio por kg</h4>
-                      </Col>
-                      <Col lg={6} className='align-right'>
-                        <h4>$ 150.00</h4>
-                      </Col>
-                      <Col lg={12} className='align-right'>
-                        <Button variant='primary' size='sm'>
-                          Editar producto
-                        </Button>
+                      <Col className='align-right'>
+                        <h4>{product.measure}</h4>
                       </Col>
                     </Row>
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Card>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey={`${index}`}>
+                    <Card.Body>
+                      <Row>
+                        <Col lg={6}>
+                          <p>
+                            {product.description}
+                          </p>
+                        </Col>
+                        <Col lg={6} className='align-right'>
+                          <p>
+                            Categoria: {product.category} <br />
+                            <br />
+                          </p>
+                        </Col>
+                        <Col lg={6}>
+                          <h4>Precio por {product.measure}</h4>
+                        </Col>
+                        <Col lg={6} className='align-right'>
+                          <h4>$ {product.price}</h4>
+                        </Col>
+                        <Col lg={12} className='align-right'>
+                          <Button variant='primary' size='sm'>
+                            Editar producto
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              ))}
             </Accordion>
           </Col>
 
