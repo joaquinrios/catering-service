@@ -99,7 +99,6 @@ export const NewOrder = ({props}) => {
                       </FinalFormField>
                     </Form.Group>
                   </Col>
-                    
                     { values.newUser ? (<>
                     <Col lg={6}>
                       <Form.Group>
@@ -137,6 +136,7 @@ export const NewOrder = ({props}) => {
                       </Form.Group>
                     </Col>
                     </>) : (<>
+                    {console.log(values)}
                     <Col lg={8}>
                       <Form.Group>
                         <Form.Label>Cliente</Form.Label>
@@ -154,6 +154,7 @@ export const NewOrder = ({props}) => {
                           inputProps={{name: input.name, value: input.value, onChange: input.onChange, className: 'form-control-lg form-control', placeholder: 'Escriba el nombre del cliente...'}}/>
           
                           </>}
+                          
                         </FinalFormField>
                       </Form.Group>
                       </Col>

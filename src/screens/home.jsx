@@ -30,6 +30,8 @@ export const Home = () => {
         <Row>
           <Col lg={9} className='cs-calendar'>
             <Calendar
+              onNavigate={(date) => console.log(date)}
+              onView={(view) => console.log(view)}
               events={events}
               startAccessor="start"
               endAccessor="end"
