@@ -27,7 +27,7 @@ export const NewOrder = ({props}) => {
   const onSuggestionsFetchRequested = ({ value }) => setSuggestions(getSuggestions(value));
   const onSuggestionsClearRequested = () => setSuggestions([]);
 
-  const onSubmitForm = (values) => {
+  const onSubmitCreateOrder = (values) => {
     console.log('form submitted', values);
   }
   return (
@@ -38,7 +38,7 @@ export const NewOrder = ({props}) => {
         <hr/>
         
           
-          <FinalForm onSubmit={onSubmitForm} initialValues={{ newUser: true, products: [undefined] }} mutators={{ ...arrayMutators }}>
+          <FinalForm onSubmit={onSubmitCreateOrder} initialValues={{ newUser: true, products: [undefined] }} mutators={{ ...arrayMutators }}>
             {({ handleSubmit, submitting, values, form }) => (
               <Form>
                 <Row>

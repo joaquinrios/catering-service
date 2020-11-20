@@ -33,8 +33,8 @@ export const Landing = () => {
   const onSubmitForm = (values) => {
     console.log('form submitted', values);
     const options = {
-      // TODO: URL
-      url: 'https://us-central1-firebasics-85a90.cloudfunctions.net/helloWorld',
+      // TODO: add API URL
+      url: '',
       method: 'POST',
       headers: {
         Accept: 'application/json',
