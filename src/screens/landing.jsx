@@ -116,7 +116,16 @@ export const Landing = () => {
       </Modal>
 
       <Container>
-        <h1 className="bold">¡Siéntete en casa con Cocina Mary!</h1>
+        <Row>
+          <Col lg={8} md={8}>
+          <h1 className="bold">¡Siéntete en casa con Cocina Mary!</h1>
+          </Col>
+          <Col lg={4} md={4} className='align-right'>
+            <Button variant='primary' size='lg' onClick={() => setModalShow(true)}>
+              Quiero ordenar &nbsp; <BsArrowRight />
+            </Button>
+          </Col>
+        </Row>
         <hr />
         <Card className="text-white">
           <Card.Img src={sloganImage} />
