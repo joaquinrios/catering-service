@@ -14,12 +14,54 @@ const options = {
   },
 };
 
+const createOrderOptions = {
+  url: '/api/products/',
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8',
+  },
+};
+
 export const Products = () => {
   const [modalShow, setModalShow] = useState(false);
+  const [postModalShow, setPostModalShow] = useState(false);
+  const [postModalMessage, setPostModalMessage] = useState('');
   const [ready, setReady] = useState(false);
   const [products, setProducts] = useState(null);
 
-  const onSubmitCreateProduct = (values) => {};
+  const closeModals = () => {
+    setPostModalShow(false);
+    setModalShow(false);
+  };
+
+  const onSubmitCreateProduct = (values) => {
+    console.log('data to submit:', values);
+    axios(createOrderOptions)
+      .then((response) => {
+        if (response.status === 200) {
+          setPostModalMessage('El nuevo producto se ha guardado con éxito.');
+          setPostModalShow(true);
+        } else {
+          setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
+          setPostModalShow(true);
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
+  };
 
   useEffect(() => {
     axios(options).then(response => {
@@ -36,8 +78,29 @@ export const Products = () => {
   return ready && (
     <>
       <Navbar />
+
+      {/* Post success or failure modal */}
+      <Modal
+          centered
+          show={postModalShow}
+          onHide={() => setPostModalShow(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Aviso</Modal.Title>
+          </Modal.Header>
+            <Modal.Body>
+              <p>{postModalMessage}</p>
+            </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => closeModals()}>
+              Cerrar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+      {/* New product form modal */}
       <FinalForm onSubmit={onSubmitCreateProduct}>
-        {({ handleSubmit, submitting }) => (
+        {({ handleSubmit, submitting, values }) => (
           <Modal
             size='lg'
             aria-labelledby='contained-modal-title-vcenter'
@@ -137,7 +200,7 @@ export const Products = () => {
               <Button variant='secondary' onClick={() => setModalShow(false)}>
                 Cerrar
               </Button>
-              <Button variant='success'>Crear producto</Button>
+              <Button variant='success' onClick={() => onSubmitCreateProduct(values)}>Crear producto</Button>
             </Modal.Footer>
           </Modal>
         )}

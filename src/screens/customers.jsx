@@ -33,7 +33,7 @@ export const Customers = (props) => {
   const closeModals = () => {
     setPostModalShow(false);
     setModalShow(false);
-  }
+  };
 
   const onSubmitCreateCustomer = (values) => {
     // TODO: Bobby?
@@ -41,7 +41,7 @@ export const Customers = (props) => {
     axios(createCustomerOptions)
       .then((response) => {
         if (response.status === 200) {
-          setPostModalMessage('El nuevo cliente se ha guardado con éxito.')
+          setPostModalMessage('El nuevo cliente se ha guardado con éxito.');
           setPostModalShow(true);
         } else {
           setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
@@ -100,7 +100,7 @@ export const Customers = (props) => {
           </Modal.Footer>
         </Modal>
 
-        {/* New customer modal */}
+        {/* New customer form modal */}
         <FinalForm onSubmit={onSubmitCreateCustomer}>
           {({ handleSubmit, submitting, values }) => (
             <Modal
