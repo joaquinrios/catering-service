@@ -30,6 +30,11 @@ export const Customers = (props) => {
   const [ready, setReady] = useState(true);
   const [customers, setCustomers] = useState(false);
 
+  // TODO: should be props or something from props, right?
+  // for customer events retrieved from database
+  const numbers = [1,2,3,4,5];
+  const numberItems = numbers.map((number) => <p>{number}</p>);
+
   const closeModals = () => {
     setPostModalShow(false);
     setModalShow(false);
@@ -83,6 +88,7 @@ export const Customers = (props) => {
 
         {/* Post success or failure modal */}
         <Modal
+          size='sm'
           centered
           show={postModalShow}
           onHide={() => setPostModalShow(false)}
@@ -317,7 +323,7 @@ export const Customers = (props) => {
                         <Row>
                           <Col>
                             <h4>{`${customer.first_name} ${customer.last_name}`}</h4>
-                            <p>Último pedido: Oct 11 [TODO]</p>
+                            <p>Último pedido: Oct 11 [TODO / whats missing?]</p>
                           </Col>
                           <Col className="align-right">
                             <h4></h4>
@@ -334,8 +340,9 @@ export const Customers = (props) => {
                                 {customer.city} <br />
                                 {customer.zip_code}, {customer.county} <br />
                               </p>
-                              <h4>Último evento</h4>
-                              <p>Cena familiar, Oct 11, 7:00 PM [TODO]</p>
+                              <h4>Últimos eventos[validate]</h4>
+                              <p>Cena familiar, Oct 11, 7:00 PM [TODO / validate]</p>
+                              <p>{numberItems}</p>
                             </Col>
                             <Col lg={6} className="align-right">
                               <p>

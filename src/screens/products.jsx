@@ -81,6 +81,7 @@ export const Products = () => {
 
       {/* Post success or failure modal */}
       <Modal
+          size='sm'
           centered
           show={postModalShow}
           onHide={() => setPostModalShow(false)}
