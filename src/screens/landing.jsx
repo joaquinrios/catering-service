@@ -27,6 +27,28 @@ const staffImage2 =
   'https://images.pexels.com/photos/4057745/pexels-photo-4057745.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500';
 const staffImage3 =
   'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
+const multiCarouselDemoImg =
+  'https://i.picsum.photos/id/362/200/300.jpg?hmac=YjZiJWaqrdKL4xFhgrjDw4Ic2tPzNLV975FWRb8td0s';
+
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+  },
+};
 
 export const Landing = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -118,10 +140,14 @@ export const Landing = () => {
       <Container>
         <Row>
           <Col lg={8} md={8}>
-          <h1 className="bold">¡Siéntete en casa con Cocina Mary!</h1>
+            <h1 className="bold">¡Siéntete en casa con Cocina Mary!</h1>
           </Col>
-          <Col lg={4} md={4} className='align-right'>
-            <Button variant='primary' size='lg' onClick={() => setModalShow(true)}>
+          <Col lg={4} md={4} className="align-right">
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => setModalShow(true)}
+            >
               Quiero ordenar &nbsp; <BsArrowRight />
             </Button>
           </Col>
@@ -162,6 +188,43 @@ export const Landing = () => {
         <Row>
           <Col>
             <h3>multicarousel goes here</h3>
+            <Carousel
+              swipeable={false}
+              draggable={false}
+              showDots={true}
+              responsive={responsive}
+              ssr={true} // means to render carousel on server-side.
+              infinite={true}
+              autoPlaySpeed={1000}
+              keyBoardControl={true}
+              customTransition="all .5"
+              transitionDuration={500}
+              containerClass="carousel-container"
+              removeArrowOnDeviceType={['tablet', 'mobile']}
+              dotListClass="custom-dot-list-style"
+              itemClass="carousel-item-padding-40-px"
+            >
+              <div>
+                Item 1
+                <Image src={multiCarouselDemoImg} />
+              </div>
+              <div>
+                Item 2
+                <Image src={multiCarouselDemoImg} />
+              </div>
+              <div>
+                Item 3
+                <Image src={multiCarouselDemoImg} />
+              </div>
+              <div>
+                Item 4
+                <Image src={multiCarouselDemoImg} />
+              </div>
+              <div>
+                Item 5
+                <Image src={multiCarouselDemoImg} />
+              </div>
+            </Carousel>
           </Col>
         </Row>
 
@@ -338,10 +401,10 @@ export const Landing = () => {
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.446371148455!2d-99.14845794847503!3d19.43631244553169!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f8d59ac21459%3A0x90b4c056728a77cf!2sCalle%20Dr%20Mora%209%2C%20Colonia%20Centro%2C%20Centro%2C%20Cuauht%C3%A9moc%2C%2006000%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses!2smx!4v1605569892526!5m2!1ses!2smx"
                 width="100%"
                 height="70%"
-                frameborder="0"
-                allowfullscreen=""
+                frameBorder="0"
+                allowFullScreen=""
                 aria-hidden="false"
-                tabindex="0"
+                tabIndex="0"
               ></iframe>
             </>
           </Col>

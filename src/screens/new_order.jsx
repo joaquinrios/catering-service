@@ -196,6 +196,7 @@ export const NewOrder = ({props}) => {
                   </Col>
 
                   <Col lg={12} className='mb-5 mt-4 align-right'>
+                    {/* is it handleSubmit? */}
                     <Button variant='primary' size='lg' onClick={handleSubmit}>Guardar pedido</Button>
                   </Col>
                 
