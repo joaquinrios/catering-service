@@ -26,15 +26,27 @@ const createCustomerOptions = {
 export const Customers = (props) => {
   const [modalShow, setModalShow] = useState(false);
   const [postModalShow, setPostModalShow] = useState(false);
+  const [postModalMessage, setPostModalMessage] = useState('');
   const [ready, setReady] = useState(true);
   const [customers, setCustomers] = useState(false);
 
+  const closeModals = () => {
+    setPostModalShow(false);
+    setModalShow(false);
+  }
+
   const onSubmitCreateCustomer = (values) => {
-    console.log('submitted:', values);
+    // TODO: Bobby?
+    console.log('to submit:', values);
     axios(createCustomerOptions)
       .then((response) => {
-        console.log('response:', response);
-        setPostModalShow(true);
+        if (response.status === 200) {
+          setPostModalMessage('El nuevo cliente se ha guardado con éxito.')
+          setPostModalShow(true);
+        } else {
+          setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
+          setPostModalShow(true);
+        }
       })
       .catch((error) => {
         if (error.response) {
@@ -69,22 +81,26 @@ export const Customers = (props) => {
       <>
         <Navbar />
 
-        {/* Success or failure modal */}
-        {/* TODO, Bobby: add logic to display success or failure content on the same modal */}
-        <Modal centered
-              show={postModalShow}
-              onHide={() => setPostModalShow(false)}>
+        {/* Post success or failure modal */}
+        <Modal
+          centered
+          show={postModalShow}
+          onHide={() => setPostModalShow(false)}
+        >
           <Modal.Header closeButton>
-            <Modal.Title>Modal title</Modal.Title>
+            <Modal.Title>Aviso</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <p>Modal body text goes here.</p>
-          </Modal.Body>
+            <Modal.Body>
+              <p>{postModalMessage}</p>
+            </Modal.Body>
           <Modal.Footer>
-            <Button variant='secondary'>Cerrar</Button>
+            <Button variant="secondary" onClick={() => closeModals()}>
+              Cerrar
+            </Button>
           </Modal.Footer>
         </Modal>
 
+        {/* New customer modal */}
         <FinalForm onSubmit={onSubmitCreateCustomer}>
           {({ handleSubmit, submitting, values }) => (
             <Modal
