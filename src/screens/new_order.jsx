@@ -93,7 +93,7 @@ export const NewOrder = ({props}) => {
                   
                   <Col lg={8} className='mb-3'>  
                     <Form.Group>
-                      <Form.Label>¿Es nuevo cliente? [TODO - no jala unu]</Form.Label>
+                      <Form.Label>¿Es nuevo cliente? [TODO - noted by Jordan]</Form.Label>
                       <FinalFormField name='newUser' type='checkbox'>
                         {({ input }) => <Row><Col><Toggle {...input} /></Col></Row>}
                       </FinalFormField>
@@ -128,11 +128,84 @@ export const NewOrder = ({props}) => {
                           {({ input }) => <Form.Control {...input} type='text' size='lg'/>}
                         </FinalFormField>
                       </Form.Group>
-                      <h3>Dirección [TODO - Bobby]</h3>
+                    </Col>
+
+                    <Col lg={12}>
+                      <h4>Dirección:</h4>
                       <Form.Group>
-                        <Form.Label>Dirección</Form.Label>
-                        <FinalFormField name='address'>
-                          {({ input }) => <Form.Control {...input} type='text' size='lg'/>}
+                        <Form.Label>Calle</Form.Label>
+                        <FinalFormField name='street'>
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. C Dr Mora 9'
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
+                    <Col lg={6}>
+                      <Form.Group>
+                        <Form.Label>Colonia</Form.Label>
+                        <FinalFormField name='neighborhood'>
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. Centro'
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
+
+                    <Col lg={6}>
+                      <Form.Group>
+                        <Form.Label>Alcaldía / Municipio</Form.Label>
+                        <FinalFormField name='city'>
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. Cuauhtémoc'
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
+
+                    <Col lg={6}>
+                      <Form.Group>
+                        <Form.Label>Código postal</Form.Label>
+                        <FinalFormField name='zipcode'>
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. 06000'
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
+
+                    <Col lg={6}>
+                      <Form.Group>
+                        <Form.Label>Estado</Form.Label>
+                        <FinalFormField name='state'>
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. Ciudad de México'
+                            />
+                          )}
                         </FinalFormField>
                       </Form.Group>
                     </Col>
@@ -171,7 +244,7 @@ export const NewOrder = ({props}) => {
                     {({ fields }) => fields.map((name, index) => (<>
                         <Col lg={8}>
                           <Form.Group>
-                            <Form.Label>Producto [TODO - Bobby - Adjust col lengths]</Form.Label>
+                            <Form.Label>Producto</Form.Label>
                             <FinalFormField name={`${name}.name`}>
                               {({ input }) => <Form.Control {...input} type='text' size='lg'/>}
                             </FinalFormField>
@@ -180,7 +253,7 @@ export const NewOrder = ({props}) => {
 
                         <Col lg={4}>
                           <Form.Group>
-                            <Form.Label>Cantidad [TODO - Bobby - col medida]</Form.Label>
+                            <Form.Label>Unidad [No es cantidad?]</Form.Label>
                             <FinalFormField name={`${name}.measurement`}>
                               {({ input }) => <Form.Control {...input} type='number' size='lg'/>}
                             </FinalFormField>

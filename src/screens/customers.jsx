@@ -33,8 +33,7 @@ export const Customers = (props) => {
   };
 
   const onSubmitCreateCustomer = (values) => {
-    console.log('to submit:', values);
-    // const { first_name, last_name, email, phone, street, city, county, state, zip_code} = req.body;
+    // console.log('to submit:', values);
     const customer = {
       first_name: values.name,
       last_name: values.lastname,
@@ -110,7 +109,7 @@ export const Customers = (props) => {
               <p>{postModalMessage}</p>
             </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => closeModals()}>
+            <Button variant='secondary' onClick={() => closeModals()}>
               Cerrar
             </Button>
           </Modal.Footer>
@@ -120,14 +119,14 @@ export const Customers = (props) => {
         <FinalForm onSubmit={onSubmitCreateCustomer}>
           {({ handleSubmit, submitting, values }) => (
             <Modal
-              size="lg"
-              aria-labelledby="contained-modal-title-vcenter"
+              size='lg'
+              aria-labelledby='contained-modal-title-vcenter'
               centered
               show={modalShow}
               onHide={() => setModalShow(false)}
             >
               <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
+                <Modal.Title id='contained-modal-title-vcenter'>
                   Añadir un nuevo cliente
                 </Modal.Title>
               </Modal.Header>
@@ -140,12 +139,12 @@ export const Customers = (props) => {
                     <Col lg={4}>
                       <Form.Group>
                         <Form.Label>Nombre</Form.Label>
-                        <FinalFormField name="name">
+                        <FinalFormField name='name'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              placeholder="i.e. Juanito"
+                              type='text'
+                              placeholder='i.e. Juanito'
                             />
                           )}
                         </FinalFormField>
@@ -155,12 +154,12 @@ export const Customers = (props) => {
                     <Col lg={8}>
                       <Form.Group>
                         <Form.Label>Apellidos</Form.Label>
-                        <FinalFormField name="lastname">
+                        <FinalFormField name='lastname'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              placeholder="i.e. Alimañana"
+                              type='text'
+                              placeholder='i.e. Alimañana'
                             />
                           )}
                         </FinalFormField>
@@ -170,12 +169,12 @@ export const Customers = (props) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Correo electrónico</Form.Label>
-                        <FinalFormField name="email">
+                        <FinalFormField name='email'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              placeholder="i.e. juanito@alimaña.com"
+                              type='text'
+                              placeholder='i.e. juanito@alimaña.com'
                             />
                           )}
                         </FinalFormField>
@@ -185,12 +184,12 @@ export const Customers = (props) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Teléfono</Form.Label>
-                        <FinalFormField name="phone">
+                        <FinalFormField name='phone'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              placeholder="i.e. 55 5495 4928"
+                              type='text'
+                              placeholder='i.e. 55 5495 4928'
                             />
                           )}
                         </FinalFormField>
@@ -200,12 +199,12 @@ export const Customers = (props) => {
                     <Col lg={12}>
                       <Form.Group>
                         <Form.Label>Notas / Datos adicionales</Form.Label>
-                        <FinalFormField name="notes">
+                        <FinalFormField name='notes'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="textarea"
-                              placeholder="i.e. Sin mucha maña"
+                              type='textarea'
+                              placeholder='i.e. Sin mucha maña'
                             />
                           )}
                         </FinalFormField>
@@ -218,12 +217,12 @@ export const Customers = (props) => {
                     <Col lg={12}>
                       <Form.Group>
                         <Form.Label>Calle</Form.Label>
-                        <FinalFormField name="street">
+                        <FinalFormField name='street'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              placeholder="i.e. C Dr Mora 9"
+                              type='text'
+                              placeholder='i.e. C Dr Mora 9'
                             />
                           )}
                         </FinalFormField>
@@ -233,12 +232,12 @@ export const Customers = (props) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Colonia</Form.Label>
-                        <FinalFormField name="neighborhood">
+                        <FinalFormField name='neighborhood'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              placeholder="i.e. Centro"
+                              type='text'
+                              placeholder='i.e. Centro'
                             />
                           )}
                         </FinalFormField>
@@ -248,12 +247,12 @@ export const Customers = (props) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Alcaldía / Municipio</Form.Label>
-                        <FinalFormField name="city">
+                        <FinalFormField name='city'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              placeholder="i.e. Cuauhtémoc"
+                              type='text'
+                              placeholder='i.e. Cuauhtémoc'
                             />
                           )}
                         </FinalFormField>
@@ -263,12 +262,12 @@ export const Customers = (props) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Código postal</Form.Label>
-                        <FinalFormField name="zipcode">
+                        <FinalFormField name='zipcode'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              placeholder="i.e. 06000"
+                              type='text'
+                              placeholder='i.e. 06000'
                             />
                           )}
                         </FinalFormField>
@@ -278,12 +277,12 @@ export const Customers = (props) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Estado</Form.Label>
-                        <FinalFormField name="state">
+                        <FinalFormField name='state'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              placeholder="i.e. Ciudad de México"
+                              type='text'
+                              placeholder='i.e. Ciudad de México'
                             />
                           )}
                         </FinalFormField>
@@ -293,11 +292,11 @@ export const Customers = (props) => {
                 </Form>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={() => setModalShow(false)}>
+                <Button variant='secondary' onClick={() => setModalShow(false)}>
                   Cerrar
                 </Button>
                 <Button
-                  variant="success"
+                  variant='success'
                   onClick={handleSubmit}
                 >
                   Crear cliente
@@ -312,10 +311,10 @@ export const Customers = (props) => {
             <Col lg={6} md={6}>
               <h1>Clientes</h1>
             </Col>
-            <Col lg={6} md={6} className="align-right">
+            <Col lg={6} md={6} className='align-right'>
               <Button
-                variant="primary"
-                size="lg"
+                variant='primary'
+                size='lg'
                 onClick={() => setModalShow(true)}
               >
                 Nuevo cliente
@@ -325,7 +324,7 @@ export const Customers = (props) => {
           <hr />
           <Row>
             <Col lg={8}>
-              <Accordion defaultActiveKey="0">
+              <Accordion defaultActiveKey='0'>
                 {customers &&
                   customers.map((customer, index) => (
                     <Card>
@@ -333,9 +332,9 @@ export const Customers = (props) => {
                         <Row>
                           <Col>
                             <h4>{`${customer.first_name} ${customer.last_name}`}</h4>
-                            <p>Último pedido: Oct 11 [TODO / whats missing?]</p>
+                            <p>Último pedido: Oct 11 [TODO / whats missing? the event?]</p>
                           </Col>
-                          <Col className="align-right">
+                          <Col className='align-right'>
                             <h4></h4>
                           </Col>
                         </Row>
@@ -350,22 +349,22 @@ export const Customers = (props) => {
                                 {customer.city} <br />
                                 {customer.zip_code}, {customer.county} <br />
                               </p>
-                              <h4>Últimos eventos[validate]</h4>
-                              <p>Cena familiar, Oct 11, 7:00 PM [TODO / validate]</p>
+                              <h4>Últimos eventos</h4>
+                              <p>Cena familiar, Oct 11, 7:00 PM</p>
                               <p>{numberItems}</p>
                             </Col>
-                            <Col lg={6} className="align-right">
+                            <Col lg={6} className='align-right'>
                               <p>
                                 Teléfono: {customer.phone} <br />
                                 Correo: {customer.email} <br />
                                 <br />
                               </p>
                             </Col>
-                            <Col lg={12} className="align-right">
-                              <Button variant="info" size="sm">
+                            <Col lg={12} className='align-right'>
+                              <Button variant='info' size='sm'>
                                 Añadir evento
                               </Button>{' '}
-                              <Button variant="primary" size="sm">
+                              <Button variant='primary' size='sm'>
                                 Editar información
                               </Button>
                             </Col>

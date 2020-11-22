@@ -7,6 +7,8 @@ import { Navbar } from '../components/navbar';
 
 export const NewCustomerOrder = () => {
   const [modalShow, setModalShow] = useState(false);
+  
+  // TODO: Bobby
   const onSubmitForm = (values) => {
     console.log('form submitted', values);
   };
@@ -167,15 +169,6 @@ export const NewCustomerOrder = () => {
                           )}
                         </FinalFormField>
                       </Form.Group>
-                      <h3>TODO: Dirección - añadir campos</h3>
-                      <Form.Group>
-                        <Form.Label>Dirección</Form.Label>
-                        <FinalFormField name='address'>
-                          {({ input }) => (
-                            <Form.Control {...input} type='text' size='lg' />
-                          )}
-                        </FinalFormField>
-                      </Form.Group>
                       <Form.Group>
                         <Form.Label>Nombre del evento:</Form.Label>
                         <FinalFormField name='eventName'>
@@ -184,6 +177,74 @@ export const NewCustomerOrder = () => {
                           )}
                         </FinalFormField>
                       </Form.Group>
+
+                      <h3>Dirección:</h3>
+                      <Form.Group>
+                        <Form.Label>Calle</Form.Label>
+                        <FinalFormField name='street'>
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. C Dr Mora 9'
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                      <Form.Group>
+                        <Form.Label>Colonia</Form.Label>
+                        <FinalFormField name='neighborhood'>
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. Centro'
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                      <Form.Group>
+                        <Form.Label>Alcaldía / Municipio</Form.Label>
+                        <FinalFormField name='city'>
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. Cuauhtémoc'
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                      <Form.Group>
+                        <Form.Label>Código postal</Form.Label>
+                        <FinalFormField name='zipcode'>
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. 06000'
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                      <Form.Group>
+                        <Form.Label>Estado</Form.Label>
+                        <FinalFormField name='state'>
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. Ciudad de México'
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+
                     </Col>
                   </Row>
 
@@ -193,6 +254,7 @@ export const NewCustomerOrder = () => {
                     <FinalFormField name='paymentMethod'>
                       {({ input }) => (
                         <Form.Control as='select'>
+                          <option />
                           <option>Tarjeta de débito/crédito</option>
                           <option>PayPal</option>
                           <option>Transferencia</option>

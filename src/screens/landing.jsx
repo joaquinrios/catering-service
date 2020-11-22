@@ -152,6 +152,9 @@ export const Landing = () => {
               Quiero ordenar &nbsp; <BsArrowRight />
             </Button>
           </Col>
+          <Col lg={12} md={12} className='align-right'>
+            <h5>Llámanos: (55) 1283 8823</h5>
+          </Col>
         </Row>
         <hr />
         <Card className="text-white">
