@@ -48,7 +48,7 @@ export const Home = () => {
           </Col>
 
           <Col lg={3}>
-          <h4> Esta semana: </h4>
+          <h4> Esta semana: [TODO]</h4>
           </Col>
         </Row>
       </Container>
