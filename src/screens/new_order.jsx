@@ -134,13 +134,13 @@ export const NewOrder = ({props}) => {
                       <h4>Dirección:</h4>
                       <Form.Group>
                         <Form.Label>Calle</Form.Label>
-                        <FinalFormField name="street">
+                        <FinalFormField name='street'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
+                              type='text'
                               size='lg'
-                              placeholder="i.e. C Dr Mora 9"
+                              placeholder='i.e. C Dr Mora 9'
                             />
                           )}
                         </FinalFormField>
@@ -149,13 +149,13 @@ export const NewOrder = ({props}) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Colonia</Form.Label>
-                        <FinalFormField name="neighborhood">
+                        <FinalFormField name='neighborhood'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
+                              type='text'
                               size='lg'
-                              placeholder="i.e. Centro"
+                              placeholder='i.e. Centro'
                             />
                           )}
                         </FinalFormField>
@@ -165,13 +165,13 @@ export const NewOrder = ({props}) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Alcaldía / Municipio</Form.Label>
-                        <FinalFormField name="city">
+                        <FinalFormField name='city'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
+                              type='text'
                               size='lg'
-                              placeholder="i.e. Cuauhtémoc"
+                              placeholder='i.e. Cuauhtémoc'
                             />
                           )}
                         </FinalFormField>
@@ -181,13 +181,13 @@ export const NewOrder = ({props}) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Código postal</Form.Label>
-                        <FinalFormField name="zipcode">
+                        <FinalFormField name='zipcode'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
+                              type='text'
                               size='lg'
-                              placeholder="i.e. 06000"
+                              placeholder='i.e. 06000'
                             />
                           )}
                         </FinalFormField>
@@ -197,13 +197,13 @@ export const NewOrder = ({props}) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Estado</Form.Label>
-                        <FinalFormField name="state">
+                        <FinalFormField name='state'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
+                              type='text'
                               size='lg'
-                              placeholder="i.e. Ciudad de México"
+                              placeholder='i.e. Ciudad de México'
                             />
                           )}
                         </FinalFormField>

@@ -98,7 +98,7 @@ export const Products = () => {
               <p>{postModalMessage}</p>
             </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => closeModals()}>
+            <Button variant='secondary' onClick={() => closeModals()}>
               Cerrar
             </Button>
           </Modal.Footer>
