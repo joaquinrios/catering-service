@@ -39,17 +39,14 @@ export const Products = () => {
     console.log('data to submit:', values);
     axios(createOrderOptions)
       .then((response) => {
-        if (response.status === 200) {
-          setPostModalMessage('El nuevo producto se ha guardado con éxito.');
-          setPostModalShow(true);
-        } else {
-          setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
-          setPostModalShow(true);
-        }
+        setPostModalMessage('El nuevo producto se ha guardado con éxito.');
+        setPostModalShow(true);
       })
       .catch((error) => {
         if (error.response) {
           console.log(error.response);
+          setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
+          setPostModalShow(true);
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
