@@ -186,9 +186,10 @@ export const Products = () => {
                       <FinalFormField name='measureUnit'>
                         {({ input }) => (
                           <Form.Control as='select'>
-                            <option>Kg</option>
+                            <option>kilogramos</option>
                             <option>litros</option>
                             <option>órden(es)</option>
+                            <option>piezas</option>
                           </Form.Control>
                         )}
                       </FinalFormField>

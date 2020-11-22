@@ -27,8 +27,9 @@ const staffImage2 =
   'https://images.pexels.com/photos/4057745/pexels-photo-4057745.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500';
 const staffImage3 =
   'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
-const multiCarouselDemoImg =
+const carouselImgVertical =
   'https://i.picsum.photos/id/362/200/300.jpg?hmac=YjZiJWaqrdKL4xFhgrjDw4Ic2tPzNLV975FWRb8td0s';
+const carouselImgHorizontal = 'https://i.picsum.photos/id/44/300/200.jpg?hmac=0hYINvSn1xgoUqgef_dkuO85gX7iT6TLDiVKLZ1tYU0';
 
 const responsive = {
   superLargeDesktop: {
@@ -187,7 +188,6 @@ export const Landing = () => {
 
         <Row>
           <Col>
-            <h3>multicarousel goes here</h3>
             <Carousel
               swipeable={false}
               draggable={false}
@@ -205,24 +205,79 @@ export const Landing = () => {
               itemClass="carousel-item-padding-40-px"
             >
               <div>
-                Item 1
-                <Image src={multiCarouselDemoImg} />
+                <Card className="text-center no-border">
+                  <Container>
+                    {' '}
+                    <Image
+                      src={carouselImgHorizontal}
+                      fluid
+                    />{' '}
+                  </Container>
+                  <Card.Body>
+                    <Card.Title>Cumpleaños</Card.Title>
+                    <Card.Text>This is the card text</Card.Text>
+                  </Card.Body>
+                </Card>
               </div>
               <div>
-                Item 2
-                <Image src={multiCarouselDemoImg} />
+                <Card className="text-center no-border">
+                  <Container>
+                    {' '}
+                    <Image
+                      src={carouselImgHorizontal}
+                      fluid
+                    />{' '}
+                  </Container>
+                  <Card.Body>
+                    <Card.Title>Aniversario</Card.Title>
+                    <Card.Text>This is the card text</Card.Text>
+                  </Card.Body>
+                </Card>
               </div>
               <div>
-                Item 3
-                <Image src={multiCarouselDemoImg} />
+                <Card className="text-center no-border">
+                  <Container>
+                    {' '}
+                    <Image
+                      src={carouselImgHorizontal}
+                      fluid
+                    />{' '}
+                  </Container>
+                  <Card.Body>
+                    <Card.Title>Reuniones... familiares? con amigos?</Card.Title>
+                    <Card.Text>This is the card text</Card.Text>
+                  </Card.Body>
+                </Card>
               </div>
               <div>
-                Item 4
-                <Image src={multiCarouselDemoImg} />
+                <Card className="text-center no-border">
+                  <Container>
+                    {' '}
+                    <Image
+                      src={carouselImgHorizontal}
+                      fluid
+                    />{' '}
+                  </Container>
+                  <Card.Body>
+                    <Card.Title>Servicio 4</Card.Title>
+                    <Card.Text>This is the card text</Card.Text>
+                  </Card.Body>
+                </Card>
               </div>
               <div>
-                Item 5
-                <Image src={multiCarouselDemoImg} />
+                <Card className="text-center no-border">
+                  <Container>
+                    {' '}
+                    <Image
+                      src={carouselImgHorizontal}
+                      fluid
+                    />{' '}
+                  </Container>
+                  <Card.Body>
+                    <Card.Title>Servicio 5</Card.Title>
+                    <Card.Text>This is the card text</Card.Text>
+                  </Card.Body>
+                </Card>
               </div>
             </Carousel>
           </Col>

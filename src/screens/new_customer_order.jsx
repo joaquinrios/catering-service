@@ -88,6 +88,7 @@ export const NewCustomerOrder = () => {
                   </Col>
 
                   <h2>Qué quieren ordenar:</h2>
+                  <h2>TODO: logica añadir/borrar items</h2>
                   <Row>
                     <Col>
                       <p>[autosuggest platillo]</p>
@@ -166,6 +167,7 @@ export const NewCustomerOrder = () => {
                           )}
                         </FinalFormField>
                       </Form.Group>
+                      <h3>TODO: Dirección - añadir campos</h3>
                       <Form.Group>
                         <Form.Label>Dirección</Form.Label>
                         <FinalFormField name='address'>
@@ -175,7 +177,7 @@ export const NewCustomerOrder = () => {
                         </FinalFormField>
                       </Form.Group>
                       <Form.Group>
-                        <Form.Label>Evento:</Form.Label>
+                        <Form.Label>Nombre del evento:</Form.Label>
                         <FinalFormField name='eventName'>
                           {({ input }) => (
                             <Form.Control {...input} type='text' size='lg' />

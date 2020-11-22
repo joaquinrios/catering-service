@@ -45,7 +45,7 @@ export const NewOrder = ({props}) => {
                   <Col lg={12}><h2>Información del evento</h2></Col>
                   <Col lg={7}>
                     <Form.Group>
-                      <Form.Label>Evento</Form.Label>
+                      <Form.Label>Nombre del evento</Form.Label>
                       <FinalFormField name='eventName'>
                         {({ input }) => <Form.Control {...input} type='text' size='lg'/>}
                       </FinalFormField>
@@ -93,7 +93,7 @@ export const NewOrder = ({props}) => {
                   
                   <Col lg={8} className='mb-3'>  
                     <Form.Group>
-                      <Form.Label>¿Es nuevo cliente?</Form.Label>
+                      <Form.Label>¿Es nuevo cliente? [TODO - no jala unu]</Form.Label>
                       <FinalFormField name='newUser' type='checkbox'>
                         {({ input }) => <Row><Col><Toggle {...input} /></Col></Row>}
                       </FinalFormField>
@@ -128,6 +128,7 @@ export const NewOrder = ({props}) => {
                           {({ input }) => <Form.Control {...input} type='text' size='lg'/>}
                         </FinalFormField>
                       </Form.Group>
+                      <h3>Dirección [TODO - Bobby]</h3>
                       <Form.Group>
                         <Form.Label>Dirección</Form.Label>
                         <FinalFormField name='address'>
@@ -170,7 +171,7 @@ export const NewOrder = ({props}) => {
                     {({ fields }) => fields.map((name, index) => (<>
                         <Col lg={8}>
                           <Form.Group>
-                            <Form.Label>Producto</Form.Label>
+                            <Form.Label>Producto [TODO - Bobby - Adjust col lengths]</Form.Label>
                             <FinalFormField name={`${name}.name`}>
                               {({ input }) => <Form.Control {...input} type='text' size='lg'/>}
                             </FinalFormField>
@@ -179,9 +180,9 @@ export const NewOrder = ({props}) => {
 
                         <Col lg={4}>
                           <Form.Group>
-                            <Form.Label>Unidad de medida</Form.Label>
+                            <Form.Label>Cantidad [TODO - Bobby - col medida]</Form.Label>
                             <FinalFormField name={`${name}.measurement`}>
-                              {({ input }) => <Form.Control {...input} type='text' size='lg'/>}
+                              {({ input }) => <Form.Control {...input} type='number' size='lg'/>}
                             </FinalFormField>
                           </Form.Group>
                         </Col>
