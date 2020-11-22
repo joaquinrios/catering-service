@@ -14,14 +14,6 @@ const options = {
   },
 };
 
-const createCustomerOptions = {
-  url: '/api/customers/',
-  method: 'POST',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json;charset=UTF-8',
-  },
-};
 
 export const Customers = (props) => {
   const [modalShow, setModalShow] = useState(false);
@@ -41,9 +33,30 @@ export const Customers = (props) => {
   };
 
   const onSubmitCreateCustomer = (values) => {
-    // TODO: Bobby?
     console.log('to submit:', values);
-    axios(createCustomerOptions)
+    // const { first_name, last_name, email, phone, street, city, county, state, zip_code} = req.body;
+    const customer = {
+      first_name: values.name,
+      last_name: values.lastname,
+      email: values.email,
+      phone: values.phone,
+      street: values.street,
+      city: values.city,
+      county: values.neighborhood,
+      state: values.state,
+      zip_code: values.zipcode
+    }
+    const options = {
+      url: '/api/customers/',
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+      data: customer
+    };
+    
+    axios(options)
       .then((response) => {
         setPostModalMessage('El nuevo cliente se ha guardado con éxito.');
         setPostModalShow(true);
@@ -285,7 +298,7 @@ export const Customers = (props) => {
                 </Button>
                 <Button
                   variant="success"
-                  onClick={() => onSubmitCreateCustomer(values)}
+                  onClick={handleSubmit}
                 >
                   Crear cliente
                 </Button>
