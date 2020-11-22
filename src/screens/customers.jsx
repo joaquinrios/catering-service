@@ -332,7 +332,7 @@ export const Customers = (props) => {
                         <Row>
                           <Col>
                             <h4>{`${customer.first_name} ${customer.last_name}`}</h4>
-                            <p>Último pedido: Oct 11 [TODO / whats missing?]</p>
+                            <p>Último pedido: Oct 11 [TODO / whats missing? the event?]</p>
                           </Col>
                           <Col className="align-right">
                             <h4></h4>
@@ -349,8 +349,8 @@ export const Customers = (props) => {
                                 {customer.city} <br />
                                 {customer.zip_code}, {customer.county} <br />
                               </p>
-                              <h4>Últimos eventos[validate]</h4>
-                              <p>Cena familiar, Oct 11, 7:00 PM [TODO / validate]</p>
+                              <h4>Últimos eventos</h4>
+                              <p>Cena familiar, Oct 11, 7:00 PM</p>
                               <p>{numberItems}</p>
                             </Col>
                             <Col lg={6} className="align-right">
