@@ -14,15 +14,6 @@ const options = {
   },
 };
 
-const createOrderOptions = {
-  url: '/api/products/',
-  method: 'POST',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json;charset=UTF-8',
-  },
-};
-
 export const Products = () => {
   const [modalShow, setModalShow] = useState(false);
   const [postModalShow, setPostModalShow] = useState(false);
@@ -36,8 +27,25 @@ export const Products = () => {
   };
 
   const onSubmitCreateProduct = (values) => {
-    console.log('data to submit:', values);
-    axios(createOrderOptions)
+    // console.log('data to submit:', values);
+    const product = {
+      product_name: values.name,
+      description: values.description,
+      category: values.category,
+      price: values.price,
+      measure: values.measureUnit
+    }
+
+    const options = {
+      url: '/api/products/',
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+      data: product
+    };
+    axios(options)
       .then((response) => {
         setPostModalMessage('El nuevo producto se ha guardado con éxito.');
         setPostModalShow(true);
@@ -152,7 +160,8 @@ export const Products = () => {
                       <Form.Label>Categoría</Form.Label>
                       <FinalFormField name='category'>
                         {({ input }) => (
-                          <Form.Control as='select'>
+                          <Form.Control {...input} as='select'>
+                            <option />
                             <option>Plato fuerte</option>
                             <option>Bebida</option>
                             <option>Complemento</option>
@@ -182,7 +191,8 @@ export const Products = () => {
                       <Form.Label>por (unidad medida)</Form.Label>
                       <FinalFormField name='measureUnit'>
                         {({ input }) => (
-                          <Form.Control as='select'>
+                          <Form.Control {...input} as='select'>
+                            <option />
                             <option>kilogramos</option>
                             <option>litros</option>
                             <option>órden(es)</option>
@@ -199,7 +209,7 @@ export const Products = () => {
               <Button variant='secondary' onClick={() => setModalShow(false)}>
                 Cerrar
               </Button>
-              <Button variant='success' onClick={() => onSubmitCreateProduct(values)}>Crear producto</Button>
+              <Button variant='success' onClick={handleSubmit}>Crear producto</Button>
             </Modal.Footer>
           </Modal>
         )}

@@ -33,8 +33,7 @@ export const Customers = (props) => {
   };
 
   const onSubmitCreateCustomer = (values) => {
-    console.log('to submit:', values);
-    // const { first_name, last_name, email, phone, street, city, county, state, zip_code} = req.body;
+    // console.log('to submit:', values);
     const customer = {
       first_name: values.name,
       last_name: values.lastname,
