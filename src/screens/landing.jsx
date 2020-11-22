@@ -192,14 +192,15 @@ export const Landing = () => {
         <Row>
           <Col>
             <Carousel
+              additionalTransfrom={0}
               swipeable={false}
               draggable={false}
-              showDots={true}
+              showDots
               responsive={responsive}
-              ssr={true} // means to render carousel on server-side.
-              infinite={true}
-              autoPlaySpeed={1000}
-              keyBoardControl={true}
+              ssr={false} // means to render carousel on server-side.
+              infinite
+              autoPlaySpeed={3000}
+              keyBoardControl
               customTransition="all .5"
               transitionDuration={500}
               containerClass="carousel-container"

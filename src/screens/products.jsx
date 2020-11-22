@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Accordion, Card, Modal, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Accordion, Card, Modal, Form, Image, InputGroup } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
+import Toggle from 'react-toggle';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+
+
+import { storage } from '../fb_app';
 
 import { Navbar } from '../components/navbar';
 
@@ -15,19 +20,44 @@ const options = {
 };
 
 export const Products = () => {
-  const [modalShow, setModalShow] = useState(false);
+  const [modalShow, setModalShow] = useState(true);
   const [postModalShow, setPostModalShow] = useState(false);
   const [postModalMessage, setPostModalMessage] = useState('');
   const [ready, setReady] = useState(false);
   const [products, setProducts] = useState(null);
+  const [image, setImage] = useState(null);
+  const [product, setProduct] = useState(null);
 
   const closeModals = () => {
     setPostModalShow(false);
     setModalShow(false);
   };
 
+  const prepareProduct = (id) => {
+    let product = products.find(p => p.product_id === id);
+    setProduct({name: product.product_name, lastname: product.last_name, email: product.email, id: product.product_id, phone: product.phone});
+    setModalShow(true);
+  }
+
+  const closeFormModal = () => {
+    setProduct(null);
+    setModalShow(false);
+  }
+
+  const onSubmitUpdateProduct = (values) => {
+    console.log(values);
+  }
+
   const onSubmitCreateProduct = (values) => {
-    // console.log('data to submit:', values);
+    const storageRef = storage.ref();
+    const image = values.image[0];
+    const extension = image.name.split('.').pop();
+    const imageNewPath = uuidv4() + '.' + extension;
+    let imageRef = storageRef.child(imageNewPath);
+    imageRef.put(image).then(snapshot => {
+      console.log(snapshot.metadata.fullPath)
+    });
+
     const product = {
       product_name: values.name,
       description: values.description,
@@ -85,12 +115,7 @@ export const Products = () => {
       <Navbar />
 
       {/* Post success or failure modal */}
-      <Modal
-          size='sm'
-          centered
-          show={postModalShow}
-          onHide={() => setPostModalShow(false)}
-        >
+      <Modal size='sm' centered show={postModalShow} onHide={() => setPostModalShow(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Aviso</Modal.Title>
           </Modal.Header>
@@ -105,54 +130,54 @@ export const Products = () => {
         </Modal>
 
       {/* New product form modal */}
-      <FinalForm onSubmit={onSubmitCreateProduct}>
+      <FinalForm onSubmit={product ? onSubmitUpdateProduct : onSubmitCreateProduct}>
         {({ handleSubmit, submitting, values }) => (
-          <Modal
-            size='lg'
-            aria-labelledby='contained-modal-title-vcenter'
-            centered
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title id='contained-modal-title-vcenter'>
-                Añadir un nuevo producto
-              </Modal.Title>
-            </Modal.Header>
+          <Modal size='lg' aria-labelledby='contained-modal-title-vcenter' centered show={modalShow} onHide={() => setModalShow(false)}>
+            <Modal.Header closeButton> <Modal.Title id='contained-modal-title-vcenter'> { product ? 'Editar productto' : 'Añadir un nuevo producto'} </Modal.Title> </Modal.Header>
             <Modal.Body>
               <Form>
                 <Row>
                   <Col lg={12}>
                     <h3>Información del producto</h3>
                   </Col>
-                  <Col lg={8}>
-                    <Form.Group>
-                      <Form.Label>Nombre</Form.Label>
-                      <FinalFormField name='name'>
-                        {({ input }) => (
-                          <Form.Control
-                            {...input}
-                            type='text'
-                            placeholder='i.e. Chicharrón en salsa verde'
-                          />
-                        )}
-                      </FinalFormField>
-                    </Form.Group>
-                  </Col>
+                  <Col lg={6}><Row>
+                    <Col lg={12}>
+                      <Form.Group>
+                        <Form.Label>Nombre</Form.Label>
+                        <FinalFormField name='name'>
+                          {({ input }) => ( <Form.Control {...input} type='text' placeholder='i.e. Chicharrón en salsa verde' /> )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
 
-                  <Col lg={12}>
-                    <Form.Group>
-                      <Form.Label>Descripción</Form.Label>
-                      <FinalFormField name='description'>
-                        {({ input }) => (
-                          <Form.Control
-                            {...input}
-                            type='textarea'
-                            placeholder='i.e. pues el nombre dice bastante'
-                          />
-                        )}
-                      </FinalFormField>
-                    </Form.Group>
+                    <Col lg={12}>
+                      <Form.Group>
+                        <Form.Label>Descripción</Form.Label>
+                        <FinalFormField name='description'>
+                        {({ input }) => ( <Form.Control {...input} type='text' /> )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>  
+
+                    <Col lg={12}>
+                      <Form.Group>
+                        <Form.Label>Imagen</Form.Label>
+                        <FinalFormField name='image'>
+                          {({input: { value, onChange, ...input } }) => {
+                            const handleChange = ({ target }) => {
+                              onChange(target.files);
+                              setImage(URL.createObjectURL(target.files[0]));
+                            }
+                            return ( <Form.File {...input} onChange={handleChange} label='' data-browse='Encontrar imagen' custom />)
+                          }}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>  
+                  </Row></Col>
+
+                  <Col lg={6}>
+                    { image && (<Form.Label className='sign-label full-width'>Imagen</Form.Label>)}
+                    <Image src={image} fluid rounded />
                   </Col>
 
                   <Col lg={8}>
@@ -161,12 +186,19 @@ export const Products = () => {
                       <FinalFormField name='category'>
                         {({ input }) => (
                           <Form.Control {...input} as='select'>
-                            <option />
-                            <option>Plato fuerte</option>
-                            <option>Bebida</option>
-                            <option>Complemento</option>
+                            <option value='main'>Plato fuerte</option>
+                            <option value='side'>Complemento</option>
                           </Form.Control>
                         )}
+                      </FinalFormField>
+                    </Form.Group>
+                  </Col>
+
+                  <Col lg={4} className='mb-3'>  
+                    <Form.Group>
+                      <Form.Label>Mostrar en plataforma</Form.Label>
+                      <FinalFormField name='active' type='checkbox'>
+                        {({ input }) => <Row><Col><Toggle {...input} /></Col></Row>}
                       </FinalFormField>
                     </Form.Group>
                   </Col>
@@ -174,29 +206,31 @@ export const Products = () => {
                   <Col lg={6}>
                     <Form.Group>
                       <Form.Label>Precio</Form.Label>
-                      <FinalFormField name='price'>
-                        {({ input }) => (
-                          <Form.Control
-                            {...input}
-                            type='text'
-                            placeholder='i.e. $50.00'
-                          />
-                        )}
+                      <InputGroup>
+                        <InputGroup.Prepend>
+                          <InputGroup.Text>$</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <FinalFormField name='price'>
+                        {({ input }) => ( <Form.Control {...input} type='text' placeholder='i.e. 150' /> )}
                       </FinalFormField>
+                        <InputGroup.Append>
+                          <InputGroup.Text>.00</InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+                      
                     </Form.Group>
                   </Col>
 
                   <Col lg={6}>
                     <Form.Group>
                       <Form.Label>por (unidad medida)</Form.Label>
-                      <FinalFormField name='measureUnit'>
+                      <FinalFormField name='measure'>
                         {({ input }) => (
                           <Form.Control {...input} as='select'>
-                            <option />
-                            <option>kilogramos</option>
-                            <option>litros</option>
-                            <option>órden(es)</option>
-                            <option>piezas</option>
+                            <option value='kg'>kilogramos</option>
+                            <option value='lt'>litros</option>
+                            <option value='orden'>órden(es)</option>
+                            <option value='pz'>piezas</option>
                           </Form.Control>
                         )}
                       </FinalFormField>
@@ -263,9 +297,7 @@ export const Products = () => {
                           <h4>$ {product.price}</h4>
                         </Col>
                         <Col lg={12} className='align-right'>
-                          <Button variant='primary' size='sm'>
-                            Editar producto
-                          </Button>
+                          <Button variant='primary' size='sm' onClick={() => prepareProduct(product.product_id)}> Editar producto </Button>
                         </Col>
                       </Row>
                     </Card.Body>
