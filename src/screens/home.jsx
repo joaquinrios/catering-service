@@ -16,7 +16,9 @@ const eventsCalendar = [];
 const eventsThisWeek = [];
 const eventsThisMonth = [];
 const eventsToday = [];
-
+var toCookMonth = new Object();
+var toCookWeek = new Object();
+var toCookDay = new Object();
 
 Date.prototype.getWeek = function() {
   var onejan = new Date(this.getFullYear(),0,1);
@@ -58,18 +60,41 @@ export const Home = (props) => {
         }
         if (startTime.getWeek() == currentWeek && today.getFullYear() == startTime.getFullYear()){
           eventsThisWeek.push(e);
+          event.products.forEach(product => {
+            if (!toCookWeek.hasOwnProperty(product.product_name)){
+              toCookWeek.product.product_name = parseInt(product.amount);
+            }
+            else{
+              toCookWeek.product.product_name += parseInt(product.amount);
+            }
+          })
         }
         if (startTime.getMonth() == currentMonth && today.getFullYear() == startTime.getFullYear()){
           eventsThisMonth.push(e);
+          event.products.forEach(product => {
+            if (!toCookMonth.hasOwnProperty(product.product_name)){
+              toCookMonth.product.product_name = parseInt(product.amount);
+            }
+            else{
+              toCookMonth.product.product_name += parseInt(product.amount);
+            }
+          })
         }
         if (startTime.getDay() == today.getDay() && startTime.getWeek() == currentWeek && today.getFullYear() == startTime.getFullYear()){
           eventsToday.push(e);
+          event.products.forEach(product => {
+            if (!toCookDay.hasOwnProperty(product.product_name)){
+              toCookDay.product.product_name = parseInt(product.amount);
+            }
+            else{
+              toCookDay.product.product_name += parseInt(product.amount);
+            }
+          })
         }
         eventsCalendar.push(e);
       });
       setEvents(events)
       setReady(true);
-      console.log(eventsCalendar);
     }).catch(error => {
       console.log(error);
       setReady(true);
@@ -113,9 +138,18 @@ export const Home = (props) => {
           <Col lg={3}>
             {
               currentView == 'month' && ( <>
+                <h4>Por cocinar: </h4>
+                { Object.keys(toCookMonth).map(function(key) {
+                  return(
+                    <div>
+                    <h4>{key}</h4>
+                    <h4>{toCookMonth[key]}</h4>
+                  </div>
+                  )
+                    })
+                }
                 <h4> Este mes:</h4>
                 { eventsThisMonth && eventsThisMonth.map( (event, index) => (
-                  
                     <div>
                       <h6>Evento {index+1}: {event.title}</h6>
                       <p>Notas: {event.notes}</p>
@@ -128,6 +162,18 @@ export const Home = (props) => {
             
               {
                 currentView == 'week' && ( <>
+
+                  <h4>Por cocinar: </h4>
+                  { Object.keys(toCookWeek).map(function(key) {
+                    return(
+                      <div>
+                      <h4>{key}</h4>
+                      <h4>{toCookWeek[key]}</h4>
+                    </div>
+                    )
+                      })
+                  }
+                  
                   <h4> Esta semana:</h4>
                   {eventsThisWeek && eventsThisWeek.map(function (event, index){
                     return(
@@ -142,6 +188,16 @@ export const Home = (props) => {
             
               {
                 currentView == 'day' &&  ( <>
+                  <h4>Por cocinar: </h4>
+                  { Object.keys(toCookDay).map(function(key) {
+                    return(
+                      <div>
+                      <h4>{key}</h4>
+                      <h4>{toCookDay[key]}</h4>
+                    </div>
+                    )
+                      })
+                  }
                   <h4> Hoy:</h4>
                   {eventsToday && eventsToday.map(function (event, index){
                     return(
