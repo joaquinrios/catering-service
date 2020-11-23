@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Navbar } from '../components/navbar';
 
 const options = {
-  url: '/api/customers/',
+  url: '/api/customers/orders',
   method: 'GET',
   headers: {
     Accept: 'application/json',
@@ -23,13 +23,6 @@ export const Customers = ({ navigate }) => {
   const [ready, setReady] = useState(true);
   const [customers, setCustomers] = useState(false);
   const [customer, setCustomer] = useState(null);
-
-  // TODO: should be props or something from props, right?
-  // for customer events retrieved from database
-  const numbers = [1,2,3,4,5];
-  const numberItems = numbers.map((number) => <p>{number}</p>);
-
-
 
   const closeModals = () => {
     setPostModalShow(false);
@@ -312,12 +305,12 @@ export const Customers = ({ navigate }) => {
               <Accordion defaultActiveKey='0'>
                 {customers &&
                   customers.map((customer, index) => (
-                    <Card>
+                    <Card key={`${index}`}>
                       <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
                         <Row>
                           <Col>
                             <h4>{`${customer.first_name} ${customer.last_name}`}</h4>
-                            <p>Último pedido: Oct 11 </p>
+                            <p>{(customer.cust_orders.length > 0) && (<>Últimos pedido: <span className='bold'>{new Date(customer.cust_orders[0].order_date.replace(' ', 'T')).toLocaleDateString()}</span></>) } </p>
                           </Col>
                           <Col className='align-right'>
                             <h4></h4>
@@ -334,9 +327,12 @@ export const Customers = ({ navigate }) => {
                                 {customer.city} <br />
                                 {customer.zip_code}, {customer.county} <br />
                               </p>
-                              <h4>Últimos eventos</h4>
-                              <p>Cena familiar, Oct 11, 7:00 PM</p>
-                              <p>{numberItems}</p>
+                              <h4>{(customer.cust_orders.length > 0) && 'Últimos 5 eventos' }</h4>
+                              { customer.cust_orders.slice(0, 5).map((order, index) => {
+                                return (
+                                <p className='mb-1'><span className='bold'>{new Date(order.order_date.replace(' ', 'T')).toLocaleDateString()}</span> -  {order.order_event}</p>
+                              )})}
+                              
                             </Col>
                             <Col lg={6} className='align-right'>
                               <p>
@@ -346,7 +342,7 @@ export const Customers = ({ navigate }) => {
                               </p>
                             </Col>
                             <Col lg={12} className='align-right'>
-                              <Button variant='info' size='sm'> Añadir evento </Button>{' '}
+                              <Button variant='info' size='sm'> Añadir pedido </Button>{' '}
                               <Button variant='primary' size='sm' onClick={() => prepareCustomer(customer.customer_id)}> Editar información </Button>
                             </Col>
                           </Row>

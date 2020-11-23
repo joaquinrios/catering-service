@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField,  } from 'react-final-form';
 import { FieldArray as FinalFormFieldArray } from 'react-final-form-arrays';
@@ -22,23 +22,35 @@ export const NewOrder = ({props}) => {
     setExistingUser(suggestion);
     return suggestion.name + ' ' + suggestion.lastname
   }; 
-  const renderSuggestion = (suggestion) => (<div> { suggestion.name} {suggestion.lastname}</div>)
+  const renderSuggestion = (suggestion) => (
+    <Row>
+      <Col lg={6}>
+        { suggestion.name} {suggestion.lastname}
+      </Col>
+      <Col lg={6}>
+        hello
+      </Col>
+    </Row>
+  );
   
   const onSuggestionsFetchRequested = ({ value }) => setSuggestions(getSuggestions(value));
   const onSuggestionsClearRequested = () => setSuggestions([]);
 
   const onSubmitCreateOrder = (values) => {
-    console.log('form submitted', values);
+    console.log(values);
   }
+
+  useEffect(() => {
+
+  }, []);
+
   return (
     <>
       <Navbar />
       <Container>
         <h1>Nuevo pedido</h1>
         <hr/>
-        
-          
-          <FinalForm onSubmit={onSubmitCreateOrder} initialValues={{ newUser: true, products: [undefined] }} mutators={{ ...arrayMutators }}>
+          <FinalForm onSubmit={onSubmitCreateOrder} initialValues={{ newUser: true }} mutators={{ ...arrayMutators }}>
             {({ handleSubmit, submitting, values, form }) => (
               <Form>
                 <Row>
@@ -93,7 +105,7 @@ export const NewOrder = ({props}) => {
                   
                   <Col lg={8} className='mb-3'>  
                     <Form.Group>
-                      <Form.Label>¿Es nuevo cliente? [TODO - noted by Jordan]</Form.Label>
+                      <Form.Label>¿Es nuevo cliente?</Form.Label>
                       <FinalFormField name='newUser' type='checkbox'>
                         {({ input }) => <Row><Col><Toggle {...input} /></Col></Row>}
                       </FinalFormField>
@@ -135,14 +147,7 @@ export const NewOrder = ({props}) => {
                       <Form.Group>
                         <Form.Label>Calle</Form.Label>
                         <FinalFormField name='street'>
-                          {({ input }) => (
-                            <Form.Control
-                              {...input}
-                              type='text'
-                              size='lg'
-                              placeholder='i.e. C Dr Mora 9'
-                            />
-                          )}
+                          {({ input }) => ( <Form.Control {...input} type='text' size='lg' placeholder='i.e. C Dr Mora 9' /> )}
                         </FinalFormField>
                       </Form.Group>
                     </Col>
@@ -150,14 +155,7 @@ export const NewOrder = ({props}) => {
                       <Form.Group>
                         <Form.Label>Colonia</Form.Label>
                         <FinalFormField name='neighborhood'>
-                          {({ input }) => (
-                            <Form.Control
-                              {...input}
-                              type='text'
-                              size='lg'
-                              placeholder='i.e. Centro'
-                            />
-                          )}
+                          {({ input }) => ( <Form.Control {...input} type='text' size='lg' placeholder='i.e. Centro' /> )}
                         </FinalFormField>
                       </Form.Group>
                     </Col>
@@ -166,14 +164,7 @@ export const NewOrder = ({props}) => {
                       <Form.Group>
                         <Form.Label>Alcaldía / Municipio</Form.Label>
                         <FinalFormField name='city'>
-                          {({ input }) => (
-                            <Form.Control
-                              {...input}
-                              type='text'
-                              size='lg'
-                              placeholder='i.e. Cuauhtémoc'
-                            />
-                          )}
+                          {({ input }) => ( <Form.Control {...input} type='text' size='lg' placeholder='i.e. Cuauhtémoc' /> )}
                         </FinalFormField>
                       </Form.Group>
                     </Col>
@@ -182,14 +173,7 @@ export const NewOrder = ({props}) => {
                       <Form.Group>
                         <Form.Label>Código postal</Form.Label>
                         <FinalFormField name='zipcode'>
-                          {({ input }) => (
-                            <Form.Control
-                              {...input}
-                              type='text'
-                              size='lg'
-                              placeholder='i.e. 06000'
-                            />
-                          )}
+                          {({ input }) => ( <Form.Control {...input} type='text' size='lg' placeholder='i.e. 06000' /> )}
                         </FinalFormField>
                       </Form.Group>
                     </Col>
@@ -198,35 +182,26 @@ export const NewOrder = ({props}) => {
                       <Form.Group>
                         <Form.Label>Estado</Form.Label>
                         <FinalFormField name='state'>
-                          {({ input }) => (
-                            <Form.Control
-                              {...input}
-                              type='text'
-                              size='lg'
-                              placeholder='i.e. Ciudad de México'
-                            />
-                          )}
+                          {({ input }) => ( <Form.Control {...input} type='text' size='lg' placeholder='i.e. Ciudad de México' /> )}
                         </FinalFormField>
                       </Form.Group>
                     </Col>
                     </>) : (<>
-                    {console.log(values)}
                     <Col lg={8}>
                       <Form.Group>
                         <Form.Label>Cliente</Form.Label>
                         <FinalFormField name='customer'>
                           {({ input }) => <>
-                          <Autosuggest
-                          suggestions={suggestions} 
-                          onSuggestionsFetchRequested={onSuggestionsFetchRequested} 
-                          onSuggestionsClearRequested={onSuggestionsClearRequested} 
-                          getSuggestionValue={getSuggestionValue}
-                          renderSuggestion={renderSuggestion}
-                          onSuggestionSelected={(_, { suggestionValue }) => {
-                            input.onChange(suggestionValue);
-                          }}
-                          inputProps={{name: input.name, value: input.value, onChange: input.onChange, className: 'form-control-lg form-control', placeholder: 'Escriba el nombre del cliente...'}}/>
-          
+                          <Autosuggest suggestions={suggestions} 
+                            onSuggestionsFetchRequested={onSuggestionsFetchRequested} 
+                            onSuggestionsClearRequested={onSuggestionsClearRequested} 
+                            getSuggestionValue={getSuggestionValue}
+                            renderSuggestion={renderSuggestion}
+                            onSuggestionSelected={(_, { suggestionValue }) => {
+                              input.onChange(suggestionValue);
+                            }}
+                            inputProps={{name: input.name, value: input.value, onChange: input.onChange, className: 'form-control-lg form-control', placeholder: 'Escriba el nombre del cliente...'}}
+                            {...input}/>
                           </>}
                           
                         </FinalFormField>
