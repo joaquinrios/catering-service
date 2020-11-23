@@ -5,7 +5,6 @@ import Toggle from 'react-toggle';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-
 import { storage } from '../fb_app';
 
 import { Navbar } from '../components/navbar';
@@ -20,7 +19,7 @@ const options = {
 };
 
 export const Products = () => {
-  const [modalShow, setModalShow] = useState(true);
+  const [modalShow, setModalShow] = useState(false);
   const [postModalShow, setPostModalShow] = useState(false);
   const [postModalMessage, setPostModalMessage] = useState('');
   const [ready, setReady] = useState(false);
@@ -35,7 +34,7 @@ export const Products = () => {
 
   const prepareProduct = (id) => {
     let product = products.find(p => p.product_id === id);
-    setProduct({name: product.product_name, lastname: product.last_name, email: product.email, id: product.product_id, phone: product.phone});
+    setProduct({name: product.product_name, description: product.description, category: product.category, id: product.product_id, price: product.price, active: product.active, measure: product.measure, filename: product.filename});
     setModalShow(true);
   }
 
@@ -44,58 +43,108 @@ export const Products = () => {
     setModalShow(false);
   }
 
-  const onSubmitUpdateProduct = (values) => {
-    console.log(values);
+  const onSubmitDeleteProduct = (id) => {
+    const options = {
+      url: `/api/products/${id}`,
+      method: 'delete',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    };
+    axios(options).then((response) => {
+      setPostModalMessage('Producto eliminado con éxito.');
+      setPostModalShow(true);
+    }).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+        setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
+        setPostModalShow(true);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
+    });
   }
 
-  const onSubmitCreateProduct = (values) => {
+  const onSubmitUpdateProduct = (values) => {
+    const getImageFile = new Promise((resolve, reject) => {
+      if (values.image) {
+        const storageRef = storage.ref();
+        const image = values.image[0];
+        const extension = image.name.split('.').pop();
+        const imageNewPath = uuidv4() + '.' + extension;
+        let imageRef = storageRef.child(imageNewPath);
+        imageRef.put(image).then(snapshot => {
+          snapshot.ref.getDownloadURL().then(url => {
+            resolve(url);
+          })
+        });
+      }else{
+        resolve(values.filename);
+      }
+    });
+
+    getImageFile.then(url => console.log(url));
+  }
+
+  const onSubmitCreateProduct = async (values) => {
     const storageRef = storage.ref();
     const image = values.image[0];
     const extension = image.name.split('.').pop();
     const imageNewPath = uuidv4() + '.' + extension;
     let imageRef = storageRef.child(imageNewPath);
-    imageRef.put(image).then(snapshot => {
-      console.log(snapshot.metadata.fullPath)
-    });
-
-    const product = {
+    let product = {
       product_name: values.name,
       description: values.description,
       category: values.category,
       price: values.price,
-      measure: values.measureUnit
+      measure: values.measure,
+      active: values.active,
+      filename: '',
     }
 
-    const options = {
-      url: '/api/products/',
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8',
-      },
-      data: product
-    };
-    axios(options)
-      .then((response) => {
-        setPostModalMessage('El nuevo producto se ha guardado con éxito.');
-        setPostModalShow(true);
+    imageRef.put(image).then(snapshot => {
+      snapshot.ref.getDownloadURL().then(url => {
+        product.filename = url
+        const options = {
+          url: '/api/products/',
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8',
+          },
+          data: product
+        };
+        axios(options)
+          .then((response) => {
+            setPostModalMessage('El nuevo producto se ha guardado con éxito.');
+            setPostModalShow(true);
+          })
+          .catch((error) => {
+            if (error.response) {
+              console.log(error.response);
+              setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
+              setPostModalShow(true);
+            } else if (error.request) {
+              // The request was made but no response was received
+              // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+              // http.ClientRequest in node.js
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message);
+            }
+            console.log(error.config);
+          });
       })
-      .catch((error) => {
-        if (error.response) {
-          console.log(error.response);
-          setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
-          setPostModalShow(true);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
-      });
+    });
   };
 
   useEffect(() => {
@@ -106,7 +155,6 @@ export const Products = () => {
     }).catch(error => {
       setReady(true);
     });
-
   }, []);
 
 
@@ -130,10 +178,10 @@ export const Products = () => {
         </Modal>
 
       {/* New product form modal */}
-      <FinalForm onSubmit={product ? onSubmitUpdateProduct : onSubmitCreateProduct}>
+      <FinalForm onSubmit={product ? onSubmitUpdateProduct : onSubmitCreateProduct} initialValues={product ? product : {category: 'main', measure: 'kg', active: true}}>
         {({ handleSubmit, submitting, values }) => (
-          <Modal size='lg' aria-labelledby='contained-modal-title-vcenter' centered show={modalShow} onHide={() => setModalShow(false)}>
-            <Modal.Header closeButton> <Modal.Title id='contained-modal-title-vcenter'> { product ? 'Editar productto' : 'Añadir un nuevo producto'} </Modal.Title> </Modal.Header>
+          <Modal size='lg' aria-labelledby='contained-modal-title-vcenter' centered show={modalShow} onHide={closeFormModal}>
+            <Modal.Header closeButton> <Modal.Title id='contained-modal-title-vcenter'> { product ? 'Editar producto' : 'Añadir un nuevo producto'} </Modal.Title> </Modal.Header>
             <Modal.Body>
               <Form>
                 <Row>
@@ -176,16 +224,19 @@ export const Products = () => {
                   </Row></Col>
 
                   <Col lg={6}>
-                    { image && (<Form.Label className='sign-label full-width'>Imagen</Form.Label>)}
-                    <Image src={image} fluid rounded />
+                    { image 
+                      ? (<><Form.Label className='sign-label full-width'>Imagen</Form.Label><Image src={image} fluid rounded /></>) 
+                      : product && product.filename && (<><Form.Label className='sign-label full-width'>Imagen</Form.Label><Image src={product.filename} fluid rounded /></>)
+                    }
+                    
                   </Col>
 
                   <Col lg={8}>
                     <Form.Group>
                       <Form.Label>Categoría</Form.Label>
-                      <FinalFormField name='category'>
+                      <FinalFormField name='category' component='select'>
                         {({ input }) => (
-                          <Form.Control {...input} as='select'>
+                          <Form.Control {...input} as='select' custom>
                             <option value='main'>Plato fuerte</option>
                             <option value='side'>Complemento</option>
                           </Form.Control>
@@ -213,9 +264,6 @@ export const Products = () => {
                         <FinalFormField name='price'>
                         {({ input }) => ( <Form.Control {...input} type='text' placeholder='i.e. 150' /> )}
                       </FinalFormField>
-                        <InputGroup.Append>
-                          <InputGroup.Text>.00</InputGroup.Text>
-                        </InputGroup.Append>
                       </InputGroup>
                       
                     </Form.Group>
@@ -240,10 +288,9 @@ export const Products = () => {
               </Form>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant='secondary' onClick={() => setModalShow(false)}>
-                Cerrar
-              </Button>
-              <Button variant='success' onClick={handleSubmit}>Crear producto</Button>
+              <Button variant='secondary' onClick={closeFormModal}> Cerrar </Button>
+              { product && (<Button variant='danger' onClick={() => onSubmitDeleteProduct(values.id)}> Borrar producto </Button>)}
+              <Button variant='success' onClick={handleSubmit}> { product ? 'Editar producto' : 'Crear producto'} </Button>
             </Modal.Footer>
           </Modal>
         )}
@@ -265,13 +312,13 @@ export const Products = () => {
             <h3>Platos fuertes</h3>
             <Accordion defaultActiveKey='0'>
               { products && products.map((product, index) => (
-                <Card>
+                <Card key={index}>
                   <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
                     <Row>
-                      <Col>
+                      <Col lg={8}>
                         <h4>{product.product_name}</h4>
                       </Col>
-                      <Col className='align-right'>
+                      <Col className='align-right' lg={4}>
                         <h4>{product.measure}</h4>
                       </Col>
                     </Row>
@@ -284,12 +331,10 @@ export const Products = () => {
                             {product.description}
                           </p>
                         </Col>
-                        <Col lg={6} className='align-right'>
-                          <p>
-                            Categoria: {product.category} <br />
-                            <br />
-                          </p>
+                        <Col lg={6}>
+                          <Image src={product.filename} fluid rounded/>
                         </Col>
+                        <Col lg={12}><hr/></Col>
                         <Col lg={6}>
                           <h4>Precio por {product.measure}</h4>
                         </Col>
