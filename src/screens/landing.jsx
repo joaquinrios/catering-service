@@ -11,11 +11,12 @@ import { Navbar } from '../components/navbar';
 
 const sloganImage =
   'https://images.pexels.com/photos/1435895/pexels-photo-1435895.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
-const carouselImage1 = '';
-const carouselImage2 = '';
-const carouselImage3 = 'https://images.pexels.com/photos/5738079/pexels-photo-5738079.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
-const carouselImage4 = 'https://images.pexels.com/photos/5738092/pexels-photo-5738092.jpeg?cs=srgb&dl=pexels-rodnae-productions-5738092.jpg&fm=jpg';
-const carouselImage5 = '';
+const carouselImage1 = 'https://images.pexels.com/photos/2763076/pexels-photo-2763076.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
+const carouselImage2 = 'https://images.pexels.com/photos/3642718/pexels-photo-3642718.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
+const carouselImage3 = 'https://images.pexels.com/photos/5738092/pexels-photo-5738092.jpeg?cs=srgb&dl=pexels-rodnae-productions-5738092.jpg&fm=jpg';
+const carouselImage4 = 'https://images.pexels.com/photos/5738079/pexels-photo-5738079.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
+const carouselImage5 = 'https://dam.tvynovelas.com/mx/wp-content/uploads/2018/12/pi%C3%B1ata.jpg';
+
 const discountsImage =
   'https://images.pexels.com/photos/2092507/pexels-photo-2092507.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
 const staffImage1 =
@@ -249,13 +250,15 @@ export const Landing = () => {
                   <Container>
                     {' '}
                     <Image
-                      src={carouselImgHorizontal}
+                      src={carouselImage1}
                       fluid
                     />{' '}
                   </Container>
                   <Card.Body>
                     <Card.Title>Cumpleaños</Card.Title>
-                    <Card.Text>This is the card text</Card.Text>
+                    <Card.Text>
+                      ¡Celebremos tu vida! No nos perderíamos uno más de tus cumpleaños por nada.
+                    </Card.Text>
                   </Card.Body>
                 </Card>
               </div>
@@ -264,28 +267,19 @@ export const Landing = () => {
                   <Container>
                     {' '}
                     <Image
-                      src={carouselImgHorizontal}
+                      src={carouselImage2}
                       fluid
                     />{' '}
                   </Container>
                   <Card.Body>
                     <Card.Title>Aniversario</Card.Title>
-                    <Card.Text>This is the card text</Card.Text>
-                  </Card.Body>
-                </Card>
-              </div>
-              <div>
-                <Card className="text-center no-border">
-                  <Container>
-                    {' '}
-                    <Image
-                      src={carouselImgHorizontal}
-                      fluid
-                    />{' '}
-                  </Container>
-                  <Card.Body>
-                    <Card.Title>Reuniones con amigos</Card.Title>
-                    <Card.Text>This is the card text</Card.Text>
+                    <Card.Text>
+                      <p className='bold'>¿Celebrando desde casa?</p>
+                      <p>
+                        Elijan la opción de su agrado y permítanos acompañarlos.<br />
+                        Disfruten de una grandiosa experiencia sin salir de casa.
+                      </p>
+                    </Card.Text>
                   </Card.Body>
                 </Card>
               </div>
@@ -299,8 +293,13 @@ export const Landing = () => {
                     />{' '}
                   </Container>
                   <Card.Body>
-                    <Card.Title>Servicio 4</Card.Title>
-                    <Card.Text>This is the card text</Card.Text>
+                    <Card.Title>Reuniones con familia y amigos</Card.Title>
+                    <Card.Text>
+                      <p>
+                        Muchos o pocos, estaremos más que felices de cocinar para todos.<br/>
+                        Nos encantará asesorarte en aspectos como el número de personas que esperas.
+                      </p>
+                    </Card.Text>
                   </Card.Body>
                 </Card>
               </div>
@@ -314,8 +313,31 @@ export const Landing = () => {
                     />{' '}
                   </Container>
                   <Card.Body>
-                    <Card.Title>Servicio 5</Card.Title>
-                    <Card.Text>This is the card text</Card.Text>
+                    <Card.Title>Primeras comuniones</Card.Title>
+                    <Card.Text>
+                      Que el festejo vaya acompañado de la mejor comida.<br />
+                      Será un privilegio ser parte una irrepetible ocasión como esta.
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </div>
+              <div>
+                <Card className="text-center no-border">
+                  <Container>
+                    {' '}
+                    <Image
+                      src={carouselImage5}
+                      fluid
+                    />{' '}
+                  </Container>
+                  <Card.Body>
+                    <Card.Title>Posadas</Card.Title>
+                    <Card.Text>
+                      <p>
+                        Porque pocas cosas se comparan con gozar de una buena comida o cena en compañía
+                        de la familia esta época de unión y paz.
+                      </p>
+                    </Card.Text>
                   </Card.Body>
                 </Card>
               </div>
@@ -339,6 +361,80 @@ export const Landing = () => {
               {' '}
               Conocer más &nbsp; <BsArrowRight />{' '}
             </Button>
+          </Col>
+        </Row>
+
+        <h1 className="text-center mt-3 mb-3 bold p-3" id="contact">
+          Contacto
+        </h1>
+        <hr />
+        <Row>
+          <Col lg={5}>
+            <h3>¿Quieres hacer un pedido?</h3>
+            <p>Empieza aquí. Nos encantará atenderte.</p>
+            <FinalForm onSubmit={onSubmitForm}>
+              {({ handleSubmit, submitting, values }) => (
+                <Form>
+                  <Form.Group>
+                    <Form.Label>Nombre</Form.Label>
+                    <FinalFormField name="customerName">
+                      {({ input }) => (
+                        <Form.Control {...input} type="text" size="lg" />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Apellidos</Form.Label>
+                    <FinalFormField name="customerLastName">
+                      {({ input }) => (
+                        <Form.Control {...input} type="text" size="lg" />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Correo electrónico</Form.Label>
+                    <FinalFormField name="email">
+                      {({ input }) => (
+                        <Form.Control {...input} type="text" size="lg" />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Teléfono</Form.Label>
+                    <FinalFormField name="customerPhone">
+                      {({ input }) => (
+                        <Form.Control {...input} type="number" size="lg" />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
+
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    // TODO: add handleSubmit, check with Joaquin data passing
+                    onClick={() => setOrderModalShow(true)}
+                  >
+                    {' '}
+                    Continuar&nbsp;&nbsp; <BsArrowRight />{' '}
+                  </Button>
+                </Form>
+              )}
+            </FinalForm>
+          </Col>
+
+          <Col lg={7}>
+            <h3>Ubicación</h3>
+            <>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.446371148455!2d-99.14845794847503!3d19.43631244553169!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f8d59ac21459%3A0x90b4c056728a77cf!2sCalle%20Dr%20Mora%209%2C%20Colonia%20Centro%2C%20Centro%2C%20Cuauht%C3%A9moc%2C%2006000%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses!2smx!4v1605569892526!5m2!1ses!2smx"
+                width="100%"
+                height="70%"
+                frameBorder="0"
+                allowFullScreen=""
+                aria-hidden="false"
+                tabIndex="0"
+              ></iframe>
+            </>
           </Col>
         </Row>
 
@@ -429,80 +525,6 @@ export const Landing = () => {
                 </Card.Text>
               </Card.Body>
             </Card>
-          </Col>
-        </Row>
-
-        <h1 className="text-center mt-3 mb-3 bold p-3" id="contact">
-          Contacto
-        </h1>
-        <hr />
-        <Row>
-          <Col lg={5}>
-            <h3>¿Quieres hacer un pedido?</h3>
-            <p>Empieza aquí. Nos encantará atenderte.</p>
-            <FinalForm onSubmit={onSubmitForm}>
-              {({ handleSubmit, submitting, values }) => (
-                <Form>
-                  <Form.Group>
-                    <Form.Label>Nombre</Form.Label>
-                    <FinalFormField name="customerName">
-                      {({ input }) => (
-                        <Form.Control {...input} type="text" size="lg" />
-                      )}
-                    </FinalFormField>
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Apellidos</Form.Label>
-                    <FinalFormField name="customerLastName">
-                      {({ input }) => (
-                        <Form.Control {...input} type="text" size="lg" />
-                      )}
-                    </FinalFormField>
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Correo electrónico</Form.Label>
-                    <FinalFormField name="email">
-                      {({ input }) => (
-                        <Form.Control {...input} type="text" size="lg" />
-                      )}
-                    </FinalFormField>
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Teléfono</Form.Label>
-                    <FinalFormField name="customerPhone">
-                      {({ input }) => (
-                        <Form.Control {...input} type="number" size="lg" />
-                      )}
-                    </FinalFormField>
-                  </Form.Group>
-
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    // TODO: add handleSubmit, check with Joaquin data passing
-                    onClick={() => setOrderModalShow(true)}
-                  >
-                    {' '}
-                    Continuar&nbsp;&nbsp; <BsArrowRight />{' '}
-                  </Button>
-                </Form>
-              )}
-            </FinalForm>
-          </Col>
-
-          <Col lg={7}>
-            <h3>Ubicación</h3>
-            <>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.446371148455!2d-99.14845794847503!3d19.43631244553169!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f8d59ac21459%3A0x90b4c056728a77cf!2sCalle%20Dr%20Mora%209%2C%20Colonia%20Centro%2C%20Centro%2C%20Cuauht%C3%A9moc%2C%2006000%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses!2smx!4v1605569892526!5m2!1ses!2smx"
-                width="100%"
-                height="70%"
-                frameBorder="0"
-                allowFullScreen=""
-                aria-hidden="false"
-                tabIndex="0"
-              ></iframe>
-            </>
           </Col>
         </Row>
         <hr />
