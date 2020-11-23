@@ -18,7 +18,6 @@ const eventsThisMonth = [];
 const eventsToday = [];
 
 
-
 Date.prototype.getWeek = function() {
   var onejan = new Date(this.getFullYear(),0,1);
   var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
@@ -38,6 +37,8 @@ const options = {
 export const Home = (props) => {
   const [ready, setReady] = useState(false);
   const [orders, setEvents] = useState(null);
+  const [currentView, setCurrentView] = useState("month");
+
   useEffect(() => {
     axios(options).then(response => {
       const currentWeek = new Date(Date.now()).getWeek();
@@ -92,7 +93,7 @@ export const Home = (props) => {
           <Col lg={9} className='cs-calendar'>
             <Calendar
               onNavigate={(date) => console.log("Navigate" + date)}
-              onView={(view) => console.log("View " + view)}
+              onView={(view) => setCurrentView(view)}
               events={eventsCalendar}
               startAccessor="start"
               endAccessor="end"
@@ -110,35 +111,49 @@ export const Home = (props) => {
           </Col>
 
           <Col lg={3}>
-          <h4> Este mes:</h4>
-          {eventsThisMonth && eventsThisMonth.map(function (event, index){
-            return(
-              <div>
-                <h6>Evento {index+1}: {event.title}</h6>
-                <p>Notas: {event.notes}</p>
-              </div>
-            )
-          })}
-
-          <h4> Esta semana:</h4>
-          {eventsThisWeek && eventsThisWeek.map(function (event, index){
-            return(
-              <div>
-                <h6>Evento {index+1}: {event.title}</h6>
-                <p>Notas: {event.notes}</p>
-              </div>
-            )
-          })}
-
-          <h4> Hoy:</h4>
-          {eventsToday && eventsToday.map(function (event, index){
-            return(
-              <div>
-                <h6>Evento {index+1}: {event.title}</h6>
-                <p>Notas: {event.notes}</p>
-              </div>
-            )
-          })}
+            {
+              currentView == 'month' && ( <>
+                <h4> Este mes:</h4>
+                { eventsThisMonth && eventsThisMonth.map( (event, index) => (
+                  
+                    <div>
+                      <h6>Evento {index+1}: {event.title}</h6>
+                      <p>Notas: {event.notes}</p>
+                    </div>
+                  )
+                  )
+                }
+                </>)
+              }
+            
+              {
+                currentView == 'week' && ( <>
+                  <h4> Esta semana:</h4>
+                  {eventsThisWeek && eventsThisWeek.map(function (event, index){
+                    return(
+                      <div>
+                        <h6>Evento {index+1}: {event.title}</h6>
+                        <p>Notas: {event.notes}</p>
+                      </div>
+                    )
+                  })}
+                </>)
+              }
+            
+              {
+                currentView == 'day' &&  ( <>
+                  <h4> Hoy:</h4>
+                  {eventsToday && eventsToday.map(function (event, index){
+                    return(
+                      <div>
+                        <h6>Evento {index+1}: {event.title}</h6>
+                        <p>Notas: {event.notes}</p>
+                      </div>
+                    )
+                  })}
+                </>)
+              }
+            
           </Col>
         </Row>
       </Container>
