@@ -13,8 +13,8 @@ const sloganImage =
   'https://images.pexels.com/photos/1435895/pexels-photo-1435895.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
 const carouselImage1 = '';
 const carouselImage2 = '';
-const carouselImage3 = '';
-const carouselImage4 = '';
+const carouselImage3 = 'https://images.pexels.com/photos/5738079/pexels-photo-5738079.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
+const carouselImage4 = 'https://images.pexels.com/photos/5738092/pexels-photo-5738092.jpeg?cs=srgb&dl=pexels-rodnae-productions-5738092.jpg&fm=jpg';
 const carouselImage5 = '';
 const discountsImage =
   'https://images.pexels.com/photos/2092507/pexels-photo-2092507.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
@@ -159,7 +159,7 @@ export const Landing = () => {
                 <hr/>
                 <h4>¡También estamos en Facebook!</h4>
                 <p>
-                  Consulta nuestra <a href='https://www.facebook.com/Cocina-Mary-101557345100936'>página de Facebook</a> para conocer bases y más detalles sobre promociones [y nuestro programa de recomendaciones].
+                  Consulta nuestra <a href='https://www.facebook.com/Cocina-Mary-101557345100936'>página de Facebook</a> para conocer bases y más detalles sobre promociones y nuestro programa de recomendaciones.
                 </p>
               </Col>
             </Row>
@@ -284,7 +284,7 @@ export const Landing = () => {
                     />{' '}
                   </Container>
                   <Card.Body>
-                    <Card.Title>Reuniones... familiares? con amigos?</Card.Title>
+                    <Card.Title>Reuniones con amigos</Card.Title>
                     <Card.Text>This is the card text</Card.Text>
                   </Card.Body>
                 </Card>
@@ -294,7 +294,7 @@ export const Landing = () => {
                   <Container>
                     {' '}
                     <Image
-                      src={carouselImgHorizontal}
+                      src={carouselImage3}
                       fluid
                     />{' '}
                   </Container>
@@ -309,7 +309,7 @@ export const Landing = () => {
                   <Container>
                     {' '}
                     <Image
-                      src={carouselImgHorizontal}
+                      src={carouselImage4}
                       fluid
                     />{' '}
                   </Container>
