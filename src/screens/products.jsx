@@ -25,10 +25,19 @@ export const Products = ({ navigate }) => {
   const [ready, setReady] = useState(false);
   const [products, setProducts] = useState(null);
   const [dishes, setDishes] = useState(null);
+  const [filteredDishes, setFilteredDishes] = useState(null);
   const [sides, setSides] = useState(null);
 
   const [image, setImage] = useState(null);
   const [product, setProduct] = useState(null);
+
+  const dishesFilterOnChange = (event) => {
+    const inputValue = event.target.value;
+    let filteredDishes = dishes.filter(dish => {
+      return dish.product_name.toLowerCase().includes(inputValue.toLowerCase())
+    });
+    setFilteredDishes(!inputValue.length ? dishes : filteredDishes);
+  };
 
   const closeModals = () => {
     setPostModalShow(false);
@@ -195,6 +204,7 @@ export const Products = ({ navigate }) => {
       const _dishes = _products.filter(p => p.category == 'main')
       const _sides = _products.filter(p => p.category == 'side')
       setDishes(_dishes);
+      setFilteredDishes(_dishes);
       setSides(_sides);
       setProducts(_products);
       setReady(true);
@@ -364,12 +374,12 @@ export const Products = ({ navigate }) => {
 
               <Col lg={6} className='align-right'>
               <Form.Group>
-                <Form.Control type="text" placeholder='Buscar un plato fuerte' />
+                <Form.Control type="text" placeholder='Buscar un plato fuerte' onChange={dishesFilterOnChange} />
               </Form.Group>
               </Col>
             </Row>
             <Accordion defaultActiveKey='0'>
-              { dishes && dishes.map((product, index) => (
+              { filteredDishes && filteredDishes.map((product, index) => (
                 <Card key={index}>
                   <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
                     <Row>
