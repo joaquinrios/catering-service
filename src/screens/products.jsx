@@ -100,19 +100,18 @@ export const Products = () => {
     const extension = image.name.split('.').pop();
     const imageNewPath = uuidv4() + '.' + extension;
     let imageRef = storageRef.child(imageNewPath);
-    let product = {
-      product_name: values.name,
-      description: values.description,
-      category: values.category,
-      price: values.price,
-      measure: values.measure,
-      active: values.active,
-      filename: '',
-    }
 
     imageRef.put(image).then(snapshot => {
       snapshot.ref.getDownloadURL().then(url => {
-        product.filename = url
+        let product = {
+          product_name: values.name,
+          description: values.description,
+          category: values.category,
+          price: values.price,
+          measure: values.measure,
+          active: values.active,
+          filename: url,
+        }
         const options = {
           url: '/api/products/',
           method: 'POST',
