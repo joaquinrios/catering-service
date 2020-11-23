@@ -9,16 +9,8 @@ import 'react-multi-carousel/lib/styles.css';
 
 import { Navbar } from '../components/navbar';
 
-const headingImage =
-  'https://images.pexels.com/photos/3184183/pexels-photo-3184183.jpeg?cs=srgb&dl=pexels-fauxels-3184183.jpg&fm=jpg';
 const sloganImage =
   'https://images.pexels.com/photos/1435895/pexels-photo-1435895.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
-const carouselImage1 =
-  'https://images.pexels.com/photos/3186654/pexels-photo-3186654.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
-const carouselImage2 =
-  'https://images.pexels.com/photos/3893682/pexels-photo-3893682.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260';
-const carouselImage3 =
-  'https://images.pexels.com/photos/196643/pexels-photo-196643.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260';
 const discountsImage =
   'https://images.pexels.com/photos/2092507/pexels-photo-2092507.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
 const staffImage1 =
@@ -52,7 +44,8 @@ const responsive = {
 };
 
 export const Landing = () => {
-  const [modalShow, setModalShow] = useState(false);
+  const [orderModalShow, setOrderModalShow] = useState(false);
+  const [discountsModalShow, setDiscountsModalshow] = useState(false);
   const onSubmitForm = (values) => {
     console.log('form submitted', values);
     const options = {
@@ -68,7 +61,7 @@ export const Landing = () => {
     axios(options)
       .then((response) => {
         console.log(response);
-        setModalShow(true);
+        setOrderModalShow(true);
         // setResponse() ya no va, o sí??
       })
       .catch((error) => {
@@ -95,8 +88,8 @@ export const Landing = () => {
       <Modal
         size="lg"
         centered
-        show={modalShow}
-        onHide={() => setModalShow(false)}
+        show={orderModalShow}
+        onHide={() => setOrderModalShow(false)}
       >
         <Modal.Header closeButton>
           <Modal.Title>
@@ -104,7 +97,6 @@ export const Landing = () => {
             <h2>Estamos para ayudarte.</h2>{' '}
           </Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
           <Form>
             <Row>
@@ -128,12 +120,46 @@ export const Landing = () => {
             </Row>
           </Form>
         </Modal.Body>
-
         <Modal.Footer>
           {' '}
-          <Button variant="secondary" onClick={() => setModalShow(false)}>
+          <Button variant="secondary" onClick={() => setOrderModalShow(false)}>
             {' '}
             Cerrar{' '}
+          </Button>{' '}
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        size="lg"
+        centered
+        show={discountsModalShow}
+        onHide={() => setDiscountsModalshow(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {' '}
+            <h2>Descuentos y promociones.</h2>
+            {' '}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Row>
+              <Col lg={12}>
+                <h4>Platillos y promociones de temporada.</h4>
+                <p>
+                  Tenemos varias cosas preparadas para ti, tus familiares y amigos.<br/>
+                  Después de hacer tu primer pedido, espera detalles en la dirección de correo que nos proporcionaste al ordenar.
+                </p>
+              </Col>
+            </Row>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          {' '}
+          <Button variant="secondary" onClick={() => setDiscountsModalshow(false)}>
+            {' '}
+            De acuerdo{' '}
           </Button>{' '}
         </Modal.Footer>
       </Modal>
@@ -147,7 +173,7 @@ export const Landing = () => {
             <Button
               variant="primary"
               size="lg"
-              onClick={() => setModalShow(true)}
+              onClick={() => setOrderModalShow(true)}
             >
               Quiero ordenar &nbsp; <BsArrowRight />
             </Button>
@@ -299,7 +325,7 @@ export const Landing = () => {
             </p>
           </Col>
           <Col lg={4} className="align-right">
-            <Button size="lg" onClick={() => setModalShow(true)}>
+            <Button size="lg" onClick={() => setOrderModalShow(true)}>
               {' '}
               Conocer más &nbsp; <BsArrowRight />{' '}
             </Button>
@@ -319,7 +345,7 @@ export const Landing = () => {
               traerte beneficios para la siguiente vez que decidas invitarnos a
               tu evento.
             </p>
-            <Button size="lg">
+            <Button size="lg" onClick={() => setDiscountsModalshow(true)}>
               {' '}
               Ver más&nbsp;&nbsp; <BsArrowRight />
             </Button>
@@ -443,7 +469,8 @@ export const Landing = () => {
                   <Button
                     variant="primary"
                     size="lg"
-                    onClick={() => onSubmitForm(values)}
+                    // TODO: add handleSubmit, check with Joaquin data passing
+                    onClick={() => setOrderModalShow(true)}
                   >
                     {' '}
                     Continuar&nbsp;&nbsp; <BsArrowRight />{' '}
