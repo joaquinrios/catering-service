@@ -72,6 +72,7 @@ export const Customers = ({ navigate }) => {
     axios(options).then((response) => {
       setPostModalMessage('El nuevo cliente se ha guardado con éxito.');
       setPostModalShow(true);
+      setTimeout(() => window.location.reload(), 2000);
     }).catch((error) => {
       if (error.response) {
         console.log(error.response);
@@ -102,6 +103,7 @@ export const Customers = ({ navigate }) => {
     axios(options).then((response) => {
       setPostModalMessage('Cliente eliminado con éxito.');
       setPostModalShow(true);
+      setTimeout(() => window.location.reload(), 2000);
     }).catch((error) => {
       if (error.response) {
         console.log(error.response);
@@ -135,7 +137,7 @@ export const Customers = ({ navigate }) => {
       setModalShow(false);
       setPostModalMessage('Información de cliente modificada con éxito.');
       setPostModalShow(true);
-      setTimeout(() => navigate('/customers'), 1000);
+      setTimeout(() => window.location.reload(), 2000);
     }).catch((error) => {
       if (error.response) {
         console.log(error.response);
@@ -297,10 +299,10 @@ export const Customers = ({ navigate }) => {
 
         <Container>
           <Row>
-            <Col lg={6} md={6}>
+            <Col lg={4} md={4}>
               <h1>Clientes</h1>
             </Col>
-            <Col lg={6} md={6} className='align-right'>
+            <Col lg={8} md={8} className='align-right'>
               <Button variant='primary' size='lg' onClick={() => setModalShow(true)}> Nuevo cliente </Button>
             </Col>
           </Row>

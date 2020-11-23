@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Router, Redirect } from '@reach/router'
+import React from 'react';
+import { Router } from '@reach/router'
 
 import { Home } from '../screens/home';
 import { Login } from '../screens/login';
