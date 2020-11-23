@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { BsX } from 'react-icons/bs';
 import { Form as FinalForm, Field as FinalFormField,  } from 'react-final-form';
 import { FieldArray as FinalFormFieldArray } from 'react-final-form-arrays';
+import axios from 'axios';
 import arrayMutators from 'final-form-arrays'
 import Toggle from 'react-toggle';
 import Autosuggest from 'react-autosuggest';
@@ -9,26 +11,54 @@ import Autosuggest from 'react-autosuggest';
 import { Navbar } from '../components/navbar';
 
 export const NewOrder = ({props}) => {
-  const [clients, setClients] = useState([{ name: 'Roberto', lastname: 'Perezyera', email: 'roberto@mora.com'}, { name: 'Robertito', lastname: 'Perezyera', email: 'robertito@mora.com'}, { name: 'Robertote', lastname: 'Perezyera', email: 'robertote@mora.com'}]);
+  const [ready, setReady] = useState(false);
+  const [customers, setCustomers] = useState([]);
+  const [products, setProducts] = useState([]);
   const [existingUser, setExistingUser] = useState(null);
-  const [suggestions, setSuggestions] = useState(clients);
+  const [suggestions, setSuggestions] = useState(customers);
   
+  const getProductsSum = (selectedProducts) => {
+    const ids = selectedProducts.map((product) => {
+      if (product !== undefined && product.hasOwnProperty('id')) {
+        return product.id;
+      }
+    });
+    let total = 0
+    
+    ids.forEach(id => {
+      let currentProduct = products.find(p =>  p.product_id === id);
+      total += currentProduct !== undefined ? parseFloat(currentProduct.price) : 0
+    });
+    return total
+  }
+
   const getSuggestions = (value) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
-    return inputLength === 0 ? [] : clients.filter(client => client.name.toLowerCase().slice(0, inputLength) === inputValue);
+    return inputLength === 0 ? [] : customers.filter(customer => 
+      (customer.first_name.toLowerCase().includes(inputValue.toLowerCase())) ||
+      (customer.last_name.toLowerCase().includes(inputValue.toLowerCase())));
   }
   const getSuggestionValue = (suggestion) => {
     setExistingUser(suggestion);
-    return suggestion.name + ' ' + suggestion.lastname
+    return suggestion.first_name + ' ' + suggestion.last_name
   }; 
   const renderSuggestion = (suggestion) => (
     <Row>
       <Col lg={6}>
-        { suggestion.name} {suggestion.lastname}
+        {suggestion.first_name} {suggestion.last_name}
       </Col>
-      <Col lg={6}>
-        hello
+      <Col lg={6} className='align-right'>
+        {suggestion.email}
+      </Col>
+      <Col lg={12}><hr/></Col>
+      <Col>
+        {suggestion.street} <br />
+        {suggestion.city} <br />
+        {suggestion.zip_code}, {suggestion.county} <br />
+      </Col>
+      <Col className='align-right'>
+        {suggestion.phone}
       </Col>
     </Row>
   );
@@ -37,14 +67,39 @@ export const NewOrder = ({props}) => {
   const onSuggestionsClearRequested = () => setSuggestions([]);
 
   const onSubmitCreateOrder = (values) => {
+    console.log(existingUser);
     console.log(values);
   }
 
   useEffect(() => {
-
+    const optionsCustomers = {
+      url: '/api/customers',
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    };
+    const optionsProducts = {
+      url: '/api/products',
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    };
+    axios(optionsCustomers).then((response) => {
+      const _customers = response.data.customers;
+      setCustomers(_customers);
+    }).catch((error) => { });
+    axios(optionsProducts).then((response) => {
+      const _products = response.data.products;
+      setProducts(_products);
+    }).catch((error) => { });
+    setReady(true);
   }, []);
 
-  return (
+  return ready && customers && products && (
     <>
       <Navbar />
       <Container>
@@ -187,7 +242,7 @@ export const NewOrder = ({props}) => {
                       </Form.Group>
                     </Col>
                     </>) : (<>
-                    <Col lg={8}>
+                    <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Cliente</Form.Label>
                         <FinalFormField name='customer'>
@@ -207,6 +262,29 @@ export const NewOrder = ({props}) => {
                         </FinalFormField>
                       </Form.Group>
                       </Col>
+
+                      <Col lg={6}>
+                        <Row>
+                        { existingUser && (<>
+                          <Col lg={6}>
+                            {existingUser.first_name} {existingUser.last_name}
+                          </Col>
+                          <Col lg={6} className='align-right'>
+                            
+                          </Col>
+                          <Col lg={12}><hr/></Col>
+                          <Col>
+                            {existingUser.street} <br />
+                            {existingUser.city} <br />
+                            {existingUser.zip_code}, {existingUser.county} <br />
+                          </Col>
+                          <Col className='align-right'>
+                            {existingUser.phone} <br/>
+                            {existingUser.email}
+                          </Col>
+                        </>)}
+                        </Row>
+                      </Col>
                     </>)}
 
                   <Col lg={6} className='mt-5'><h2>Datos del pedido</h2></Col>
@@ -216,32 +294,50 @@ export const NewOrder = ({props}) => {
                   </Col>
 
                   <FinalFormFieldArray name='products'>
-                    {({ fields }) => fields.map((name, index) => (<>
-                        <Col lg={8}>
+                    {({ fields }) => fields.map((field, index) => (<>
+                        <Col lg={6} >
                           <Form.Group>
                             <Form.Label>Producto</Form.Label>
-                            <FinalFormField name={`${name}.name`}>
-                              {({ input }) => <Form.Control {...input} type='text' size='lg'/>}
+                            <FinalFormField name={`${field}.id`} component='select'>
+                              {({ input }) => (
+                                <Form.Control {...input} as='select' size='lg' custom>
+                                  <option/>
+                                  { products.map((product, index) => {
+                                    return ( <option key={`${index}`} value={`${product.product_id}`}>{product.product_name} </option>
+                                  )})}
+                                </Form.Control>
+                              )}
                             </FinalFormField>
                           </Form.Group>
                         </Col>
 
-                        <Col lg={4}>
+                        <Col lg={2}>
                           <Form.Group>
-                            <Form.Label>Unidad [No es cantidad?]</Form.Label>
-                            <FinalFormField name={`${name}.measurement`}>
+                            <Form.Label>Cantidad</Form.Label>
+                            <FinalFormField name={`${field}.quantity`} initialValue={1}>
                               {({ input }) => <Form.Control {...input} type='number' size='lg'/>}
                             </FinalFormField>
+                          </Form.Group>
+                        </Col>
+
+                        <Col lg={1} className='mt-4'>
+                          <BsX size={32} className='text-danger cursor' onClick={() => {fields.remove(index)}}/>
+                        </Col>
+
+                        <Col lg={3} className='align-right'>
+                          <Form.Group>
+                            <Form.Label></Form.Label>
+                            { values.products[index] && values.products[index].id && (<h4>{parseFloat(values.products[index].quantity)} * {products.find(p => p.product_id === values.products[index].id).price} = $ {parseFloat(products.find(p => p.product_id === values.products[index].id).price) * parseFloat(values.products[index].quantity)}</h4>) }
                           </Form.Group>
                         </Col>
                     </>))}
                   </FinalFormFieldArray>
 
                   <Col lg={8} className='align-right'>
-                    <h4>Total: </h4>
+                  { values.products && values.products.length > 0 && (<h4>Total: </h4>)}
                   </Col>
                   <Col lg={4} className='align-right'>
-                    <h4>$ 1500.00</h4>
+                    { values.products && values.products.length > 0 && (<h4> $ { getProductsSum(values.products)}</h4>)}
                   </Col>
 
                   <Col lg={12} className='mb-5 mt-4 align-right'>

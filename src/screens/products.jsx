@@ -201,8 +201,8 @@ export const Products = ({ navigate }) => {
   useEffect(() => {
     axios(options).then(response => {
       const _products = response.data.products;
-      const _dishes = _products.filter(p => p.category == 'main')
-      const _sides = _products.filter(p => p.category == 'side')
+      const _dishes = _products.filter(p => p.category === 'main')
+      const _sides = _products.filter(p => p.category === 'side')
       setDishes(_dishes);
       setFilteredDishes(_dishes);
       setSides(_sides);

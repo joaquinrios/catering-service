@@ -16,6 +16,10 @@ code {
   margin-bottom: 2rem;
 }
 
+.cursor:hover {
+  cursor: pointer;
+}
+
 .bold {
   font-weight: bold;
 }

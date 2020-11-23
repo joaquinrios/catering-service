@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, Card, Image, Form, Modal } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
-import { BsArrowRight, BsX } from 'react-icons/bs';
+import { BsArrowRight } from 'react-icons/bs';
 import axios from 'axios';
 
 import Carousel from 'react-multi-carousel';

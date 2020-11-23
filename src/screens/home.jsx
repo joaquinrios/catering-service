@@ -16,9 +16,9 @@ const eventsCalendar = [];
 const eventsThisWeek = [];
 const eventsThisMonth = [];
 const eventsToday = [];
-var toCookMonth = new Object();
-var toCookWeek = new Object();
-var toCookDay = new Object();
+var toCookMonth = {};
+var toCookWeek = {};
+var toCookDay = {};
 
 Date.prototype.getWeek = function() {
   var onejan = new Date(this.getFullYear(),0,1);

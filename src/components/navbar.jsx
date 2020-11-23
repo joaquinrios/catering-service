@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Navbar as BNavbar, Nav, Button, FormControl, Form, NavDropdown } from 'react-bootstrap';
+import { Container, Navbar as BNavbar, Nav, NavDropdown } from 'react-bootstrap';
 
 import { useAuth, signOut } from './auth_provider';
 
