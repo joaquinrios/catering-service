@@ -11,6 +11,11 @@ import { Navbar } from '../components/navbar';
 
 const sloganImage =
   'https://images.pexels.com/photos/1435895/pexels-photo-1435895.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
+const carouselImage1 = '';
+const carouselImage2 = '';
+const carouselImage3 = '';
+const carouselImage4 = '';
+const carouselImage5 = '';
 const discountsImage =
   'https://images.pexels.com/photos/2092507/pexels-photo-2092507.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260';
 const staffImage1 =
@@ -150,6 +155,11 @@ export const Landing = () => {
                 <p>
                   Tenemos varias cosas preparadas para ti, tus familiares y amigos.<br/>
                   Después de hacer tu primer pedido, espera detalles en la dirección de correo que nos proporcionaste al ordenar.
+                </p>
+                <hr/>
+                <h4>¡También estamos en Facebook!</h4>
+                <p>
+                  Consulta nuestra <a href='https://www.facebook.com/Cocina-Mary-101557345100936'>página de Facebook</a> para conocer bases y más detalles sobre promociones [y nuestro programa de recomendaciones].
                 </p>
               </Col>
             </Row>
