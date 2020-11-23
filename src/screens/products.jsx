@@ -357,7 +357,17 @@ export const Products = ({ navigate }) => {
         <hr />
         <Row>
           <Col lg={8}>
-            <h3>Platos fuertes</h3>
+            <Row>
+              <Col lg={6}>
+                <h3>Platos fuertes</h3>
+              </Col>
+
+              <Col lg={6} className='align-right'>
+              <Form.Group>
+                <Form.Control type="text" placeholder='Buscar un plato fuerte' />
+              </Form.Group>
+              </Col>
+            </Row>
             <Accordion defaultActiveKey='0'>
               { dishes && dishes.map((product, index) => (
                 <Card key={index}>

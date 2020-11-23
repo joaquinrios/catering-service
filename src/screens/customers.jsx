@@ -299,10 +299,10 @@ export const Customers = ({ navigate }) => {
 
         <Container>
           <Row>
-            <Col lg={6} md={6}>
+            <Col lg={4} md={4}>
               <h1>Clientes</h1>
             </Col>
-            <Col lg={6} md={6} className='align-right'>
+            <Col lg={8} md={8} className='align-right'>
               <Button variant='primary' size='lg' onClick={() => setModalShow(true)}> Nuevo cliente </Button>
             </Col>
           </Row>
