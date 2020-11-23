@@ -91,7 +91,46 @@ export const Products = () => {
       }
     });
 
-    getImageFile.then(url => console.log(url));
+    getImageFile.then(url => {
+      console.log(url);
+      let product = {
+        product_name: values.name,
+        description: values.description,
+        category: values.category,
+        price: values.price,
+        measure: values.measure,
+        active: values.active,
+        filename: url,
+      }
+      const options = {
+        url: `/api/products/${values.id}`,
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+        },
+        data: product
+      };
+      axios(options).then((response) => {
+        setPostModalMessage('El producto se ha actualizado con éxito.');
+        setPostModalShow(true);
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
+          setPostModalShow(true);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+      });
+    });
   }
 
   const onSubmitCreateProduct = async (values) => {
@@ -121,27 +160,25 @@ export const Products = () => {
           },
           data: product
         };
-        axios(options)
-          .then((response) => {
-            setPostModalMessage('El nuevo producto se ha guardado con éxito.');
+        axios(options).then((response) => {
+          setPostModalMessage('El nuevo producto se ha guardado con éxito.');
+          setPostModalShow(true);
+        }).catch((error) => {
+          if (error.response) {
+            console.log(error.response);
+            setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
             setPostModalShow(true);
-          })
-          .catch((error) => {
-            if (error.response) {
-              console.log(error.response);
-              setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
-              setPostModalShow(true);
-            } else if (error.request) {
-              // The request was made but no response was received
-              // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-              // http.ClientRequest in node.js
-              console.log(error.request);
-            } else {
-              // Something happened in setting up the request that triggered an Error
-              console.log('Error', error.message);
-            }
-            console.log(error.config);
-          });
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
+        });
       })
     });
   };
