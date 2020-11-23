@@ -72,6 +72,7 @@ export const Customers = ({ navigate }) => {
     axios(options).then((response) => {
       setPostModalMessage('El nuevo cliente se ha guardado con éxito.');
       setPostModalShow(true);
+      setTimeout(() => window.location.reload(), 2000);
     }).catch((error) => {
       if (error.response) {
         console.log(error.response);
@@ -102,6 +103,7 @@ export const Customers = ({ navigate }) => {
     axios(options).then((response) => {
       setPostModalMessage('Cliente eliminado con éxito.');
       setPostModalShow(true);
+      setTimeout(() => window.location.reload(), 2000);
     }).catch((error) => {
       if (error.response) {
         console.log(error.response);
@@ -135,7 +137,7 @@ export const Customers = ({ navigate }) => {
       setModalShow(false);
       setPostModalMessage('Información de cliente modificada con éxito.');
       setPostModalShow(true);
-      setTimeout(() => navigate('/customers'), 1000);
+      setTimeout(() => window.location.reload(), 2000);
     }).catch((error) => {
       if (error.response) {
         console.log(error.response);

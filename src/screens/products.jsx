@@ -18,12 +18,15 @@ const options = {
   },
 };
 
-export const Products = () => {
+export const Products = ({ navigate }) => {
   const [modalShow, setModalShow] = useState(false);
   const [postModalShow, setPostModalShow] = useState(false);
   const [postModalMessage, setPostModalMessage] = useState('');
   const [ready, setReady] = useState(false);
   const [products, setProducts] = useState(null);
+  const [dishes, setDishes] = useState(null);
+  const [sides, setSides] = useState(null);
+
   const [image, setImage] = useState(null);
   const [product, setProduct] = useState(null);
 
@@ -55,6 +58,7 @@ export const Products = () => {
     axios(options).then((response) => {
       setPostModalMessage('Producto eliminado con éxito.');
       setPostModalShow(true);
+      setTimeout(() => window.location.reload(), 2000);
     }).catch((error) => {
       if (error.response) {
         console.log(error.response);
@@ -114,6 +118,7 @@ export const Products = () => {
       axios(options).then((response) => {
         setPostModalMessage('El producto se ha actualizado con éxito.');
         setPostModalShow(true);
+        setTimeout(() => window.location.reload(), 2000);
       }).catch((error) => {
         if (error.response) {
           console.log(error.response);
@@ -163,6 +168,7 @@ export const Products = () => {
         axios(options).then((response) => {
           setPostModalMessage('El nuevo producto se ha guardado con éxito.');
           setPostModalShow(true);
+          setTimeout(() => window.location.reload(), 2000);
         }).catch((error) => {
           if (error.response) {
             console.log(error.response);
@@ -186,11 +192,17 @@ export const Products = () => {
   useEffect(() => {
     axios(options).then(response => {
       const _products = response.data.products;
-      setProducts(_products)
+      const _dishes = _products.filter(p => p.category == 'main')
+      const _sides = _products.filter(p => p.category == 'side')
+      setDishes(_dishes);
+      setSides(_sides);
+      setProducts(_products);
       setReady(true);
     }).catch(error => {
       setReady(true);
     });
+
+
   }, []);
 
 
@@ -347,7 +359,7 @@ export const Products = () => {
           <Col lg={8}>
             <h3>Platos fuertes</h3>
             <Accordion defaultActiveKey='0'>
-              { products && products.map((product, index) => (
+              { dishes && dishes.map((product, index) => (
                 <Card key={index}>
                   <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
                     <Row>
@@ -355,7 +367,7 @@ export const Products = () => {
                         <h4>{product.product_name}</h4>
                       </Col>
                       <Col className='align-right' lg={4}>
-                        <h4>{product.measure}</h4>
+                        <h4>$ {product.price} por {product.measure}</h4>
                       </Col>
                     </Row>
                   </Accordion.Toggle>
@@ -391,39 +403,39 @@ export const Products = () => {
           <Col lg={4}>
             <h3>Complementos</h3>
             <Accordion defaultActiveKey='0'>
-              <Card>
-                <Accordion.Toggle as={Card.Header} eventKey='0'>
-                  <Row>
-                    <Col>
-                      <h5>Orden de órdenes</h5>
-                    </Col>
-                  </Row>
-                </Accordion.Toggle>
-                <Accordion.Collapse eventKey='0'>
-                  <Card.Body>
+              { sides && sides.map((product, index) => (
+                <Card>
+                  <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
                     <Row>
-                      <Col lg={12}>
-                        <p>
-                          Practicamente es una orden de órdenes y contiene
-                          multiples órdenes en una sola orden.
-                        </p>
-                      </Col>
-                      <Col lg={8}>
-                        <h6>Precio por pz</h6>
-                      </Col>
-                      <Col lg={4} className='align-right'>
-                        <h6>$ 50.00</h6>
-                      </Col>
-
-                      <Col lg={12} className='align-right'>
-                        <Button variant='primary' size='sm'>
-                          Editar complemento
-                        </Button>
+                      <Col>
+                        <h5>{product.product_name}</h5>
                       </Col>
                     </Row>
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Card>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey={`${index}`}>
+                    <Card.Body>
+                      <Row>
+                        <Col lg={12}>
+                          <Image src={product.filename} rounded fluid className='mb-3'/>
+                          <p>
+                            {product.description}
+                          </p>
+                        </Col>
+                        <Col lg={8}>
+                          <h6>Precio por {product.measure}</h6>
+                        </Col>
+                        <Col lg={4} className='align-right'>
+                          <h6>$ {product.price}</h6>
+                        </Col>
+
+                        <Col lg={12} className='align-right'>
+                          <Button variant='primary' size='sm' onClick={() => prepareProduct(product.product_id)}> Editar complemento </Button>
+                        </Col>
+                      </Row>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              ))}
             </Accordion>
           </Col>
         </Row>
