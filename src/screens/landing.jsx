@@ -184,7 +184,7 @@ export const Landing = () => {
             <Button
               variant="primary"
               size="lg"
-              onClick={() => setOrderModalShow(true)}
+              href='/order'
             >
               Hacer mi pedido &nbsp; <BsArrowRight />
             </Button>
@@ -432,7 +432,7 @@ export const Landing = () => {
             </Card>
           </Col>
         </Row>
-        
+
 
         <h2 className="mt-5 bold">Cotización personalizada</h2>
         <Row>
