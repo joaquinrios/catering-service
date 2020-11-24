@@ -13,6 +13,17 @@ const options = {
   },
 };
 
+function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
+}
+
 export const Orders = (props) => {
   const [ready, setReady] = useState(false);
   const [orders, setOrders] = useState(null);
@@ -38,14 +49,16 @@ export const Orders = (props) => {
             <h1>Pedidos</h1>
           </Col>
           <Col lg={6} md={6} className='align-right'> 
-            <Button variant='primary' size='lg' href='/new_order'>Nuevo pedido</Button>
+            <Button variant='primary' size='lg' href='/new-order'>Nuevo pedido</Button>
           </Col>
         </Row>
         <hr/>
         <Row>
           <Col lg={8}>
             <Accordion defaultActiveKey="0">
-              { orders && orders.map((order, index) => (
+              { orders && orders.map((order, index) => {
+                const date = new Date(order.order_date.replace(' ', 'T'))
+                return (
                 <Card>
                   <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
                     <Row>
@@ -59,7 +72,7 @@ export const Orders = (props) => {
                         </p>
                       </Col>
                       <Col className='align-right'>
-                        <h4>Oct 11, 7:00 PM</h4>
+                        <h4>{date.toLocaleDateString('default', {month: 'long'})} {date.getDay()+1}, {formatAMPM(date)}</h4>
                       </Col>
                     </Row>
                   </Accordion.Toggle>
@@ -68,17 +81,17 @@ export const Orders = (props) => {
                     <Row>               
                         <Col lg={6}>
                           <p>
-                            Producto 1, 5 kg <br/>
-                            Producto 2, 2 L, <br/>
-                            Producto 3, 2 órdenes
+                            {order.products.map((product, index) => (
+                             <> {product.product_name} <br/></>
+                            ))}
                           </p>
                           <h4>Total:</h4>
                         </Col>
                         <Col lg={6} className='align-right'>
                           <p>
-                            $ 700.00 <br/>
-                            $ 600.00 <br/>
-                            $ 100.00 <br/>
+                          {order.products.map((product, index) => (
+                             <> $ {product.price} * {parseFloat(product.amount)} = $ {(parseFloat(product.amount)*parseFloat(product.price))}.00 <br/></>
+                            ))}
                           </p>
                           <h4>$ {order.total_price}</h4>
                         </Col>
@@ -89,7 +102,7 @@ export const Orders = (props) => {
                     </Card.Body>
                   </Accordion.Collapse>
                 </Card>
-              ))}
+              )})}
             </Accordion>
           </Col>
         </Row>

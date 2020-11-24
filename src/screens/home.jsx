@@ -110,7 +110,7 @@ export const Home = (props) => {
             <h1>Dashboard</h1>
           </Col>
           <Col lg={6} md={6} className='align-right'> 
-            <Button variant='primary' size='lg' href='/new_order'>Nuevo pedido</Button>
+            <Button variant='primary' size='lg' href='/new-order'>Nuevo pedido</Button>
           </Col>
         </Row>
         <hr/>
