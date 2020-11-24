@@ -160,7 +160,7 @@ export const Landing = () => {
                 <hr/>
                 <h4>¡También estamos en Facebook!</h4>
                 <p>
-                  Consulta nuestra <a href='https://www.facebook.com/Cocina-Mary-101557345100936'>página de Facebook</a> para conocer bases y más detalles sobre promociones y nuestro programa de recomendaciones.
+                  Consulta nuestra <a href='https://www.facebook.com/Cocina-Mary-101557345100936' target='_blank'>página de Facebook</a> para conocer bases y más detalles sobre promociones y nuestro programa de recomendaciones.
                 </p>
               </Col>
             </Row>
@@ -189,10 +189,11 @@ export const Landing = () => {
               Hacer mi pedido &nbsp; <BsArrowRight />
             </Button>
           </Col>
+        
         </Row>
         <hr />
         <Card className="text-white">
-          <Card.Img src={sloganImage} />
+          <Card.Img src={sloganImage} width='auto' height='550px' />
           <Card.ImgOverlay className="cs-card-slogan">
             <Card.Title>
               <h1 className="bold">
@@ -526,7 +527,6 @@ export const Landing = () => {
             </>
           </Col>
         </Row>
-
 
         <hr />
         <Row className="pt-1 pb-5">
