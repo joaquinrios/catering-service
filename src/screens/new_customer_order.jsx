@@ -173,12 +173,11 @@ export const NewCustomerOrder = ({props}) => {
                         </FinalFormField>
                       </Form.Group>
                     </Col>
-
                     <Col lg={12}>
                       <h2>Qué quieren ordenar:</h2>
                     </Col>
 
-                    <Col lg={6} className='mt-5'><h2>Datos del pedido</h2></Col>
+                  <Col lg={6} className='mt-5'><h2>Datos del pedido</h2></Col>
                   <Col lg={6} className='align-right mt-5'>
                     <Button variant='success' onClick={() => form.mutators.push('products', undefined)}>Añadir producto</Button> {' '}
                     <Button variant='danger' onClick={(() => form.mutators.pop('products'))}>Borrar último producto</Button>
@@ -231,15 +230,12 @@ export const NewCustomerOrder = ({props}) => {
                     { values.products && values.products.length > 0 && (<h4> $ { getProductsSum(values.products)}</h4>)}
                   </Col>
 
-
-
-
-                    <Col>
-                      <h4>
-                        <BsFillPeopleFill />
-                        &nbsp; Para [x] personas, recomendamos [x] kilos.
-                      </h4>
-                    </Col>
+                  <Col className='align-right'>
+                    <h4>
+                      <BsFillPeopleFill />
+                      &nbsp; Para [x] personas, recomendamos [x] kilos.
+                    </h4>
+                  </Col>
 
                     <Col lg={12}>
                       <h2>Tu información:</h2>
@@ -384,7 +380,7 @@ export const NewCustomerOrder = ({props}) => {
                     </Col>
                     <br />
                     <Col lg={6}>
-                      <Button variant='secondary' size='lg'>
+                      <Button variant='secondary' size='lg' href='/'>
                         Cancelar
                       </Button>
                     </Col>

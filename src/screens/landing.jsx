@@ -118,7 +118,7 @@ export const Landing = () => {
                   mente. <br />
                   ¡Manos a la obra!
                 </p>
-                <Button variant="success">
+                <Button variant="success" href='/order'>
                   Vamos&nbsp;&nbsp;
                   <BsArrowRight />
                 </Button>
@@ -188,6 +188,10 @@ export const Landing = () => {
             >
               Hacer mi pedido &nbsp; <BsArrowRight />
             </Button>
+          </Col>
+          <Col className='align-right'>
+          <h4>Te asistimos en lo que necesites</h4>
+          <h4>(55) 1283 8823</h4>
           </Col>
         
         </Row>
