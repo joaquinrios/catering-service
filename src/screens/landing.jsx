@@ -92,7 +92,7 @@ export const Landing = () => {
       <Navbar />
 
       <Modal
-        size="lg"
+        size='lg'
         centered
         show={orderModalShow}
         onHide={() => setOrderModalShow(false)}
@@ -109,7 +109,7 @@ export const Landing = () => {
               <Col lg={5}>
                 <h4>Atención personalizada</h4>
                 <p>Llámanos y nos ponemos de acuerdo en minutos.</p>
-                <h3 className="text-center">(55) 1283 8823</h3>
+                <h3 className='text-center'>(55) 1283 8823</h3>
               </Col>
               <Col lg={7}>
                 <h4>Hacer mi pedido solo.</h4>
@@ -118,7 +118,7 @@ export const Landing = () => {
                   mente. <br />
                   ¡Manos a la obra!
                 </p>
-                <Button variant="success">
+                <Button variant='success' href='/order'>
                   Vamos&nbsp;&nbsp;
                   <BsArrowRight />
                 </Button>
@@ -128,7 +128,7 @@ export const Landing = () => {
         </Modal.Body>
         <Modal.Footer>
           {' '}
-          <Button variant="secondary" onClick={() => setOrderModalShow(false)}>
+          <Button variant='secondary' onClick={() => setOrderModalShow(false)}>
             {' '}
             Cerrar{' '}
           </Button>{' '}
@@ -136,7 +136,7 @@ export const Landing = () => {
       </Modal>
 
       <Modal
-        size="lg"
+        size='lg'
         centered
         show={discountsModalShow}
         onHide={() => setDiscountsModalshow(false)}
@@ -144,7 +144,7 @@ export const Landing = () => {
         <Modal.Header closeButton>
           <Modal.Title>
             {' '}
-            <h2>Descuentos y promociones.</h2>
+            <h2>Promociones.</h2>
             {' '}
           </Modal.Title>
         </Modal.Header>
@@ -160,7 +160,7 @@ export const Landing = () => {
                 <hr/>
                 <h4>¡También estamos en Facebook!</h4>
                 <p>
-                  Consulta nuestra <a href='https://www.facebook.com/Cocina-Mary-101557345100936'>página de Facebook</a> para conocer bases y más detalles sobre promociones y nuestro programa de recomendaciones.
+                  Consulta nuestra <a href='https://www.facebook.com/Cocina-Mary-101557345100936' target='_blank'>página de Facebook</a> para conocer bases y más detalles sobre promociones y nuestro programa de recomendaciones.
                 </p>
               </Col>
             </Row>
@@ -168,7 +168,7 @@ export const Landing = () => {
         </Modal.Body>
         <Modal.Footer>
           {' '}
-          <Button variant="secondary" onClick={() => setDiscountsModalshow(false)}>
+          <Button variant='secondary' onClick={() => setDiscountsModalshow(false)}>
             {' '}
             De acuerdo{' '}
           </Button>{' '}
@@ -178,27 +178,29 @@ export const Landing = () => {
       <Container>
         <Row>
           <Col lg={8} md={8}>
-            <h1 className="bold">¡Siéntete en casa con Cocina Mary!</h1>
+            <h1 className='bold'>¡Siéntete en casa con Cocina Mary!</h1>
           </Col>
-          <Col lg={4} md={4} className="align-right">
+          <Col lg={4} md={4} className='align-right'>
             <Button
-              variant="primary"
-              size="lg"
-              onClick={() => setOrderModalShow(true)}
+              variant='primary'
+              size='lg'
+              href='/order'
             >
-              Quiero ordenar &nbsp; <BsArrowRight />
+              Hacer mi pedido &nbsp; <BsArrowRight />
             </Button>
           </Col>
-          <Col lg={12} md={12} className='align-right'>
-            <h5>Llámanos: (55) 1283 8823</h5>
+          <Col className='align-bottom-right'>
+            <br/>
+            <h4>Te asistimos en lo que necesites: (55) 1283 8823</h4>
+            <hr />
           </Col>
+        
         </Row>
-        <hr />
-        <Card className="text-white">
-          <Card.Img src={sloganImage} />
-          <Card.ImgOverlay className="cs-card-slogan">
+        <Card className='text-white'>
+          <Card.Img src={sloganImage} width='auto' height='550px' />
+          <Card.ImgOverlay className='cs-card-slogan'>
             <Card.Title>
-              <h1 className="bold">
+              <h1 className='bold'>
                 ¡Porque la familia
                 <br /> es lo primero!
               </h1>
@@ -206,7 +208,7 @@ export const Landing = () => {
           </Card.ImgOverlay>
         </Card>
 
-        <h1 className="text-center mt-3 mb-3 bold p-3" id="services">
+        <h1 className='text-center mt-3 mb-3 bold p-3' id='services'>
           Servicios
         </h1>
         <hr />
@@ -238,15 +240,15 @@ export const Landing = () => {
               infinite
               autoPlaySpeed={3000}
               keyBoardControl
-              customTransition="all .5"
+              customTransition='all .5'
               transitionDuration={500}
-              containerClass="carousel-container"
+              containerClass='carousel-container'
               removeArrowOnDeviceType={['tablet', 'mobile']}
-              dotListClass="custom-dot-list-style"
-              itemClass="carousel-item-padding-40-px"
+              dotListClass='custom-dot-list-style'
+              itemClass='carousel-item-padding-40-px'
             >
               <div>
-                <Card className="text-center no-border">
+                <Card className='text-center no-border'>
                   <Container>
                     {' '}
                     <Image
@@ -263,7 +265,7 @@ export const Landing = () => {
                 </Card>
               </div>
               <div>
-                <Card className="text-center no-border">
+                <Card className='text-center no-border'>
                   <Container>
                     {' '}
                     <Image
@@ -284,7 +286,7 @@ export const Landing = () => {
                 </Card>
               </div>
               <div>
-                <Card className="text-center no-border">
+                <Card className='text-center no-border'>
                   <Container>
                     {' '}
                     <Image
@@ -304,7 +306,7 @@ export const Landing = () => {
                 </Card>
               </div>
               <div>
-                <Card className="text-center no-border">
+                <Card className='text-center no-border'>
                   <Container>
                     {' '}
                     <Image
@@ -322,7 +324,7 @@ export const Landing = () => {
                 </Card>
               </div>
               <div>
-                <Card className="text-center no-border">
+                <Card className='text-center no-border'>
                   <Container>
                     {' '}
                     <Image
@@ -345,101 +347,9 @@ export const Landing = () => {
           </Col>
         </Row>
 
-        <h2 className="mt-5 bold">Cotización personalizada</h2>
-        <Row>
-          <Col lg={8}>
-            <p>
-              Con más de quince años de trayectoria, nos ajustamos a toda clase
-              de evento, prespuesto y paladar. Nuestra satisfacción viene de
-              conocerte y ayudarte a encontrar las mejores opciones para que tú
-              y tus invitados queden deleitados al final de cada comida en la
-              que estemos presentes. ¿Te animas a empezar a explorar?
-            </p>
-          </Col>
-          <Col lg={4} className="align-right">
-            <Button size="lg" onClick={() => setOrderModalShow(true)}>
-              {' '}
-              Conocer más &nbsp; <BsArrowRight />{' '}
-            </Button>
-          </Col>
-        </Row>
 
-        <h1 className="text-center mt-3 mb-3 bold p-3" id="contact">
-          Contacto
-        </h1>
-        <hr />
-        <Row>
-          <Col lg={5}>
-            <h3>¿Quieres hacer un pedido?</h3>
-            <p>Empieza aquí. Nos encantará atenderte.</p>
-            <FinalForm onSubmit={onSubmitForm}>
-              {({ handleSubmit, submitting, values }) => (
-                <Form>
-                  <Form.Group>
-                    <Form.Label>Nombre</Form.Label>
-                    <FinalFormField name="customerName">
-                      {({ input }) => (
-                        <Form.Control {...input} type="text" size="lg" />
-                      )}
-                    </FinalFormField>
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Apellidos</Form.Label>
-                    <FinalFormField name="customerLastName">
-                      {({ input }) => (
-                        <Form.Control {...input} type="text" size="lg" />
-                      )}
-                    </FinalFormField>
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Correo electrónico</Form.Label>
-                    <FinalFormField name="email">
-                      {({ input }) => (
-                        <Form.Control {...input} type="text" size="lg" />
-                      )}
-                    </FinalFormField>
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Label>Teléfono</Form.Label>
-                    <FinalFormField name="customerPhone">
-                      {({ input }) => (
-                        <Form.Control {...input} type="number" size="lg" />
-                      )}
-                    </FinalFormField>
-                  </Form.Group>
-
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    // TODO: add handleSubmit, check with Joaquin data passing
-                    onClick={() => setOrderModalShow(true)}
-                  >
-                    {' '}
-                    Continuar&nbsp;&nbsp; <BsArrowRight />{' '}
-                  </Button>
-                </Form>
-              )}
-            </FinalForm>
-          </Col>
-
-          <Col lg={7}>
-            <h3>Ubicación</h3>
-            <>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.446371148455!2d-99.14845794847503!3d19.43631244553169!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f8d59ac21459%3A0x90b4c056728a77cf!2sCalle%20Dr%20Mora%209%2C%20Colonia%20Centro%2C%20Centro%2C%20Cuauht%C3%A9moc%2C%2006000%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses!2smx!4v1605569892526!5m2!1ses!2smx"
-                width="100%"
-                height="70%"
-                frameBorder="0"
-                allowFullScreen=""
-                aria-hidden="false"
-                tabIndex="0"
-              ></iframe>
-            </>
-          </Col>
-        </Row>
-
-        <h1 className="text-center mt-3 mb-3 bold p-3" id="discounts">
-          Descuentos
+        <h1 className='text-center mt-3 mb-3 bold p-3' id='discounts'>
+          Promociones
         </h1>
         <hr />
         <Row>
@@ -451,7 +361,7 @@ export const Landing = () => {
               traerte beneficios para la siguiente vez que decidas invitarnos a
               tu evento.
             </p>
-            <Button size="lg" onClick={() => setDiscountsModalshow(true)}>
+            <Button size='lg' onClick={() => setDiscountsModalshow(true)}>
               {' '}
               Ver más&nbsp;&nbsp; <BsArrowRight />
             </Button>
@@ -461,20 +371,20 @@ export const Landing = () => {
           </Col>
         </Row>
 
-        <h1 className="text-center mt-3 mb-3 bold p-3" id="about-us">
+        <h1 className='text-center mt-3 mb-3 bold p-3' id='about-us'>
           Nosotros
         </h1>
         <hr />
         <Row>
           <Col lg={4}>
-            <Card className="text-center no-border">
+            <Card className='text-center no-border'>
               <Container>
                 {' '}
                 <Image
                   src={staffImage1}
                   roundedCircle
                   fluid
-                  className="cs-circle-image"
+                  className='cs-circle-image'
                 />{' '}
               </Container>
               <Card.Body>
@@ -487,14 +397,14 @@ export const Landing = () => {
             </Card>
           </Col>
           <Col lg={4}>
-            <Card className="text-center no-border">
+            <Card className='text-center no-border'>
               <Container>
                 {' '}
                 <Image
                   src={staffImage2}
                   roundedCircle
                   fluid
-                  className="cs-circle-image"
+                  className='cs-circle-image'
                 />{' '}
               </Container>
               <Card.Body>
@@ -507,14 +417,14 @@ export const Landing = () => {
             </Card>
           </Col>
           <Col lg={4}>
-            <Card className="text-center no-border">
+            <Card className='text-center no-border'>
               <Container>
                 {' '}
                 <Image
                   src={staffImage3}
                   roundedCircle
                   fluid
-                  className="cs-circle-image"
+                  className='cs-circle-image'
                 />{' '}
               </Container>
               <Card.Body>
@@ -527,10 +437,66 @@ export const Landing = () => {
             </Card>
           </Col>
         </Row>
+
+
+        <h2 className='mt-5 bold'>Cotización personalizada</h2>
+        <Row>
+          <Col lg={8}>
+            <p>
+              Con más de quince años de trayectoria, nos ajustamos a toda clase
+              de evento, prespuesto y paladar. Nuestra satisfacción viene de
+              conocerte y ayudarte a encontrar las mejores opciones para que tú
+              y tus invitados queden deleitados al final de cada comida en la
+              que estemos presentes. ¿Te animas a empezar a explorar?
+            </p>
+          </Col>
+          <Col lg={4} className='align-right'>
+            <Button size='lg' onClick={() => setOrderModalShow(true)}>
+              {' '}
+              Conocer más &nbsp; <BsArrowRight />{' '}
+            </Button>
+          </Col>
+        </Row>
+
+        <h1 className='text-center mt-3 mb-3 bold p-3' id='contact'>
+          Contacto
+        </h1>
         <hr />
-        <Row className="pt-1 pb-5">
-          <Col className="bold">Cocina Mary © 2020</Col>
-          <Col className="bold align-right">
+        <Row>
+          <Col lg={5}>
+            <h3>[TODO - Bobby - change as requested by customer]]</h3>
+            <p>[Add contact info, social networks, phone number, button to make order]</p>
+            <Button
+                    variant='primary'
+                    size='lg'
+                    // TODO: add handleSubmit, check with Joaquin data passing
+                    onClick={() => setOrderModalShow(true)}
+                  >
+                    {' '}
+                    Continuar&nbsp;&nbsp; <BsArrowRight />{' '}
+                  </Button>
+          </Col>
+
+          <Col lg={7}>
+            <h3>Ubicación</h3>
+            <>
+              <iframe
+                src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.446371148455!2d-99.14845794847503!3d19.43631244553169!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f8d59ac21459%3A0x90b4c056728a77cf!2sCalle%20Dr%20Mora%209%2C%20Colonia%20Centro%2C%20Centro%2C%20Cuauht%C3%A9moc%2C%2006000%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses!2smx!4v1605569892526!5m2!1ses!2smx'
+                width='100%'
+                height='70%'
+                frameBorder='0'
+                allowFullScreen=''
+                aria-hidden='false'
+                tabIndex='0'
+              ></iframe>
+            </>
+          </Col>
+        </Row>
+
+        <hr />
+        <Row className='pt-1 pb-5'>
+          <Col className='bold'>Cocina Mary © 2020</Col>
+          <Col className='bold align-right'>
             Dr Mora 9, Centro, Cuauhtemoc, 06000, Ciudad de México.{' '}
           </Col>
         </Row>

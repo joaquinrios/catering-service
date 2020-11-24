@@ -369,12 +369,12 @@ export const Products = ({ navigate }) => {
           <Col lg={8}>
             <Row>
               <Col lg={6}>
-                <h3>Platos fuertes</h3>
+                <h3>Platillos tradicionales</h3>
               </Col>
 
               <Col lg={6} className='align-right'>
               <Form.Group>
-                <Form.Control type="text" placeholder='Buscar un plato fuerte' onChange={dishesFilterOnChange} />
+                <Form.Control type='text' placeholder='Buscar un plato fuerte' onChange={dishesFilterOnChange} />
               </Form.Group>
               </Col>
             </Row>
