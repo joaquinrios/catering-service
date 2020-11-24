@@ -58,14 +58,14 @@ export const NewCustomerOrder = ({props}) => {
 
       {/* Order received modal */}
       <Modal
-        size="md"
-        aria-labelledby="contained-modal-title-vcenter"
+        size='md'
+        aria-labelledby='contained-modal-title-vcenter'
         centered
         show={modalShow}
         onHide={() => setModalShow(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">¡Listo!</Modal.Title>
+          <Modal.Title id='contained-modal-title-vcenter'>¡Listo!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -86,7 +86,7 @@ export const NewCustomerOrder = ({props}) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="info" href='/' onClick={() => setModalShow(false)}>
+          <Button variant='info' href='/' onClick={() => setModalShow(false)}>
             De acuerdo
           </Button>
         </Modal.Footer>
@@ -111,27 +111,27 @@ export const NewCustomerOrder = ({props}) => {
                     <Col lg={7}>
                       <Form.Group>
                         <Form.Label>Nombre del evento</Form.Label>
-                        <FinalFormField name="eventName">
+                        <FinalFormField name='eventName'>
                           {({ input }) => (
-                            <Form.Control {...input} type="text" size="lg" />
+                            <Form.Control {...input} type='text' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
 
                       <Form.Group>
                         <Form.Label>Fecha</Form.Label>
-                        <FinalFormField name="date">
+                        <FinalFormField name='date'>
                           {({ input }) => (
-                            <Form.Control {...input} type="date" size="lg" />
+                            <Form.Control {...input} type='date' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
 
                       <Form.Group>
                         <Form.Label>Hora de llegada</Form.Label>
-                        <FinalFormField name="time">
+                        <FinalFormField name='time'>
                           {({ input }) => (
-                            <Form.Control {...input} type="time" size="lg" />
+                            <Form.Control {...input} type='time' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
@@ -140,21 +140,21 @@ export const NewCustomerOrder = ({props}) => {
                     <Col lg={5}>
                       <Form.Group>
                         <Form.Label>Personas</Form.Label>
-                        <FinalFormField name="persons">
+                        <FinalFormField name='persons'>
                           {({ input }) => (
-                            <Form.Control {...input} type="number" size="lg" />
+                            <Form.Control {...input} type='number' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
 
                       <Form.Group>
                         <Form.Label>Notas:</Form.Label>
-                        <FinalFormField name="eventNotes">
+                        <FinalFormField name='eventNotes'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="textarea"
-                              size="lg"
+                              type='textarea'
+                              size='lg'
                             />
                           )}
                         </FinalFormField>
@@ -162,7 +162,7 @@ export const NewCustomerOrder = ({props}) => {
 
                       <Form.Group>
                         <Form.Label>¿Tu evento es recurrente?</Form.Label>
-                        <FinalFormField name="frequent" type="checkbox">
+                        <FinalFormField name='frequent' type='checkbox'>
                           {({ input }) => (
                             <Row>
                               <Col>
@@ -248,18 +248,18 @@ export const NewCustomerOrder = ({props}) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Nombre</Form.Label>
-                        <FinalFormField name="customerName">
+                        <FinalFormField name='customerName'>
                           {({ input }) => (
-                            <Form.Control {...input} type="text" size="lg" />
+                            <Form.Control {...input} type='text' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
 
                       <Form.Group>
                         <Form.Label>Apellidos</Form.Label>
-                        <FinalFormField name="customerLastName">
+                        <FinalFormField name='customerLastName'>
                           {({ input }) => (
-                            <Form.Control {...input} type="text" size="lg" />
+                            <Form.Control {...input} type='text' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
@@ -267,17 +267,17 @@ export const NewCustomerOrder = ({props}) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Teléfono</Form.Label>
-                        <FinalFormField name="phone">
+                        <FinalFormField name='phone'>
                           {({ input }) => (
-                            <Form.Control {...input} type="text" size="lg" />
+                            <Form.Control {...input} type='text' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Correo electrónico</Form.Label>
-                        <FinalFormField name="email">
+                        <FinalFormField name='email'>
                           {({ input }) => (
-                            <Form.Control {...input} type="text" size="lg" />
+                            <Form.Control {...input} type='text' size='lg' />
                           )}
                         </FinalFormField>
                       </Form.Group>
@@ -287,13 +287,13 @@ export const NewCustomerOrder = ({props}) => {
                       <h4>Dirección:</h4>
                       <Form.Group>
                         <Form.Label>Calle</Form.Label>
-                        <FinalFormField name="street">
+                        <FinalFormField name='street'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              size="lg"
-                              placeholder="i.e. C Dr Mora 9"
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. C Dr Mora 9'
                             />
                           )}
                         </FinalFormField>
@@ -302,13 +302,13 @@ export const NewCustomerOrder = ({props}) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Colonia</Form.Label>
-                        <FinalFormField name="neighborhood">
+                        <FinalFormField name='neighborhood'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              size="lg"
-                              placeholder="i.e. Centro"
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. Centro'
                             />
                           )}
                         </FinalFormField>
@@ -318,13 +318,13 @@ export const NewCustomerOrder = ({props}) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Alcaldía / Municipio</Form.Label>
-                        <FinalFormField name="city">
+                        <FinalFormField name='city'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              size="lg"
-                              placeholder="i.e. Cuauhtémoc"
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. Cuauhtémoc'
                             />
                           )}
                         </FinalFormField>
@@ -334,13 +334,13 @@ export const NewCustomerOrder = ({props}) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Código postal</Form.Label>
-                        <FinalFormField name="zipcode">
+                        <FinalFormField name='zipcode'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              size="lg"
-                              placeholder="i.e. 06000"
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. 06000'
                             />
                           )}
                         </FinalFormField>
@@ -350,13 +350,13 @@ export const NewCustomerOrder = ({props}) => {
                     <Col lg={6}>
                       <Form.Group>
                         <Form.Label>Estado</Form.Label>
-                        <FinalFormField name="state">
+                        <FinalFormField name='state'>
                           {({ input }) => (
                             <Form.Control
                               {...input}
-                              type="text"
-                              size="lg"
-                              placeholder="i.e. Ciudad de México"
+                              type='text'
+                              size='lg'
+                              placeholder='i.e. Ciudad de México'
                             />
                           )}
                         </FinalFormField>
@@ -370,9 +370,9 @@ export const NewCustomerOrder = ({props}) => {
                     <Col lg={12}>
                       <Form.Group>
                         <Form.Label>Selecciona tu método de pago</Form.Label>
-                        <FinalFormField name="paymentMethod" component='select'>
+                        <FinalFormField name='paymentMethod' component='select'>
                           {({ input }) => (
-                            <Form.Control {...input} as="select" custom>
+                            <Form.Control {...input} as='select' custom>
                               <option />
                               <option>Tarjeta de débito/crédito</option>
                               <option>PayPal</option>
@@ -384,14 +384,14 @@ export const NewCustomerOrder = ({props}) => {
                     </Col>
                     <br />
                     <Col lg={6}>
-                      <Button variant="secondary" size="lg">
+                      <Button variant='secondary' size='lg'>
                         Cancelar
                       </Button>
                     </Col>
-                    <Col lg={6} className="align-right">
+                    <Col lg={6} className='align-right'>
                       <Button
-                        variant="primary"
-                        size="lg"
+                        variant='primary'
+                        size='lg'
                         onClick={handleSubmit}
                       >
                         Guardar pedido
@@ -404,9 +404,9 @@ export const NewCustomerOrder = ({props}) => {
             </FinalForm>
           </Row>
           <hr />
-          <Row className="pt-1 pb-5">
-            <Col className="bold">Cocina Mary © 2020</Col>
-            <Col className="bold align-right">
+          <Row className='pt-1 pb-5'>
+            <Col className='bold'>Cocina Mary © 2020</Col>
+            <Col className='bold align-right'>
               Dr Mora 9, Centro, Cuauhtemoc, 06000, Ciudad de México.{' '}
             </Col>
           </Row>
