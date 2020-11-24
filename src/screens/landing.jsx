@@ -144,7 +144,7 @@ export const Landing = () => {
         <Modal.Header closeButton>
           <Modal.Title>
             {' '}
-            <h2>Descuentos y promociones.</h2>
+            <h2>Promociones.</h2>
             {' '}
           </Modal.Title>
         </Modal.Header>
@@ -186,11 +186,8 @@ export const Landing = () => {
               size="lg"
               onClick={() => setOrderModalShow(true)}
             >
-              Quiero ordenar &nbsp; <BsArrowRight />
+              Hacer mi pedido &nbsp; <BsArrowRight />
             </Button>
-          </Col>
-          <Col lg={12} md={12} className='align-right'>
-            <h5>Llámanos: (55) 1283 8823</h5>
           </Col>
         </Row>
         <hr />
@@ -345,6 +342,98 @@ export const Landing = () => {
           </Col>
         </Row>
 
+
+        <h1 className="text-center mt-3 mb-3 bold p-3" id="discounts">
+          Promociones
+        </h1>
+        <hr />
+        <Row>
+          <Col lg={8}>
+            <p>
+              Nuestra meta es llevar deleite con nuestro sazón a boca de todos,
+              y sabemos que tú y tus acompañantes son clave para alcanzar más y
+              más personas. Conoce cómo recomendarnos con tus amigos puede
+              traerte beneficios para la siguiente vez que decidas invitarnos a
+              tu evento.
+            </p>
+            <Button size="lg" onClick={() => setDiscountsModalshow(true)}>
+              {' '}
+              Ver más&nbsp;&nbsp; <BsArrowRight />
+            </Button>
+          </Col>
+          <Col>
+            <Image src={discountsImage} thumbnail />
+          </Col>
+        </Row>
+
+        <h1 className="text-center mt-3 mb-3 bold p-3" id="about-us">
+          Nosotros
+        </h1>
+        <hr />
+        <Row>
+          <Col lg={4}>
+            <Card className="text-center no-border">
+              <Container>
+                {' '}
+                <Image
+                  src={staffImage1}
+                  roundedCircle
+                  fluid
+                  className="cs-circle-image"
+                />{' '}
+              </Container>
+              <Card.Body>
+                <Card.Text>
+                  Nuestra cocina está conformada por el más experimentado
+                  personal, que entiende que una comida sabrosa es el pilar de
+                  toda reunión, en toda ocasión.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col lg={4}>
+            <Card className="text-center no-border">
+              <Container>
+                {' '}
+                <Image
+                  src={staffImage2}
+                  roundedCircle
+                  fluid
+                  className="cs-circle-image"
+                />{' '}
+              </Container>
+              <Card.Body>
+                <Card.Text>
+                  Cuando disfrutas de nuestros platillos, estás disfrutando de
+                  nuestra compañía. Desde hace más de quince años, nos hemos
+                  posicionado como un valioso integrante más en tus eventos.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col lg={4}>
+            <Card className="text-center no-border">
+              <Container>
+                {' '}
+                <Image
+                  src={staffImage3}
+                  roundedCircle
+                  fluid
+                  className="cs-circle-image"
+                />{' '}
+              </Container>
+              <Card.Body>
+                <Card.Text>
+                  Un equipo de atención completamente orientado a ti, apasionado
+                  por entender tus necesidades y feliz de orientarte para
+                  exceder las expectativas de tus familiares o amigos.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        
+
         <h2 className="mt-5 bold">Cotización personalizada</h2>
         <Row>
           <Col lg={8}>
@@ -438,95 +527,7 @@ export const Landing = () => {
           </Col>
         </Row>
 
-        <h1 className="text-center mt-3 mb-3 bold p-3" id="discounts">
-          Descuentos
-        </h1>
-        <hr />
-        <Row>
-          <Col lg={8}>
-            <p>
-              Nuestra meta es llevar deleite con nuestro sazón a boca de todos,
-              y sabemos que tú y tus acompañantes son clave para alcanzar más y
-              más personas. Conoce cómo recomendarnos con tus amigos puede
-              traerte beneficios para la siguiente vez que decidas invitarnos a
-              tu evento.
-            </p>
-            <Button size="lg" onClick={() => setDiscountsModalshow(true)}>
-              {' '}
-              Ver más&nbsp;&nbsp; <BsArrowRight />
-            </Button>
-          </Col>
-          <Col>
-            <Image src={discountsImage} thumbnail />
-          </Col>
-        </Row>
 
-        <h1 className="text-center mt-3 mb-3 bold p-3" id="about-us">
-          Nosotros
-        </h1>
-        <hr />
-        <Row>
-          <Col lg={4}>
-            <Card className="text-center no-border">
-              <Container>
-                {' '}
-                <Image
-                  src={staffImage1}
-                  roundedCircle
-                  fluid
-                  className="cs-circle-image"
-                />{' '}
-              </Container>
-              <Card.Body>
-                <Card.Text>
-                  Nuestra cocina está conformada por el más experimentado
-                  personal, que entiende que una comida sabrosa es el pilar de
-                  toda reunión, en toda ocasión.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={4}>
-            <Card className="text-center no-border">
-              <Container>
-                {' '}
-                <Image
-                  src={staffImage2}
-                  roundedCircle
-                  fluid
-                  className="cs-circle-image"
-                />{' '}
-              </Container>
-              <Card.Body>
-                <Card.Text>
-                  Cuando disfrutas de nuestros platillos, estás disfrutando de
-                  nuestra compañía. Desde hace más de quince años, nos hemos
-                  posicionado como un valioso integrante más en tus eventos.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={4}>
-            <Card className="text-center no-border">
-              <Container>
-                {' '}
-                <Image
-                  src={staffImage3}
-                  roundedCircle
-                  fluid
-                  className="cs-circle-image"
-                />{' '}
-              </Container>
-              <Card.Body>
-                <Card.Text>
-                  Un equipo de atención completamente orientado a ti, apasionado
-                  por entender tus necesidades y feliz de orientarte para
-                  exceder las expectativas de tus familiares o amigos.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
         <hr />
         <Row className="pt-1 pb-5">
           <Col className="bold">Cocina Mary © 2020</Col>
