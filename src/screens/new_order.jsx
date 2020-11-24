@@ -69,6 +69,60 @@ export const NewOrder = ({props}) => {
   const onSubmitCreateOrder = (values) => {
     console.log(existingUser);
     console.log(values);
+    const order = {
+      order_date: values.date,
+      order_event: values.eventName,
+      recurring: values.frequent,
+      order_notes: values.eventNotes,
+      // TODO
+      total_price: '42',
+      amount_paid: '42',
+      customer_id: existingUser ? existingUser.customer_id : '',
+      first_name: values.customerName,
+      last_name: values.customerLastName,
+      email: values.email,
+      phone: values.phone,
+      street: values.street,
+      city: values.city,
+      county: values.county,
+      state: values.state,
+      zip_code: values.zipcode,
+      products: values.products
+    };
+    const options = {
+      url: existingUser ? '/api/orders/' : '/api/orders/newCustomer',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+      data: order
+    };
+
+    axios(options).then((response) => {
+      // TODO - Bobby ? modal ?
+      // setPostModalMessage('El nuevo cliente se ha guardado con éxito.');
+      // setPostModalShow(true);
+      setTimeout(() => window.location.reload(), 2000);
+    }).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+        // setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
+        // setPostModalShow(true);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
+    });
+
+    
+    
   }
 
   useEffect(() => {
@@ -177,7 +231,7 @@ export const NewOrder = ({props}) => {
 
                       <Form.Group>
                         <Form.Label>Apellidos</Form.Label>
-                        <FinalFormField name='customerName'>
+                        <FinalFormField name='customerLastName'>
                           {({ input }) => <Form.Control {...input} type='text' size='lg'/>}
                         </FinalFormField>
                       </Form.Group>
