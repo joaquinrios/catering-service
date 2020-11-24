@@ -26,8 +26,8 @@ export const NewOrder = ({props}) => {
     let total = 0
     
     ids.forEach(id => {
-      let currentProduct = products.find(p =>  p.product_id === id);
-      total += currentProduct !== undefined ? parseFloat(currentProduct.price) : 0
+      let currentProduct = products.find(p =>  p.product_id == id);
+      total += currentProduct != undefined ? parseFloat(currentProduct.price) : 0
     });
     return total
   }
@@ -327,7 +327,7 @@ export const NewOrder = ({props}) => {
                         <Col lg={3} className='align-right'>
                           <Form.Group>
                             <Form.Label></Form.Label>
-                            { values.products[index] && values.products[index].id && (<h4>{parseFloat(values.products[index].quantity)} * {products.find(p => p.product_id === values.products[index].id).price} = $ {parseFloat(products.find(p => p.product_id === values.products[index].id).price) * parseFloat(values.products[index].quantity)}</h4>) }
+                            { values.products[index] && values.products[index].id && (<h4>{parseFloat(values.products[index].quantity)} * {products.find(p => p.product_id == values.products[index].id).price} = $ {parseFloat(products.find(p => p.product_id == values.products[index].id).price) * parseFloat(values.products[index].quantity)}</h4>) }
                           </Form.Group>
                         </Col>
                     </>))}
