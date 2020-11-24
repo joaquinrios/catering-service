@@ -33,6 +33,7 @@ export const NewCustomerOrder = ({props}) => {
   // TODO: Bobby
   const onSubmitCreateCustomerOrder = (values) => {
     console.log('form submitted', values);
+    setModalShow(true);
   };
 
   useEffect(() => {
@@ -85,7 +86,7 @@ export const NewCustomerOrder = ({props}) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="info" onClick={() => setModalShow(false)}>
+          <Button variant="info" href='/' onClick={() => setModalShow(false)}>
             De acuerdo
           </Button>
         </Modal.Footer>
@@ -369,9 +370,9 @@ export const NewCustomerOrder = ({props}) => {
                     <Col lg={12}>
                       <Form.Group>
                         <Form.Label>Selecciona tu método de pago</Form.Label>
-                        <FinalFormField name="paymentMethod">
+                        <FinalFormField name="paymentMethod" component='select'>
                           {({ input }) => (
-                            <Form.Control as="select">
+                            <Form.Control {...input} as="select" custom>
                               <option />
                               <option>Tarjeta de débito/crédito</option>
                               <option>PayPal</option>
