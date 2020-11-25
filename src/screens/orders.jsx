@@ -91,7 +91,7 @@ export const Orders = (props) => {
                         </p>
                       </Col>
                       <Col className='align-right'>
-                        <h4>{date.toLocaleDateString('default', {month: 'long'})} {date.getDay()+1}, {formatAMPM(date)}</h4>
+                        <h4>{date.toLocaleDateString('default', {month: 'long'})} {date.getDate()}, {formatAMPM(date)}</h4>
                       </Col>
                     </Row>
                   </Accordion.Toggle>
@@ -109,7 +109,7 @@ export const Orders = (props) => {
                         <Col lg={6} className='align-right'>
                           <p>
                           {order.products.map((product, index) => (
-                             <> $ {product.price} * {parseFloat(product.amount)} = $ {(parseFloat(product.amount)*parseFloat(product.price))}.00 <br/></>
+                             <> $ {product.price}.00 <br/></>
                             ))}
                           </p>
                           <h4>$ {order.total_price}</h4>
