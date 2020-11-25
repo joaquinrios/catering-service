@@ -338,11 +338,7 @@ export const NewOrder = ({props}) => {
                       </Col>
                     </>)}
 
-                  <Col lg={6} className='mt-5'><h2>Datos del pedido</h2></Col>
-                  <Col lg={6} className='align-right mt-5'>
-                    <Button variant='success' onClick={() => form.mutators.push('products', undefined)}>Añadir producto</Button> {' '}
-                    <Button variant='danger' onClick={(() => form.mutators.pop('products'))}>Borrar último producto</Button>
-                  </Col>
+                  <Col lg={12} className='mt-5'><h2>Datos del pedido</h2></Col>
 
                   <FinalFormFieldArray name='products'>
                     {({ fields }) => fields.map((field, index) => (<>
@@ -391,7 +387,12 @@ export const NewOrder = ({props}) => {
                     { values.products && values.products.length > 0 && (<h4> $ { getProductsSum(values.products)}</h4>)}
                   </Col>
 
-                  <Col lg={12} className='mb-5 mt-4 align-right'>
+                  <Col lg={6} className='mb-5 mt-4'>
+                    <Button variant='success' size='lg' onClick={() => form.mutators.push('products', undefined)}>Añadir producto</Button> {' '}
+                    <Button variant='danger' size='lg' onClick={(() => form.mutators.pop('products'))}>Borrar último producto</Button>
+                  </Col>
+
+                  <Col lg={6} className='mb-5 mt-4 align-right'>
                     <Button variant='primary' size='lg' onClick={handleSubmit}>Guardar pedido</Button>
                   </Col>
                 
