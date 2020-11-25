@@ -54,3 +54,9 @@ code {
 .cs-card-slogan h1 {
   font-size: 5vh;
 }
+
+.cs-mh img {
+  height: 256px !important;
+  object-fit: cover;
+  width: 100%;
+}
