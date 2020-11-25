@@ -4,14 +4,24 @@ import axios from 'axios';
 
 import { Navbar } from '../components/navbar';
 
-const options = {
-  url: '/api/orders/',
-  method: 'GET',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json;charset=UTF-8',
-  },
-};
+
+
+const onSubmitDeleteOrder = (id) => {
+  const options = {
+    url: `/api/orders/${id}`,
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8',
+    },
+  };
+
+  axios(options).then(response => {
+    setTimeout(() => window.location.reload(), 200);
+  }).catch(error => {
+    setTimeout(() => window.location.reload(), 200);
+  });
+}
 
 function formatAMPM(date) {
   var hours = date.getHours();
@@ -29,6 +39,15 @@ export const Orders = (props) => {
   const [orders, setOrders] = useState(null);
 
   useEffect(() => {
+    const options = {
+      url: '/api/orders/',
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    };
+
     axios(options).then(response => {
       const _orders = response.data.orders;
       setOrders(_orders)
@@ -63,7 +82,7 @@ export const Orders = (props) => {
                   <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
                     <Row>
                       <Col>
-                        <h4>Pedido # {order.order_id}</h4>
+                        <h4>Pedido # {order.order_id} - {order.order_event}</h4>
                         <p>{order.first_name} {order.last_name}</p>
                         <p>
                           {order.street} <br/>
@@ -96,6 +115,7 @@ export const Orders = (props) => {
                           <h4>$ {order.total_price}</h4>
                         </Col>
                         <Col lg={12} className='align-right'>
+                          <Button variant='danger' size='sm' onClick={() => onSubmitDeleteOrder(order.order_id)}>Cancelar pedido</Button> {' '}
                           <Button variant='primary' size='sm'>Editar pedido</Button>
                         </Col>
                       </Row>
