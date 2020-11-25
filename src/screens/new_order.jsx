@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
-import { BsX } from 'react-icons/bs';
+import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap';
+import { BsX, BsFillInfoCircleFill } from 'react-icons/bs';
 import { Form as FinalForm, Field as FinalFormField,  } from 'react-final-form';
 import { FieldArray as FinalFormFieldArray } from 'react-final-form-arrays';
 import axios from 'axios';
@@ -21,6 +21,8 @@ export const NewOrder = ({props}) => {
   const [products, setProducts] = useState([]);
   const [existingUser, setExistingUser] = useState(null);
   const [suggestions, setSuggestions] = useState(customers);
+  const [postModalShow, setPostModalShow] = useState(false);
+  const [postModalMessage, setPostModalMessage] = useState('');
   
   const getProductsSum = (selectedProducts) => {
     const ids = selectedProducts.map((product) => {
@@ -104,15 +106,14 @@ export const NewOrder = ({props}) => {
     };
 
     axios(options).then((response) => {
-      // TODO - Bobby ? modal ?
-      // setPostModalMessage('El nuevo cliente se ha guardado con éxito.');
-      // setPostModalShow(true);
-      // setTimeout(() => window.location.reload(), 2000);
+      setPostModalMessage('El nuevo pedido se ha registrado con éxito.');
+      setPostModalShow(true);
+      setTimeout(() => window.location.reload(), 2000);
     }).catch((error) => {
       if (error.response) {
         console.log(error.response);
-        // setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
-        // setPostModalShow(true);
+        setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
+        setPostModalShow(true);
       } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -157,6 +158,22 @@ export const NewOrder = ({props}) => {
   return ready && customers && products && (
     <>
       <Navbar />
+
+      {/* Post success or failure modal */}
+      <Modal size='sm' centered show={postModalShow} onHide={() => setPostModalShow(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title><BsFillInfoCircleFill />&nbsp;&nbsp;Aviso</Modal.Title>
+          </Modal.Header>
+            <Modal.Body>
+              <p>{postModalMessage}</p>
+            </Modal.Body>
+          <Modal.Footer>
+            <Button variant='secondary' onClick={() => setPostModalShow(false)}>
+              Cerrar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
       <Container>
         <h1>Nuevo pedido</h1>
         <hr/>
