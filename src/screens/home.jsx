@@ -12,21 +12,16 @@ require('moment/locale/es.js');
 
 const localizer = momentLocalizer(moment);
 const allViews = Object.keys(Views).map(k => Views[k]);
-const eventsCalendar = [];
-const eventsThisWeek = [];
-const eventsThisMonth = [];
-const eventsToday = [];
-var toCookMonth = {};
-const toCookMonthList = [];
-var toCookWeek = {};
-const toCookWeekList = [];
-var toCookDay = {};
-const toCookDayList = [];
 
 Date.prototype.getWeek = function(int) {
   var dt = new Date(this.getFullYear(),0,1);
   return Math.ceil((((this - dt) / 86400000) + dt.getDay()+1)/7);
 };
+
+Date.prototype.addHours = function(h) {
+  this.setTime(this.getTime() + (h*60*60*1000));
+  return this;
+}
 
 function compare(a, b) {
   // Use toUpperCase() to ignore character casing
@@ -63,82 +58,99 @@ const options = {
 
 export const Home = (props) => {
   const [ready, setReady] = useState(false);
-  const [toDoes, setToDoes] = useState(false);
-  const [currentView, setCurrentView] = useState("month");
+  const [events, setEvents] = useState(null);
+  const [orders, setOrders] = useState(null);
+  const [eventsWeek, setEventsWeek] = useState(null);
+  const [eventsMonth, setEventsMonth] = useState(null);
+  const [eventsToday, setEventsToday] = useState(null);
+  const [cookWeek, setCookWeek] = useState(null);
+  const [cookMonth, setCookMonth] = useState(null);
+  const [cookToday, setCookToday] = useState(null);
+  const [cook, setCook] = useState(null);
+  const [currentView, setCurrentView] = useState('month');
+  
+  const currentWeek = new Date(Date.now()).getWeek();
+  const currentMonth =  new Date(Date.now()).getMonth();
+  const today = new Date();
 
   useEffect(() => {
     axios(options).then(response => {
-      const currentWeek = new Date(Date.now()).getWeek();
-      const currentMonth = new Date(Date.now()).getMonth();
-      const today = new Date();
-      const events = response.data.message;
-      events.forEach(event => {
-        var startTime = new Date(event.order_date.replace(' ', 'T'));
-        var endTime = new Date(startTime.getTime());
-        endTime.setHours(endTime.getHours() + 4)
-        var e = {
-          id: 0,
+      const _orders = response.data.message;
+      const _eM = [];
+      const _eT = [];
+      const _eW = [];
+      const _events = [];
+      const _cM = {};
+      const _cT = {};
+      const _cW = {};
+      setOrders(_orders);
+
+      _orders.forEach(event => {
+        let startTime = new Date(event.order_date.replace(' ', 'T'));
+        let endTime = new Date(event.order_date.replace(' ', 'T')).addHours(4);
+        let e = {
+          id: event.order_id,
           title: event.order_event,
           start: startTime,
           end: endTime,
           notes: event.order_notes,
         }
         if (startTime.getWeek() == currentWeek && today.getFullYear() == startTime.getFullYear()){
-          
-          eventsThisWeek.push(e);
+          _eW.push(e);
           event.products.forEach(product => {
-            var str_product_name = product.product_name;
-            if (toCookWeek.hasOwnProperty(str_product_name)){
-              toCookWeek[str_product_name].amount += parseInt(product.amount);
-            }
-            else{
-              toCookWeek[str_product_name] = {};
-              toCookWeek[str_product_name].amount = parseInt(product.amount);
-              toCookWeek[str_product_name].measure = product.product_measure;
+            let productName = product.product_name;
+            if (_cW.hasOwnProperty(productName)) {
+              _cW[productName].amount += parseInt(product.amount);
+            } else {
+              _cW[productName] = {};
+              _cW[productName].amount = parseInt(product.amount);
+              _cW[productName].measure = product.product_measure;
             }
           })
         }
         if (startTime.getMonth() == currentMonth && today.getFullYear() == startTime.getFullYear()){
-          eventsThisMonth.push(e);
+          _eM.push(e);
           event.products.forEach(product => {
-            var str_product_name = product.product_name;
-            if (toCookMonth.hasOwnProperty(str_product_name)){
-              toCookMonth[str_product_name].amount += parseInt(product.amount);
-            }
-            else{
-              toCookMonth[str_product_name] = {};
-              toCookMonth[str_product_name].amount = parseInt(product.amount);
-              toCookMonth[str_product_name].measure = product.product_measure;
+            var productName = product.product_name;
+            if (_cM.hasOwnProperty(productName)){
+              _cM[productName].amount += parseInt(product.amount);
+            } else {
+              _cM[productName] = {};
+              _cM[productName].amount = parseInt(product.amount);
+              _cM[productName].measure = product.product_measure;
             }
           })
         }
         if (startTime.getDay() == today.getDay() && startTime.getWeek() == currentWeek && today.getFullYear() == startTime.getFullYear()){
-          eventsToday.push(e);
+          _eT.push(e);
           event.products.forEach(product => {
-            console.log(product);
-            var str_product_name = product.product_name;
-            console.log(str_product_name);
-            if (toCookDay.hasOwnProperty(str_product_name)){
-              toCookDay[str_product_name].amount += parseInt(product.amount);
-            }
-            else{
-              toCookDay[str_product_name] = {};
-              toCookDay[str_product_name].amount = parseInt(product.amount);
-              toCookDay[str_product_name].measure =  product.product_measure;
+            let productName = product.product_name;
+            if (_cT.hasOwnProperty(productName)){
+              _cT[productName].amount += parseInt(product.amount);
+            } else {
+              _cT[productName] = {};
+              _cT[productName].amount = parseInt(product.amount);
+              _cT[productName].measure =  product.product_measure;
             }
           })
         }
-        eventsCalendar.push(e);
+        _events.push(e);
       });
-      var toCookMonthList = toArrayOfObjects(toCookMonth);
-      var toCookWeekList = toArrayOfObjects(toCookWeek);
-      toCookMonthList.sort(compare);
-      toCookWeekList.sort(compare);
-      toCookDayList.sort(compare);
-      console.log("toCookMonthList", toCookMonthList);
-      console.log("events this month", toCookWeekList)
+      let _cMList = toArrayOfObjects(_cM);
+      let _cWList = toArrayOfObjects(_cW);
+      let _cTList = toArrayOfObjects(_cT);
+      _cMList.sort(compare);
+      _cWList.sort(compare);
+      _cTList.sort(compare);
+      
+      setEvents(_events);
+      setEventsMonth(_eM);
+      setEventsWeek(_eW);
+      setEventsToday(_eT);
+      setCookMonth(_cMList);
+      setCookWeek(_cWList);
+      setCookToday(_cTList);
       setReady(true);
-      setToDoes(true);
     }).catch(error => {
       console.log(error);
       setReady(true);
@@ -163,7 +175,7 @@ export const Home = (props) => {
             <Calendar
               onNavigate={(date) => console.log("Navigate" + date)}
               onView={(view) => setCurrentView(view)}
-              events={eventsCalendar}
+              events={events}
               startAccessor="start"
               endAccessor="end"
               onSelectEvent={(event, e) => console.log(event)}
@@ -179,11 +191,11 @@ export const Home = (props) => {
             />
           </Col>
 
-          <Col lg={3}>
+          { true && (<Col lg={3}>
             {
               currentView == 'month' && ( <>
                 <h4>Por cocinar: </h4>
-                { toDoes && toCookMonthList.map( (product, index) => {
+                { cookMonth && cookMonth.map( (product, index) => {
                   return(
                   <div>
                     {index}
@@ -193,7 +205,7 @@ export const Home = (props) => {
                 }
 
                 <h4> Este mes:</h4>
-                { eventsThisMonth && eventsThisMonth.map( (event, index) => (
+                { eventsMonth && eventsMonth.map( (event, index) => (
                     <div>
                       <h6>Evento {index+1}: {event.title}</h6>
                       <p>Notas: {event.notes}</p>
@@ -208,7 +220,7 @@ export const Home = (props) => {
                 currentView == 'week' && ( <>
 
                   <h4>Por cocinar: </h4>
-                  { toDoes && toCookWeekList.map( (product, index) => {
+                  { cookWeek && cookWeek.map( (product, index) => {
                   return(
                   <div>
                     {index}
@@ -218,7 +230,7 @@ export const Home = (props) => {
                 }
                   
                   <h4> Esta semana:</h4>
-                  {toDoes && eventsThisWeek.map(function (event, index){
+                  { eventsWeek && eventsWeek.map(function (event, index){
                     return(
                       <div>
                         <h6>Evento {index+1}: {event.title}</h6>
@@ -232,10 +244,10 @@ export const Home = (props) => {
               {
                 currentView == 'day' &&  ( <>
                   <h4>Por cocinar: </h4>
-                  { Object.keys(toCookDay).map(function(key) {
+                  { Object.keys(cookToday).map(function(key) {
                     return(
                       <div>
-                      {key}: {toCookDay[key].amount} {toCookDay[key].measure}
+                      {key}: {cookToday[key].amount} {cookToday[key].measure}
                     </div>
                     )
                       })
@@ -252,7 +264,7 @@ export const Home = (props) => {
                 </>)
               }
             
-          </Col>
+          </Col>)}
         </Row>
       </Container>
     </>

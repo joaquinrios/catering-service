@@ -69,14 +69,17 @@ export const NewOrder = ({props}) => {
   const onSubmitCreateOrder = (values) => {
     console.log(existingUser);
     console.log(values);
+    console.log(values.date);
+    const date = new Date(values.date);
+    const time = values.time.split(':')
+    date.setHours(time[0], time[1]);
+    console.log(date);
     const order = {
-      order_date: values.date,
+      order_date: date,
       order_event: values.eventName,
       recurring: values.frequent,
       order_notes: values.eventNotes,
-      // TODO
-      total_price: '42',
-      amount_paid: '42',
+      amount_paid: '0',
       customer_id: existingUser ? existingUser.customer_id : '',
       first_name: values.customerName,
       last_name: values.customerLastName,
@@ -99,7 +102,7 @@ export const NewOrder = ({props}) => {
       data: order
     };
 
-    axios(options).then((response) => {
+    false && axios(options).then((response) => {
       // TODO - Bobby ? modal ?
       // setPostModalMessage('El nuevo cliente se ha guardado con éxito.');
       // setPostModalShow(true);
