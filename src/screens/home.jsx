@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Button, Container, Row, Col, Form } from 'react-bootstrap';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css'
@@ -56,9 +56,12 @@ const options = {
   },
 };
 
+
+
 export const Home = (props) => {
   const [ready, setReady] = useState(false);
   const [events, setEvents] = useState(null);
+  const [filteredEvents, setFilteredEvents] = useState(null);
   const [orders, setOrders] = useState(null);
   const [eventsWeek, setEventsWeek] = useState(null);
   const [eventsMonth, setEventsMonth] = useState(null);
@@ -68,10 +71,26 @@ export const Home = (props) => {
   const [cookToday, setCookToday] = useState(null);
   const [cook, setCook] = useState(null);
   const [currentView, setCurrentView] = useState('month');
+  const [filteredStart, setFilteredStart] = useState(null);
+  const [filteredEnd, setFilteredEnd] = useState(null);
   
   const currentWeek = new Date(Date.now()).getWeek();
   const currentMonth =  new Date(Date.now()).getMonth();
   const today = new Date();
+
+  const endDateOnChange = (event) => {
+    const end = new Date(event.target.value);
+    setFilteredEnd(end);
+    let _filteredEvents = filteredStart ? events.filter(event => event.start >= filteredStart  && event.end <= end) : events.filter(event => event.end <= end);
+    setFilteredEvents(_filteredEvents);
+  };
+  
+  const startDateOnChange = (event) => {
+    const start = new Date(event.target.value);
+    setFilteredStart(start);
+    let _filteredEvents = filteredEnd ? events.filter(event => event.start >= start && event.end <= filteredEnd) : events.filter(event => event.start >= start);
+    setFilteredEvents(_filteredEvents);
+  };
 
   useEffect(() => {
     axios(options).then(response => {
@@ -144,6 +163,7 @@ export const Home = (props) => {
       _cTList.sort(compare);
       
       setEvents(_events);
+      setFilteredEvents(_events);
       setEventsMonth(_eM);
       setEventsWeek(_eW);
       setEventsToday(_eT);
@@ -172,10 +192,25 @@ export const Home = (props) => {
         <hr/>
         <Row>
           <Col lg={9} className='cs-calendar'>
+            <Row>
+              <Col lg={4}>
+                <Form.Group>
+                  <Form.Label>Desde:</Form.Label>
+                  <Form.Control type='date' onChange={startDateOnChange} />
+                </Form.Group>
+              </Col>
+              
+              <Col lg={4}>
+                <Form.Group>
+                  <Form.Label>Hasta:</Form.Label>
+                  <Form.Control type='date' onChange={endDateOnChange}/>
+                </Form.Group>
+              </Col>
+            </Row>
             <Calendar
               onNavigate={(date) => console.log("Navigate" + date)}
               onView={(view) => setCurrentView(view)}
-              events={events}
+              events={filteredEvents}
               startAccessor="start"
               endAccessor="end"
               onSelectEvent={(event, e) => console.log(event)}

@@ -10,6 +10,11 @@ import Autosuggest from 'react-autosuggest';
 
 import { Navbar } from '../components/navbar';
 
+Date.prototype.addDays = function(days) {
+  this.setDate(this.getDate() + parseInt(days));
+  return this;
+};
+
 export const NewOrder = ({props}) => {
   const [ready, setReady] = useState(false);
   const [customers, setCustomers] = useState([]);
@@ -69,13 +74,9 @@ export const NewOrder = ({props}) => {
   const onSubmitCreateOrder = (values) => {
     console.log(existingUser);
     console.log(values);
-    console.log(values.date);
-    const date = new Date(values.date);
-    const time = values.time.split(':')
-    date.setHours(time[0], time[1]);
-    console.log(date);
     const order = {
-      order_date: date,
+      order_date: values.date,
+      order_time: values.time,
       order_event: values.eventName,
       recurring: values.frequent,
       order_notes: values.eventNotes,
@@ -102,11 +103,11 @@ export const NewOrder = ({props}) => {
       data: order
     };
 
-    false && axios(options).then((response) => {
+    axios(options).then((response) => {
       // TODO - Bobby ? modal ?
       // setPostModalMessage('El nuevo cliente se ha guardado con éxito.');
       // setPostModalShow(true);
-      setTimeout(() => window.location.reload(), 2000);
+      // setTimeout(() => window.location.reload(), 2000);
     }).catch((error) => {
       if (error.response) {
         console.log(error.response);
