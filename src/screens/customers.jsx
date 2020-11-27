@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Accordion, Card, Modal, Form } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
+import { BsFillInfoCircleFill } from 'react-icons/bs';
 import axios from 'axios';
 
 import { Navbar } from '../components/navbar';
@@ -169,7 +170,7 @@ export const Customers = ({ navigate }) => {
           onHide={() => setPostModalShow(false)}
         >
           <Modal.Header closeButton>
-            <Modal.Title>Aviso</Modal.Title>
+            <Modal.Title><BsFillInfoCircleFill />&nbsp;&nbsp;Aviso</Modal.Title>
           </Modal.Header>
             <Modal.Body>
               <p>{postModalMessage}</p>
@@ -351,6 +352,13 @@ export const Customers = ({ navigate }) => {
                     </Card>
                   ))}
               </Accordion>
+            </Col>
+          </Row>
+
+          <hr />
+          <Row className='pt-1 pb-5'>
+            <Col >
+              {' '}
             </Col>
           </Row>
         </Container>
