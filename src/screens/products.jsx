@@ -28,6 +28,7 @@ export const Products = ({ navigate }) => {
   const [dishes, setDishes] = useState(null);
   const [filteredDishes, setFilteredDishes] = useState(null);
   const [sides, setSides] = useState(null);
+  const[seasonal, setSeasonal] = useState(null);
 
   const [image, setImage] = useState(null);
   const [product, setProduct] = useState(null);
@@ -204,9 +205,11 @@ export const Products = ({ navigate }) => {
       const _products = response.data.products;
       const _dishes = _products.filter(p => p.category === 'main')
       const _sides = _products.filter(p => p.category === 'side')
+      const _seasonal = _products.filter(p => p.category === 'seasonal')
       setDishes(_dishes);
       setFilteredDishes(_dishes);
       setSides(_sides);
+      setSeasonal(_seasonal);
       setProducts(_products);
       setReady(true);
     }).catch(error => {
@@ -470,12 +473,12 @@ export const Products = ({ navigate }) => {
 
               <Col lg={6} className='align-right'>
               <Form.Group>
-                <Form.Control type='text' placeholder='Buscar un plato fuerte' onChange={dishesFilterOnChange} />
+                <Form.Control type='text' placeholder='Buscar un plato de temporada' onChange={dishesFilterOnChange} />
               </Form.Group>
               </Col>
             </Row>
             <Accordion defaultActiveKey='0'>
-              { filteredDishes && filteredDishes.map((product, index) => (
+              { seasonal && seasonal.map((product, index) => (
                 <Card key={index}>
                   <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
                     <Row>
