@@ -126,6 +126,13 @@ export const Orders = (props) => {
             </Accordion>
           </Col>
         </Row>
+
+        <hr />
+          <Row className='pt-1 pb-5'>
+            <Col >
+              {' '}
+            </Col>
+          </Row>
       </Container>
     </>
   );

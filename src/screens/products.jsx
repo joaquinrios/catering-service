@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Accordion, Card, Modal, Form, Image, InputGroup } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
+import { BsFillInfoCircleFill } from 'react-icons/bs';
 import Toggle from 'react-toggle';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
@@ -27,6 +28,7 @@ export const Products = ({ navigate }) => {
   const [dishes, setDishes] = useState(null);
   const [filteredDishes, setFilteredDishes] = useState(null);
   const [sides, setSides] = useState(null);
+  const[seasonal, setSeasonal] = useState(null);
 
   const [image, setImage] = useState(null);
   const [product, setProduct] = useState(null);
@@ -203,9 +205,11 @@ export const Products = ({ navigate }) => {
       const _products = response.data.products;
       const _dishes = _products.filter(p => p.category === 'main')
       const _sides = _products.filter(p => p.category === 'side')
+      const _seasonal = _products.filter(p => p.category === 'seasonal')
       setDishes(_dishes);
       setFilteredDishes(_dishes);
       setSides(_sides);
+      setSeasonal(_seasonal);
       setProducts(_products);
       setReady(true);
     }).catch(error => {
@@ -223,7 +227,7 @@ export const Products = ({ navigate }) => {
       {/* Post success or failure modal */}
       <Modal size='sm' centered show={postModalShow} onHide={() => setPostModalShow(false)}>
           <Modal.Header closeButton>
-            <Modal.Title>Aviso</Modal.Title>
+            <Modal.Title><BsFillInfoCircleFill />&nbsp;&nbsp;Aviso</Modal.Title>
           </Modal.Header>
             <Modal.Body>
               <p>{postModalMessage}</p>
@@ -297,6 +301,7 @@ export const Products = ({ navigate }) => {
                           <Form.Control {...input} as='select' custom>
                             <option value='main'>Plato fuerte</option>
                             <option value='side'>Complemento</option>
+                            <option value='seasonal'>Platillo de temporada</option>
                           </Form.Control>
                         )}
                       </FinalFormField>
@@ -457,6 +462,68 @@ export const Products = ({ navigate }) => {
                 </Card>
               ))}
             </Accordion>
+          </Col>
+
+
+          <Col lg={8}>
+            <Row>
+              <Col lg={6}>
+                <h3>Platillos de temporada</h3>
+              </Col>
+
+              <Col lg={6} className='align-right'>
+              <Form.Group>
+                <Form.Control type='text' placeholder='Buscar un plato de temporada' onChange={dishesFilterOnChange} />
+              </Form.Group>
+              </Col>
+            </Row>
+            <Accordion defaultActiveKey='0'>
+              { seasonal && seasonal.map((product, index) => (
+                <Card key={index}>
+                  <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
+                    <Row>
+                      <Col lg={8}>
+                        <h4>{product.product_name}</h4>
+                      </Col>
+                      <Col className='align-right' lg={4}>
+                        <h4>$ {product.price} por {product.measure}</h4>
+                      </Col>
+                    </Row>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey={`${index}`}>
+                    <Card.Body>
+                      <Row>
+                        <Col lg={6}>
+                          <p>
+                            {product.description}
+                          </p>
+                        </Col>
+                        <Col lg={6}>
+                          <Image src={product.filename} fluid rounded/>
+                        </Col>
+                        <Col lg={12}><hr/></Col>
+                        <Col lg={6}>
+                          <h4>Precio por {product.measure}</h4>
+                        </Col>
+                        <Col lg={6} className='align-right'>
+                          <h4>$ {product.price}</h4>
+                        </Col>
+                        <Col lg={12} className='align-right'>
+                          <Button variant='primary' size='sm' onClick={() => prepareProduct(product.product_id)}> Editar producto </Button>
+                        </Col>
+                      </Row>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              ))}
+            </Accordion>
+          </Col>
+        </Row>
+
+        <hr />
+        <Row className='pt-1 pb-5'>
+          <Col >
+            {' '}
           </Col>
         </Row>
       </Container>

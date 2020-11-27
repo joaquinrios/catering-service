@@ -408,9 +408,13 @@ export const NewOrder = ({props}) => {
                     { values.products && values.products.length > 0 && (<h4> $ { getProductsSum(values.products)}</h4>)}
                   </Col>
 
-                  <Col lg={6} className='mb-5 mt-4'>
+                  <Col lg={12} className='mb-5 mt-4'>
                     <Button variant='success' size='lg' onClick={() => form.mutators.push('products', undefined)}>Añadir producto</Button> {' '}
                     <Button variant='danger' size='lg' onClick={(() => form.mutators.pop('products'))}>Borrar último producto</Button>
+                  </Col>
+
+                  <Col lg={6} className='mb-5 mt-4'>
+                    <Button variant='secondary' size='lg' href='/orders'>Cancelar</Button>
                   </Col>
 
                   <Col lg={6} className='mb-5 mt-4 align-right'>
