@@ -464,16 +464,20 @@ export const Landing = () => {
         <hr />
         <Row>
           <Col lg={5}>
-            <h3>[TODO - Bobby - change as requested by customer]]</h3>
-            <p>[Add contact info, social networks, phone number, button to make order]</p>
+            <h3>Pongámonos de acuerdo</h3>
+            <h5>¿Se acerca un evento imporante?</h5>
+            <p>Permítenos celebrar contigo. Dejarlo en manos de nosotros es como dejarlo en manos de uno de tus seres cercanos.</p>
+            <h5>Llámanos o envíanos un mensaje al:</h5>
+            <h4>(55) 1283 8823</h4>
+            <h5>O comienza por tu cuenta:</h5>
+            <p>Dale un vistazo a <a href='/menu'>nuestro menú.</a></p>
             <Button
                     variant='primary'
                     size='lg'
-                    // TODO: add handleSubmit, check with Joaquin data passing
-                    onClick={() => setOrderModalShow(true)}
+                    href='/order'
                   >
                     {' '}
-                    Continuar&nbsp;&nbsp; <BsArrowRight />{' '}
+                    Crea tu pedido&nbsp;&nbsp; <BsArrowRight />{' '}
                   </Button>
           </Col>
 
