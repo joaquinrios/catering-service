@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Button, Card, Image, Form, Modal } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
 import { BsArrowRight } from 'react-icons/bs';
+import { BiFoodMenu } from 'react-icons/bi';
+
 import axios from 'axios';
 
 import Carousel from 'react-multi-carousel';
@@ -466,17 +468,26 @@ export const Landing = () => {
             <h5>¿Se acerca un evento imporante?</h5>
             <p>Permítenos celebrar contigo. Dejarlo en manos de nosotros es como dejarlo en manos de uno de tus seres cercanos.</p>
             <h5>Llámanos o envíanos un mensaje al:</h5>
-            <h4>(55) 1283 8823</h4>
+            <h4 className='mb-3'>(55) 1283 8823</h4>
             <h5>O comienza por tu cuenta:</h5>
-            <p>Dale un vistazo a <a href='/catalog'>nuestro menú.</a></p>
+            <Button
+                    variant='primary'
+                    size='lg'
+                    href='/catalog'
+                    className='mt-2'
+                  >
+                    {' '}
+                    <BiFoodMenu />&nbsp;&nbsp; Dale un vistazo a nuestro menú...{' '}
+            </Button>
             <Button
                     variant='primary'
                     size='lg'
                     href='/order'
+                    className='mt-3'
                   >
                     {' '}
                     Crea tu pedido&nbsp;&nbsp; <BsArrowRight />{' '}
-                  </Button>
+            </Button>
           </Col>
 
           <Col lg={7}>
