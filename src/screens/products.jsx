@@ -358,6 +358,8 @@ export const Products = ({ navigate }) => {
           </Modal>
         )}
       </FinalForm>
+      
+      
       <Container>
         <Row>
           <Col lg={6} md={6}>

@@ -25,9 +25,7 @@ const staffImage2 =
   'https://images.pexels.com/photos/4057745/pexels-photo-4057745.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500';
 const staffImage3 =
   'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
-const carouselImgVertical =
-  'https://i.picsum.photos/id/362/200/300.jpg?hmac=YjZiJWaqrdKL4xFhgrjDw4Ic2tPzNLV975FWRb8td0s';
-const carouselImgHorizontal = 'https://i.picsum.photos/id/44/300/200.jpg?hmac=0hYINvSn1xgoUqgef_dkuO85gX7iT6TLDiVKLZ1tYU0';
+
 
 const responsive = {
   superLargeDesktop: {
@@ -470,7 +468,7 @@ export const Landing = () => {
             <h5>Llámanos o envíanos un mensaje al:</h5>
             <h4>(55) 1283 8823</h4>
             <h5>O comienza por tu cuenta:</h5>
-            <p>Dale un vistazo a <a href='/menu'>nuestro menú.</a></p>
+            <p>Dale un vistazo a <a href='/catalog'>nuestro menú.</a></p>
             <Button
                     variant='primary'
                     size='lg'

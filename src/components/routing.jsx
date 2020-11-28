@@ -9,6 +9,7 @@ import { Products } from '../screens/products';
 import { Customers } from '../screens/customers';
 import { Landing } from '../screens/landing';
 import { NewCustomerOrder } from '../screens/new_customer_order';
+import { Catalog } from '../screens/catalog';
 
 import { useAuth } from './auth_provider';
 
@@ -29,6 +30,7 @@ export const Routing = ({ navigate }) => {
           <Login path='/login' />
           <Landing path='/' />
           <NewCustomerOrder path='/order' />
+          <Catalog path='/catalog' />
         </>
       )}
     </Router>
