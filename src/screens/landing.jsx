@@ -119,6 +119,9 @@ export const Landing = () => {
                   ¡Manos a la obra!
                 </p>
                 <Button variant='success' href='/order'>
+                  No tengo correo :(
+                </Button>
+                <Button variant='success' href='/order'>
                   Vamos&nbsp;&nbsp;
                   <BsArrowRight />
                 </Button>
@@ -184,7 +187,7 @@ export const Landing = () => {
             <Button
               variant='primary'
               size='lg'
-              onClick={() => setOrderModalShow(true)}
+              href='/order'
             >
               Hacer mi pedido &nbsp; <BsArrowRight />
             </Button>

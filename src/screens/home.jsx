@@ -78,6 +78,10 @@ export const Home = (props) => {
   const currentMonth =  new Date(Date.now()).getMonth();
   const today = new Date();
 
+  const onClickReset = () => {
+    // TODO
+  }
+
   const endDateOnChange = (event) => {
     const end = new Date(event.target.value);
     setFilteredEnd(end);
@@ -206,6 +210,14 @@ export const Home = (props) => {
                   <Form.Control type='date' onChange={endDateOnChange}/>
                 </Form.Group>
               </Col>
+
+              {(filteredStart || filteredEnd) && (
+                <Col lg={4} className='mt-4 align-right'>
+                  <Button className='mt-2'>
+                  Limpiar campos
+                  </Button>
+                </Col>
+              )}
             </Row>
             <Calendar
               onNavigate={(date) => console.log("Navigate" + date)}
