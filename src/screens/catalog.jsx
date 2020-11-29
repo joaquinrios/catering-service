@@ -136,8 +136,8 @@ export const Catalog = () => {
                 {dishes &&
                   dishes.map((product, index) => (
                     <div>
-                      <Container className='card-container'>
-                        <Card key={index} className='carousel-card'>
+                      <Container>
+                        <Card key={index} className='text-center no-border'>
                           <Container>
                             {' '}
                             <Image src={product.filename} fluid />
@@ -152,17 +152,17 @@ export const Catalog = () => {
                             </Card.Title>
                             <Card.Body>
                               <Row>
-                                <Col lg={10}>
-                                  <p>{product.description}</p>
-                                </Col>
-                                <Col lg={12}>
-                                  <hr />
-                                </Col>
                                 <Col lg={6}>
                                   <h6>Precio por {product.measure}</h6>
                                 </Col>
                                 <Col lg={6} className="align-right">
                                   <h6>$ {product.price}</h6>
+                                </Col>
+                                <Col lg={12}>
+                                  <hr />
+                                </Col>
+                                <Col lg={10}>
+                                  <p>{product.description}</p>
                                 </Col>
                               </Row>
                             </Card.Body>
@@ -211,7 +211,7 @@ export const Catalog = () => {
                   seasonal.map((product, index) => (
                     <div>
                       <Container>
-                        <Card key={index}>
+                        <Card key={index} className='text-center no-border'>
                           <Container>
                             {' '}
                             <Image src={product.filename} fluid />
@@ -226,17 +226,17 @@ export const Catalog = () => {
                             </Card.Title>
                             <Card.Body>
                               <Row>
-                                <Col lg={10}>
-                                  <p>{product.description}</p>
-                                </Col>
-                                <Col lg={12}>
-                                  <hr />
-                                </Col>
                                 <Col lg={6}>
                                   <h6>Precio por {product.measure}</h6>
                                 </Col>
                                 <Col lg={6} className="align-right">
                                   <h6>$ {product.price}</h6>
+                                </Col>
+                                <Col lg={12}>
+                                  <hr />
+                                </Col>
+                                <Col lg={10}>
+                                  <p>{product.description}</p>
                                 </Col>
                               </Row>
                             </Card.Body>
@@ -284,7 +284,7 @@ export const Catalog = () => {
                   sides.map((product, index) => (
                     <div>
                       <Container>
-                        <Card key={index}>
+                        <Card key={index} className='text-center no-border'>
                           <Container>
                             {' '}
                             <Image src={product.filename} fluid />
@@ -299,17 +299,17 @@ export const Catalog = () => {
                             </Card.Title>
                             <Card.Body>
                               <Row>
-                                <Col lg={10}>
-                                  <p>{product.description}</p>
-                                </Col>
-                                <Col lg={12}>
-                                  <hr />
-                                </Col>
                                 <Col lg={6}>
                                   <h6>Precio por {product.measure}</h6>
                                 </Col>
                                 <Col lg={6} className="align-right">
                                   <h6>$ {product.price}</h6>
+                                </Col>
+                                <Col lg={12}>
+                                  <hr />
+                                </Col>
+                                <Col lg={10}>
+                                  <p>{product.description}</p>
                                 </Col>
                               </Row>
                             </Card.Body>

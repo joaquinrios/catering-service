@@ -60,12 +60,3 @@ code {
   object-fit: cover;
   width: 100%;
 }
-
-.cs-card-container card-container {
-  display: table;
-  width: 100%;
-}
-
-.cs-card carousel-card {
-  display: table-cell;
-}
