@@ -90,7 +90,7 @@ export const NewOrder = ({props}) => {
       phone: values.phone,
       street: values.street,
       city: values.city,
-      county: values.county,
+      county: values.neighborhood,
       state: values.state,
       zip_code: values.zipcode,
       products: values.products

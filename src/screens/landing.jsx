@@ -184,7 +184,7 @@ export const Landing = () => {
             <Button
               variant='primary'
               size='lg'
-              href='/order'
+              onClick={() => setOrderModalShow(true)}
             >
               Hacer mi pedido &nbsp; <BsArrowRight />
             </Button>
