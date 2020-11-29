@@ -6,7 +6,7 @@ import axios from 'axios';
 import arrayMutators from 'final-form-arrays';
 import Toggle from 'react-toggle';
 // import Autosuggest from 'react-autosuggest';
-import { BsFillPeopleFill, BsX } from 'react-icons/bs';
+import { BsFillPeopleFill, BsX, BsFillInfoCircleFill } from 'react-icons/bs';
 
 import { Navbar } from '../components/navbar';
 
@@ -14,6 +14,31 @@ export const NewCustomerOrder = ({props}) => {
   const [ready, setReady] = useState(false);
   const [products, setProducts] = useState([]);
   const [modalShow, setModalShow] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+
+  const successMessage = (
+    <>
+      <h5>Hemos recibido la información sobre tu pedido.</h5>
+      <p>
+        En Cocina Mary, darles a nuestros clientes la mejor
+        experiencia es lo que hacemos mejor, y para ti no será la
+        excepción.
+      </p>
+      <p>
+        Te llamaremos pronto para confirmar tu orden y platicar
+        detalles adicionales.
+      </p>
+    </>
+  )
+
+  const failureMessage = (
+    <>
+      <h5>Algo ha salido mal.</h5>
+      <p>Por favor, vuelve a intentar más tarde.</p>
+      <h5>Si el problema persiste, no dudes en contactarnos:</h5>
+      <h4>(55) 1283 8823</h4>
+    </>
+  )
 
   const getProductsSum = (selectedProducts) => {
     const ids = selectedProducts.map((product) => {
@@ -33,7 +58,58 @@ export const NewCustomerOrder = ({props}) => {
   // TODO: Bobby
   const onSubmitCreateCustomerOrder = (values) => {
     console.log('form submitted', values);
-    setModalShow(true);
+    const order = {
+      order_date: values.date,
+      order_time: values.time,
+      order_event: values.eventName,
+      recurring: values.frequent,
+      order_notes: values.eventNotes,
+      amount_paid: '0',
+      customer_id: '',
+      first_name: values.customerName,
+      last_name: values.customerLastName,
+      email: values.email,
+      phone: values.phone,
+      street: values.street,
+      city: values.city,
+      county: values.neighborhood,
+      state: values.state,
+      zip_code: values.zipcode,
+      products: values.products
+    };
+    const options = {
+      url: '/api/orders/newCustomer',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+      data: order
+    };
+    
+    axios(options).then((response) => {
+      setModalMessage(successMessage);
+      setModalShow(true);
+      setTimeout(() => window.location.reload(), 2000);
+    }).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+        setModalMessage(failureMessage);
+        setModalShow(true);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
+    });
+
+
+    
   };
 
   useEffect(() => {
@@ -65,22 +141,13 @@ export const NewCustomerOrder = ({props}) => {
         onHide={() => setModalShow(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title id='contained-modal-title-vcenter'>¡Listo!</Modal.Title>
+          <Modal.Title id='contained-modal-title-vcenter'><BsFillInfoCircleFill />&nbsp;&nbsp;Aviso</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Row>
-              <Col lg={8}>
-                <h5>Hemos recibido la información sobre tu pedido.</h5>
-                <p>
-                  En Cocina Mary, darles a nuestros clientes la mejor
-                  experiencia es lo que hacemos mejor, y para ti no será la
-                  excepción.
-                </p>
-                <p>
-                  Te llamaremos pronto para confirmar tu orden y platicar
-                  detalles adicionales.
-                </p>
+              <Col lg={12}>
+                <>{modalMessage}</>
               </Col>
             </Row>
           </Form>
@@ -175,13 +242,9 @@ export const NewCustomerOrder = ({props}) => {
                     </Col>
                     <Col lg={12}>
                       <h2>Qué quieren ordenar:</h2>
+                      <p>Utiliza los botones para ir agregando o eliminando productos de tu pedido.</p>
                     </Col>
-
-                  <Col lg={6} className='mt-5'><h2>Datos del pedido</h2></Col>
-                  <Col lg={6} className='align-right mt-5'>
-                    <Button variant='success' onClick={() => form.mutators.push('products', undefined)}>Añadir producto</Button> {' '}
-                    <Button variant='danger' onClick={(() => form.mutators.pop('products'))}>Borrar último producto</Button>
-                  </Col>
+                  <Col lg={12} className='mt-3'><h4>Productos en este pedido:</h4></Col>
 
                   <FinalFormFieldArray name='products'>
                     {({ fields }) => fields.map((field, index) => (<>
@@ -222,19 +285,23 @@ export const NewCustomerOrder = ({props}) => {
                         </Col>
                     </>))}
                   </FinalFormFieldArray>
+                  <Col lg={12} className='align-right mt-5'>
+                    <Button variant='success' onClick={() => form.mutators.push('products', undefined)}>Añadir producto</Button> {' '}
+                    <Button variant='danger' onClick={(() => form.mutators.pop('products'))}>Borrar último producto</Button>
+                  </Col>
 
-                  <Col lg={8} className='align-right'>
+                  <Col lg={8} className='align-right mt-4'>
                   { values.products && values.products.length > 0 && (<h4>Total: </h4>)}
                   </Col>
-                  <Col lg={4} className='align-right'>
+                  <Col lg={4} className='align-right mt-4'>
                     { values.products && values.products.length > 0 && (<h4> $ { getProductsSum(values.products)}</h4>)}
                   </Col>
 
                   <Col className='align-right'>
-                    <h4>
+                    <h5 className='mt-3'>
                       <BsFillPeopleFill />
                       &nbsp; Para [x] personas, recomendamos [x] kilos.
-                    </h4>
+                    </h5>
                   </Col>
 
                     <Col lg={12}>
@@ -372,7 +439,7 @@ export const NewCustomerOrder = ({props}) => {
                               <option />
                               <option>Tarjeta de débito/crédito</option>
                               <option>PayPal</option>
-                              <option>Transferencia</option>
+                              <option>Transferencia bancaria</option>
                             </Form.Control>
                           )}
                         </FinalFormField>

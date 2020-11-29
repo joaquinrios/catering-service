@@ -35,6 +35,7 @@ export const Navbar = (props) => {
                 </>
               ) : (
                 <> 
+                  <Nav.Link href='/catalog'>Menú</Nav.Link>
                   <Nav.Link href='#services'>Servicios</Nav.Link>
                   <Nav.Link href='#discounts'>Descuentos</Nav.Link>
                   <Nav.Link href='#about-us'>Nosotros</Nav.Link>

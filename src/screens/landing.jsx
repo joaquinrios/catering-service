@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Button, Card, Image, Form, Modal } from 'react-bootstrap';
 import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
 import { BsArrowRight } from 'react-icons/bs';
+import { BiFoodMenu } from 'react-icons/bi';
+
 import axios from 'axios';
 
 import Carousel from 'react-multi-carousel';
@@ -25,9 +27,7 @@ const staffImage2 =
   'https://images.pexels.com/photos/4057745/pexels-photo-4057745.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500';
 const staffImage3 =
   'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
-const carouselImgVertical =
-  'https://i.picsum.photos/id/362/200/300.jpg?hmac=YjZiJWaqrdKL4xFhgrjDw4Ic2tPzNLV975FWRb8td0s';
-const carouselImgHorizontal = 'https://i.picsum.photos/id/44/300/200.jpg?hmac=0hYINvSn1xgoUqgef_dkuO85gX7iT6TLDiVKLZ1tYU0';
+
 
 const responsive = {
   superLargeDesktop: {
@@ -184,7 +184,7 @@ export const Landing = () => {
             <Button
               variant='primary'
               size='lg'
-              href='/order'
+              onClick={() => setOrderModalShow(true)}
             >
               Hacer mi pedido &nbsp; <BsArrowRight />
             </Button>
@@ -464,17 +464,30 @@ export const Landing = () => {
         <hr />
         <Row>
           <Col lg={5}>
-            <h3>[TODO - Bobby - change as requested by customer]]</h3>
-            <p>[Add contact info, social networks, phone number, button to make order]</p>
+            <h3>Pongámonos de acuerdo</h3>
+            <h5>¿Se acerca un evento imporante?</h5>
+            <p>Permítenos celebrar contigo. Dejarlo en manos de nosotros es como dejarlo en manos de uno de tus seres cercanos.</p>
+            <h5>Llámanos o envíanos un mensaje al:</h5>
+            <h4 className='mb-3'>(55) 1283 8823</h4>
+            <h5>O comienza por tu cuenta:</h5>
             <Button
                     variant='primary'
                     size='lg'
-                    // TODO: add handleSubmit, check with Joaquin data passing
-                    onClick={() => setOrderModalShow(true)}
+                    href='/catalog'
+                    className='mt-2'
                   >
                     {' '}
-                    Continuar&nbsp;&nbsp; <BsArrowRight />{' '}
-                  </Button>
+                    <BiFoodMenu />&nbsp;&nbsp; Dale un vistazo a nuestro menú...{' '}
+            </Button>
+            <Button
+                    variant='primary'
+                    size='lg'
+                    href='/order'
+                    className='mt-3'
+                  >
+                    {' '}
+                    Crea tu pedido&nbsp;&nbsp; <BsArrowRight />{' '}
+            </Button>
           </Col>
 
           <Col lg={7}>
