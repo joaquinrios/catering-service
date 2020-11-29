@@ -119,6 +119,9 @@ export const Landing = () => {
                   ¡Manos a la obra!
                 </p>
                 <Button variant='success' href='/order'>
+                  No tengo correo :(
+                </Button>
+                <Button variant='success' href='/order'>
                   Vamos&nbsp;&nbsp;
                   <BsArrowRight />
                 </Button>
