@@ -79,7 +79,12 @@ export const Home = (props) => {
   const today = new Date();
 
   const onClickReset = () => {
-    // TODO
+    setFilteredEvents(events);
+    // clear start date form field
+    // clear end date form field
+    // de-render button
+    //  boolean variable?
+    //  is useState easier or overkill?
   }
 
   const endDateOnChange = (event) => {
@@ -213,7 +218,7 @@ export const Home = (props) => {
 
               {(filteredStart || filteredEnd) && (
                 <Col lg={4} className='mt-4 align-right'>
-                  <Button className='mt-2'>
+                  <Button className='mt-2' onClick={onClickReset}>
                   Limpiar campos
                   </Button>
                 </Col>
