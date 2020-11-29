@@ -251,6 +251,10 @@ export const NewCustomerOrder = ({ props }) => {
                       Si ya has ordenado con nosotros, con esto validamos que ya
                       no necesitamos pedirte nuevamente datos como tu dirección.
                     </p>
+                    <p>
+                      Si esta definitivamente es tu primera vez por aquí, solamente 
+                      da click en el botón de "Nunca he ordenado" para comenzar.
+                    </p>
                   </Col>
                 </Row>
               </Form>
