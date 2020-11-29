@@ -274,7 +274,6 @@ export const NewCustomerOrder = ({ props }) => {
       <Container>
         <h1>Nuevo pedido</h1>
         <hr />
-        <Row>
           <FinalForm
             onSubmit={onSubmitCreateCustomerOrder}
             initialValues={{ newUser: true }}
@@ -347,6 +346,7 @@ export const NewCustomerOrder = ({ props }) => {
                       </FinalFormField>
                     </Form.Group>
                   </Col>
+
                   <Col lg={12}>
                     <h2>Qué quieren ordenar:</h2>
                     <p>
@@ -635,13 +635,13 @@ export const NewCustomerOrder = ({ props }) => {
                     </Form.Group>
                   </Col>
                   <br />
-                  <Col lg={6}>
-                    <Button variant="secondary" size="lg" href="/">
+                  <Col lg={6} className='mt-4'>
+                    <Button variant="secondary" size='lg' href='/'>
                       Cancelar
                     </Button>
                   </Col>
-                  <Col lg={6} className="align-right">
-                    <Button variant="primary" size="lg" onClick={handleSubmit}>
+                  <Col lg={6} className='align-right mt-4'>
+                    <Button variant='primary' size='lg' onClick={handleSubmit}>
                       Guardar pedido
                     </Button>
                   </Col>
@@ -649,7 +649,7 @@ export const NewCustomerOrder = ({ props }) => {
               </Form>
             )}
           </FinalForm>
-        </Row>
+        
         <hr />
         <Row className="pt-1 pb-5">
           <Col className="bold">Cocina Mary © 2020</Col>
