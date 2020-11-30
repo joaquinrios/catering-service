@@ -73,6 +73,8 @@ export const Home = (props) => {
   const [currentView, setCurrentView] = useState('month');
   const [filteredStart, setFilteredStart] = useState(null);
   const [filteredEnd, setFilteredEnd] = useState(null);
+  const [formStart, setFormStart] = useState('');
+  const [formEnd, setFormEnd] = useState('');
   
   const currentWeek = new Date(Date.now()).getWeek();
   const currentMonth =  new Date(Date.now()).getMonth();
@@ -80,16 +82,16 @@ export const Home = (props) => {
 
   const onClickReset = () => {
     setFilteredEvents(events);
-    // clear start date form field
-    // clear end date form field
-    // de-render button
-    //  boolean variable?
-    //  is useState easier or overkill?
+    setFilteredStart('');
+    setFilteredEnd('');
+    setFormStart('');
+    setFormEnd('');
   }
 
   const endDateOnChange = (event) => {
     const end = new Date(event.target.value);
     setFilteredEnd(end);
+    setFormEnd(event.target.value);
     let _filteredEvents = filteredStart ? events.filter(event => event.start >= filteredStart  && event.end <= end) : events.filter(event => event.end <= end);
     setFilteredEvents(_filteredEvents);
   };
@@ -97,6 +99,7 @@ export const Home = (props) => {
   const startDateOnChange = (event) => {
     const start = new Date(event.target.value);
     setFilteredStart(start);
+    setFormStart(event.target.value);
     let _filteredEvents = filteredEnd ? events.filter(event => event.start >= start && event.end <= filteredEnd) : events.filter(event => event.start >= start);
     setFilteredEvents(_filteredEvents);
   };
@@ -205,14 +208,14 @@ export const Home = (props) => {
               <Col lg={4}>
                 <Form.Group>
                   <Form.Label>Desde:</Form.Label>
-                  <Form.Control type='date' onChange={startDateOnChange} />
+                  <Form.Control type='date' value={formStart} onChange={startDateOnChange} />
                 </Form.Group>
               </Col>
               
               <Col lg={4}>
                 <Form.Group>
                   <Form.Label>Hasta:</Form.Label>
-                  <Form.Control type='date' onChange={endDateOnChange}/>
+                  <Form.Control type='date' value={formEnd} onChange={endDateOnChange}/>
                 </Form.Group>
               </Col>
 
