@@ -98,17 +98,26 @@ export const NewCustomerOrder = ({ props }) => {
       });
   };
 
-  // TODO: Bobby
   const onSubmitCreateCustomerOrder = (values) => {
     // console.log('form submitted', values);
-    const order = {
+    let order;
+    userID > 0 ? order = {
       order_date: values.date,
       order_time: values.time,
       order_event: values.eventName,
       recurring: values.frequent,
       order_notes: values.eventNotes,
       amount_paid: '0',
-      customer_id: '',
+      customer_id: userID,
+      products: values.products
+    } : order = {
+      order_date: values.date,
+      order_time: values.time,
+      order_event: values.eventName,
+      recurring: values.frequent,
+      order_notes: values.eventNotes,
+      amount_paid: '0',
+      customer_id: -1,
       first_name: values.customerName,
       last_name: values.customerLastName,
       email: values.email,
@@ -118,10 +127,10 @@ export const NewCustomerOrder = ({ props }) => {
       county: values.neighborhood,
       state: values.state,
       zip_code: values.zipcode,
-      products: values.products,
-    };
+      products: values.products
+    }
     const options = {
-      url: '/api/orders/newCustomer',
+      url: userID > 0 ? '/api/orders/' : '/api/orders/newCustomer',
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -134,7 +143,7 @@ export const NewCustomerOrder = ({ props }) => {
       .then((response) => {
         setPostModalMessage(successMessage);
         setPostModalShow(true);
-        setTimeout(() => window.location.reload(), 2000);
+        setTimeout(() => window.location.href = '/', 2000);
       })
       .catch((error) => {
         if (error.response) {
@@ -218,6 +227,7 @@ export const NewCustomerOrder = ({ props }) => {
             aria-labelledby="contained-modal-title-vcenter"
             centered
             show={validationModalShow}
+            onHide={() => setValidationModalShow(true)}
           >
             <Modal.Header>
               <Modal.Title id="contained-modal-title-vcenter">
@@ -260,7 +270,7 @@ export const NewCustomerOrder = ({ props }) => {
               </Form>
             </Modal.Body>
             <Modal.Footer>
-            <Button variant="secondary" onClick={closeValidationModal}>
+            <Button variant="secondary" onClick={handleSubmit}>
                 Nunca he ordenado
               </Button>
               <Button variant="success" onClick={handleSubmit}>

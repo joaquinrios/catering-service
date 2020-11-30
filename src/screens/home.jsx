@@ -73,18 +73,25 @@ export const Home = (props) => {
   const [currentView, setCurrentView] = useState('month');
   const [filteredStart, setFilteredStart] = useState(null);
   const [filteredEnd, setFilteredEnd] = useState(null);
+  const [formStart, setFormStart] = useState('');
+  const [formEnd, setFormEnd] = useState('');
   
   const currentWeek = new Date(Date.now()).getWeek();
   const currentMonth =  new Date(Date.now()).getMonth();
   const today = new Date();
 
   const onClickReset = () => {
-    // TODO
+    setFilteredEvents(events);
+    setFilteredStart('');
+    setFilteredEnd('');
+    setFormStart('');
+    setFormEnd('');
   }
 
   const endDateOnChange = (event) => {
     const end = new Date(event.target.value);
     setFilteredEnd(end);
+    setFormEnd(event.target.value);
     let _filteredEvents = filteredStart ? events.filter(event => event.start >= filteredStart  && event.end <= end) : events.filter(event => event.end <= end);
     setFilteredEvents(_filteredEvents);
   };
@@ -92,6 +99,7 @@ export const Home = (props) => {
   const startDateOnChange = (event) => {
     const start = new Date(event.target.value);
     setFilteredStart(start);
+    setFormStart(event.target.value);
     let _filteredEvents = filteredEnd ? events.filter(event => event.start >= start && event.end <= filteredEnd) : events.filter(event => event.start >= start);
     setFilteredEvents(_filteredEvents);
   };
@@ -200,20 +208,20 @@ export const Home = (props) => {
               <Col lg={4}>
                 <Form.Group>
                   <Form.Label>Desde:</Form.Label>
-                  <Form.Control type='date' onChange={startDateOnChange} />
+                  <Form.Control type='date' value={formStart} onChange={startDateOnChange} />
                 </Form.Group>
               </Col>
               
               <Col lg={4}>
                 <Form.Group>
                   <Form.Label>Hasta:</Form.Label>
-                  <Form.Control type='date' onChange={endDateOnChange}/>
+                  <Form.Control type='date' value={formEnd} onChange={endDateOnChange}/>
                 </Form.Group>
               </Col>
 
               {(filteredStart || filteredEnd) && (
                 <Col lg={4} className='mt-4 align-right'>
-                  <Button className='mt-2'>
+                  <Button className='mt-2' onClick={onClickReset}>
                   Limpiar campos
                   </Button>
                 </Col>
