@@ -6,15 +6,17 @@ import axios from 'axios';
 import arrayMutators from 'final-form-arrays';
 import Toggle from 'react-toggle';
 import { BsFillPeopleFill, BsX, BsFillInfoCircleFill, BsFillPersonCheckFill } from 'react-icons/bs';
+import { RiUserSearchLine, RiUserHeartLine } from 'react-icons/ri';
 
 import { Navbar } from '../components/navbar';
 
 export const NewCustomerOrder = ({ props }) => {
   const [ready, setReady] = useState(false);
   const [products, setProducts] = useState([]);
+  const [validationModalShow, setValidationModalShow] = useState(true);
+  const [notifyModalShow, setNotifyModalShow] = useState(false);
   const [postModalShow, setPostModalShow] = useState(false);
   const [postModalMessage, setPostModalMessage] = useState('');
-  const [validationModalShow, setValidationModalShow] = useState(true);
   const [userID, setUserID] = useState(null);
 
   const successMessage = (
@@ -40,6 +42,11 @@ export const NewCustomerOrder = ({ props }) => {
     </>
   );
 
+  const closeModals = () => {
+    setNotifyModalShow(false);
+    setValidationModalShow(false);
+  };
+
   const getProductsSum = (selectedProducts) => {
     const ids = selectedProducts.map((product) => {
       if (product !== undefined && product.hasOwnProperty('id')) {
@@ -55,11 +62,6 @@ export const NewCustomerOrder = ({ props }) => {
     });
     return total;
   };
-
-  const closeValidationModal = () => {
-    setUserID(-1);
-    setValidationModalShow(false);
-  }
 
   const validateEmail = (values) => {
     const emailToCheck = {
@@ -78,7 +80,7 @@ export const NewCustomerOrder = ({ props }) => {
     axios(options)
       .then((response) => {
         setUserID(response.data.customer_id);
-        setValidationModalShow(false);
+        setNotifyModalShow(true);
       })
       .catch((error) => {
         if (error.response) {
@@ -101,36 +103,38 @@ export const NewCustomerOrder = ({ props }) => {
   const onSubmitCreateCustomerOrder = (values) => {
     // console.log('form submitted', values);
     let order;
-    userID > 0 ? order = {
-      order_date: values.date,
-      order_time: values.time,
-      order_event: values.eventName,
-      persons: values.persons,
-      recurring: values.frequent,
-      order_notes: values.eventNotes,
-      amount_paid: '0',
-      customer_id: userID,
-      products: values.products
-    } : order = {
-      order_date: values.date,
-      order_time: values.time,
-      order_event: values.eventName,
-      persons: values.persons,
-      recurring: values.frequent,
-      order_notes: values.eventNotes,
-      amount_paid: '0',
-      customer_id: -1,
-      first_name: values.customerName,
-      last_name: values.customerLastName,
-      email: values.email,
-      phone: values.phone,
-      street: values.street,
-      city: values.city,
-      county: values.neighborhood,
-      state: values.state,
-      zip_code: values.zipcode,
-      products: values.products
-    }
+    userID > 0
+      ? (order = {
+          order_date: values.date,
+          order_time: values.time,
+          order_event: values.eventName,
+          persons: values.persons,
+          recurring: values.frequent,
+          order_notes: values.eventNotes,
+          amount_paid: '0',
+          customer_id: userID,
+          products: values.products,
+        })
+      : (order = {
+          order_date: values.date,
+          order_time: values.time,
+          order_event: values.eventName,
+          persons: values.persons,
+          recurring: values.frequent,
+          order_notes: values.eventNotes,
+          amount_paid: '0',
+          customer_id: -1,
+          first_name: values.customerName,
+          last_name: values.customerLastName,
+          email: values.email,
+          phone: values.phone,
+          street: values.street,
+          city: values.city,
+          county: values.neighborhood,
+          state: values.state,
+          zip_code: values.zipcode,
+          products: values.products,
+        });
     const options = {
       url: userID > 0 ? '/api/orders/' : '/api/orders/newCustomer',
       method: 'POST',
@@ -145,7 +149,7 @@ export const NewCustomerOrder = ({ props }) => {
       .then((response) => {
         setPostModalMessage(successMessage);
         setPostModalShow(true);
-        setTimeout(() => window.location.href = '/', 2000);
+        setTimeout(() => (window.location.href = '/'), 2000);
       })
       .catch((error) => {
         if (error.response) {
@@ -187,6 +191,108 @@ export const NewCustomerOrder = ({ props }) => {
     <>
       <Navbar />
 
+      {/* Notify valid email modal */}
+      <Modal
+        size="sm"
+        centered
+        show={notifyModalShow}
+        onHide={() => setPostModalShow(false)}
+      >
+        <Modal.Header>
+          <Modal.Title>
+            <RiUserHeartLine />&nbsp;&nbsp;
+            {userID > 0 ? (
+            <>
+              ¡Hola de nuevo!
+            </>
+          ) : (
+            <>
+              ¡Bienvenido!
+            </>
+          )}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {userID > 0 ? (
+            <>
+              <h5 className='text-center'>Qué bueno es verte de vuelta.</h5>
+            </>
+          ) : (
+            <>
+              <h5 className='text-center'>No podemos esperar para deleitarte con nuestros sabores.</h5>
+            </>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => closeModals()}>
+            ¡A ordenar!
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Email vaidation modal */}
+      <FinalForm onSubmit={validateEmail}>
+        {({ handleSubmit, submitting, values }) => (
+          <Modal
+            size="md"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={validationModalShow}
+            onHide={() => setValidationModalShow(true)}
+          >
+            <Modal.Header>
+              <Modal.Title id="contained-modal-title-vcenter">
+                <RiUserSearchLine />
+                &nbsp;&nbsp;Hola... ¿de nuevo?
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Row>
+                  <Col lg={12}>
+                    <h5>
+                      Antes de continuar, necesitamos validar si estás de
+                      regreso o es tu primera vez por aquí.
+                    </h5>
+                    <Form.Group>
+                      <Form.Label>
+                        Ingresa tu dirección de correo a continuación:
+                      </Form.Label>
+                      <FinalFormField name="email">
+                        {({ input }) => (
+                          <Form.Control
+                            {...input}
+                            type="text"
+                            placeholder="i.e. joaquin@rios.com"
+                          />
+                        )}
+                      </FinalFormField>
+                    </Form.Group>
+                    <p>
+                      Si ya has ordenado con nosotros, con esto validamos que ya
+                      no necesitamos pedirte nuevamente datos como tu dirección.
+                    </p>
+                    <p>
+                      Si esta definitivamente es tu primera vez por aquí,
+                      solamente da click en el botón de "Nunca he ordenado" para
+                      comenzar.
+                    </p>
+                  </Col>
+                </Row>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleSubmit}>
+                Nunca he ordenado
+              </Button>
+              <Button variant="success" onClick={handleSubmit}>
+                Validar correo
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        )}
+      </FinalForm>
+
       {/* Order received modal */}
       <Modal
         size="md"
@@ -221,447 +327,381 @@ export const NewCustomerOrder = ({ props }) => {
         </Modal.Footer>
       </Modal>
 
-      {/* Email vaidation modal */}
-      <FinalForm onSubmit={validateEmail}>
-        {({ handleSubmit, submitting, values }) => (
-          <Modal
-            size="md"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            show={validationModalShow}
-            onHide={() => setValidationModalShow(true)}
-          >
-            <Modal.Header>
-              <Modal.Title id="contained-modal-title-vcenter">
-                <BsFillPersonCheckFill />
-                &nbsp;&nbsp;Hola... ¿de nuevo?
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form>
-                <Row>
-                  <Col lg={12}>
-                    <h5>
-                      Antes de continuar, necesitamos validar si estás de
-                      regreso o es tu primera vez por aquí.
-                    </h5>
-                    <Form.Group>
-                      <Form.Label>
-                        Ingresa tu dirección de correo a continuación:
-                      </Form.Label>
-                      <FinalFormField name="email">
-                        {({ input }) => (
-                          <Form.Control
-                            {...input}
-                            type="text"
-                            placeholder="i.e. joaquin@rios.com"
-                          />
-                        )}
-                      </FinalFormField>
-                    </Form.Group>
-                    <p>
-                      Si ya has ordenado con nosotros, con esto validamos que ya
-                      no necesitamos pedirte nuevamente datos como tu dirección.
-                    </p>
-                    <p>
-                      Si esta definitivamente es tu primera vez por aquí, solamente 
-                      da click en el botón de "Nunca he ordenado" para comenzar.
-                    </p>
-                  </Col>
-                </Row>
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-            <Button variant="secondary" onClick={handleSubmit}>
-                Nunca he ordenado
-              </Button>
-              <Button variant="success" onClick={handleSubmit}>
-                Validar correo
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        )}
-      </FinalForm>
-
       <Container>
         <h1>Nuevo pedido</h1>
         <hr />
-          <FinalForm
-            onSubmit={onSubmitCreateCustomerOrder}
-            initialValues={{ newUser: true }}
-            mutators={{ ...arrayMutators }}
-          >
-            {({ handleSubmit, submitting, values, form }) => (
-              <Form>
-                <Row>
-                  <Col lg={12}>
-                    <h2>Información del evento</h2>
-                  </Col>
-                  <Col lg={7}>
-                    <Form.Group>
-                      <Form.Label>Nombre del evento</Form.Label>
-                      <FinalFormField name="eventName">
-                        {({ input }) => (
-                          <Form.Control {...input} type="text" size="lg" />
-                        )}
-                      </FinalFormField>
-                    </Form.Group>
+        <FinalForm
+          onSubmit={onSubmitCreateCustomerOrder}
+          initialValues={{ newUser: true }}
+          mutators={{ ...arrayMutators }}
+        >
+          {({ handleSubmit, submitting, values, form }) => (
+            <Form>
+              <Row>
+                <Col lg={12}>
+                  <h2>Información del evento</h2>
+                </Col>
+                <Col lg={7}>
+                  <Form.Group>
+                    <Form.Label>Nombre del evento</Form.Label>
+                    <FinalFormField name="eventName">
+                      {({ input }) => (
+                        <Form.Control {...input} type="text" size="lg" />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
 
-                    <Form.Group>
-                      <Form.Label>Fecha</Form.Label>
-                      <FinalFormField name="date">
-                        {({ input }) => (
-                          <Form.Control {...input} type="date" size="lg" />
-                        )}
-                      </FinalFormField>
-                    </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Fecha</Form.Label>
+                    <FinalFormField name="date">
+                      {({ input }) => (
+                        <Form.Control {...input} type="date" size="lg" />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
 
-                    <Form.Group>
-                      <Form.Label>Hora de llegada</Form.Label>
-                      <FinalFormField name="time">
-                        {({ input }) => (
-                          <Form.Control {...input} type="time" size="lg" />
-                        )}
-                      </FinalFormField>
-                    </Form.Group>
-                  </Col>
+                  <Form.Group>
+                    <Form.Label>Hora de llegada</Form.Label>
+                    <FinalFormField name="time">
+                      {({ input }) => (
+                        <Form.Control {...input} type="time" size="lg" />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
+                </Col>
 
-                  <Col lg={5}>
-                    <Form.Group>
-                      <Form.Label>Personas</Form.Label>
-                      <FinalFormField name="persons">
-                        {({ input }) => (
-                          <Form.Control {...input} type="number" size="lg" />
-                        )}
-                      </FinalFormField>
-                    </Form.Group>
+                <Col lg={5}>
+                  <Form.Group>
+                    <Form.Label>Personas</Form.Label>
+                    <FinalFormField name="persons">
+                      {({ input }) => (
+                        <Form.Control {...input} type="number" size="lg" />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
 
-                    <Form.Group>
-                      <Form.Label>Notas:</Form.Label>
-                      <FinalFormField name="eventNotes">
-                        {({ input }) => (
-                          <Form.Control {...input} type="textarea" size="lg" />
-                        )}
-                      </FinalFormField>
-                    </Form.Group>
+                  <Form.Group>
+                    <Form.Label>Notas:</Form.Label>
+                    <FinalFormField name="eventNotes">
+                      {({ input }) => (
+                        <Form.Control {...input} type="textarea" size="lg" />
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
 
-                    <Form.Group>
-                      <Form.Label>¿Tu evento es recurrente?</Form.Label>
-                      <FinalFormField name="frequent" type="checkbox">
-                        {({ input }) => (
-                          <Row>
-                            <Col>
-                              <Toggle {...input} />
-                            </Col>
-                          </Row>
-                        )}
-                      </FinalFormField>
-                    </Form.Group>
-                  </Col>
-
-                  <Col lg={12}>
-                    <h2>Qué quieren ordenar:</h2>
-                    <p>
-                      Utiliza los botones para ir agregando o eliminando
-                      productos de tu pedido.
-                    </p>
-                  </Col>
-                  <Col lg={12} className="mt-3">
-                    <h4>Productos en este pedido:</h4>
-                  </Col>
-
-                  <FinalFormFieldArray name="products">
-                    {({ fields }) =>
-                      fields.map((field, index) => (
-                        <>
-                          <Col lg={6}>
-                            <Form.Group>
-                              <Form.Label>Producto</Form.Label>
-                              <FinalFormField
-                                name={`${field}.id`}
-                                component="select"
-                              >
-                                {({ input }) => (
-                                  <Form.Control
-                                    {...input}
-                                    as="select"
-                                    size="lg"
-                                    custom
-                                  >
-                                    <option />
-                                    {products.map((product, index) => {
-                                      return (
-                                        <option
-                                          key={`${index}`}
-                                          value={`${product.product_id}`}
-                                        >
-                                          {product.product_name}{' '}
-                                        </option>
-                                      );
-                                    })}
-                                  </Form.Control>
-                                )}
-                              </FinalFormField>
-                            </Form.Group>
+                  <Form.Group>
+                    <Form.Label>¿Tu evento es recurrente?</Form.Label>
+                    <FinalFormField name="frequent" type="checkbox">
+                      {({ input }) => (
+                        <Row>
+                          <Col>
+                            <Toggle {...input} />
                           </Col>
+                        </Row>
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
+                </Col>
 
-                          <Col lg={2}>
-                            <Form.Group>
-                              <Form.Label>Cantidad</Form.Label>
-                              <FinalFormField
-                                name={`${field}.quantity`}
-                                initialValue={1}
-                              >
-                                {({ input }) => (
-                                  <Form.Control
-                                    {...input}
-                                    type="number"
-                                    size="lg"
-                                  />
-                                )}
-                              </FinalFormField>
-                            </Form.Group>
-                          </Col>
+                <Col lg={12}>
+                  <h2>Qué quieren ordenar:</h2>
+                  <p>
+                    Utiliza los botones para ir agregando o eliminando productos
+                    de tu pedido.
+                  </p>
+                </Col>
+                <Col lg={12} className="mt-3">
+                  <h4>Productos en este pedido:</h4>
+                </Col>
 
-                          <Col lg={1} className="mt-4">
-                            <BsX
-                              size={32}
-                              className="text-danger cursor"
-                              onClick={() => {
-                                fields.remove(index);
-                              }}
-                            />
-                          </Col>
+                <FinalFormFieldArray name="products">
+                  {({ fields }) =>
+                    fields.map((field, index) => (
+                      <>
+                        <Col lg={6}>
+                          <Form.Group>
+                            <Form.Label>Producto</Form.Label>
+                            <FinalFormField
+                              name={`${field}.id`}
+                              component="select"
+                            >
+                              {({ input }) => (
+                                <Form.Control
+                                  {...input}
+                                  as="select"
+                                  size="lg"
+                                  custom
+                                >
+                                  <option />
+                                  {products.map((product, index) => {
+                                    return (
+                                      <option
+                                        key={`${index}`}
+                                        value={`${product.product_id}`}
+                                      >
+                                        {product.product_name}{' '}
+                                      </option>
+                                    );
+                                  })}
+                                </Form.Control>
+                              )}
+                            </FinalFormField>
+                          </Form.Group>
+                        </Col>
 
-                          <Col lg={3} className="align-right">
-                            <Form.Group>
-                              <Form.Label></Form.Label>
-                              {values.products[index] &&
-                                values.products[index].id && (
-                                  <h4>
-                                    {parseFloat(
-                                      values.products[index].quantity
-                                    )}{' '}
-                                    *{' '}
-                                    {
-                                      products.find(
-                                        (p) =>
-                                          p.product_id ==
-                                          values.products[index].id
-                                      ).price
-                                    }{' '}
-                                    = ${' '}
-                                    {parseFloat(
-                                      products.find(
-                                        (p) =>
-                                          p.product_id ==
-                                          values.products[index].id
-                                      ).price
-                                    ) *
-                                      parseFloat(
-                                        values.products[index].quantity
-                                      )}
-                                  </h4>
-                                )}
-                            </Form.Group>
-                          </Col>
-                        </>
-                      ))
-                    }
-                  </FinalFormFieldArray>
-                  <Col lg={12} className="align-right mt-5">
-                    <Button
-                      variant="success"
-                      onClick={() => form.mutators.push('products', undefined)}
-                    >
-                      Añadir producto
-                    </Button>{' '}
-                    <Button
-                      variant="danger"
-                      onClick={() => form.mutators.pop('products')}
-                    >
-                      Borrar último producto
-                    </Button>
-                  </Col>
+                        <Col lg={2}>
+                          <Form.Group>
+                            <Form.Label>Cantidad</Form.Label>
+                            <FinalFormField
+                              name={`${field}.quantity`}
+                              initialValue={1}
+                            >
+                              {({ input }) => (
+                                <Form.Control
+                                  {...input}
+                                  type="number"
+                                  size="lg"
+                                />
+                              )}
+                            </FinalFormField>
+                          </Form.Group>
+                        </Col>
 
-                  <Col lg={8} className="align-right mt-4">
-                    {values.products && values.products.length > 0 && (
-                      <h4>Total: </h4>
-                    )}
-                  </Col>
-                  <Col lg={4} className="align-right mt-4">
-                    {values.products && values.products.length > 0 && (
-                      <h4> $ {getProductsSum(values.products)}</h4>
-                    )}
-                  </Col>
+                        <Col lg={1} className="mt-4">
+                          <BsX
+                            size={32}
+                            className="text-danger cursor"
+                            onClick={() => {
+                              fields.remove(index);
+                            }}
+                          />
+                        </Col>
 
-                  <Col className="align-right">
-                    <h5 className="mt-3">
-                      <BsFillPeopleFill />
-                      &nbsp; Para [x] personas, recomendamos [x] kilos.
-                    </h5>
-                  </Col>
+                        <Col lg={3} className="align-right">
+                          <Form.Group>
+                            <Form.Label></Form.Label>
+                            {values.products[index] &&
+                              values.products[index].id && (
+                                <h4>
+                                  {parseFloat(values.products[index].quantity)}{' '}
+                                  *{' '}
+                                  {
+                                    products.find(
+                                      (p) =>
+                                        p.product_id ==
+                                        values.products[index].id
+                                    ).price
+                                  }{' '}
+                                  = ${' '}
+                                  {parseFloat(
+                                    products.find(
+                                      (p) =>
+                                        p.product_id ==
+                                        values.products[index].id
+                                    ).price
+                                  ) *
+                                    parseFloat(values.products[index].quantity)}
+                                </h4>
+                              )}
+                          </Form.Group>
+                        </Col>
+                      </>
+                    ))
+                  }
+                </FinalFormFieldArray>
+                <Col lg={12} className="align-right mt-5">
+                  <Button
+                    variant="success"
+                    onClick={() => form.mutators.push('products', undefined)}
+                  >
+                    Añadir producto
+                  </Button>{' '}
+                  <Button
+                    variant="danger"
+                    onClick={() => form.mutators.pop('products')}
+                  >
+                    Borrar último producto
+                  </Button>
+                </Col>
 
-                  {userID < 0 && (
-                    <>
-                      <Col lg={12}>
-                        <h2>Tu información:</h2>
-                      </Col>
-                      <Col lg={6}>
-                        <Form.Group>
-                          <Form.Label>Nombre</Form.Label>
-                          <FinalFormField name="customerName">
-                            {({ input }) => (
-                              <Form.Control {...input} type="text" size="lg" />
-                            )}
-                          </FinalFormField>
-                        </Form.Group>
-
-                        <Form.Group>
-                          <Form.Label>Apellidos</Form.Label>
-                          <FinalFormField name="customerLastName">
-                            {({ input }) => (
-                              <Form.Control {...input} type="text" size="lg" />
-                            )}
-                          </FinalFormField>
-                        </Form.Group>
-                      </Col>
-                      <Col lg={6}>
-                        <Form.Group>
-                          <Form.Label>Teléfono</Form.Label>
-                          <FinalFormField name="phone">
-                            {({ input }) => (
-                              <Form.Control {...input} type="text" size="lg" />
-                            )}
-                          </FinalFormField>
-                        </Form.Group>
-                        <Form.Group>
-                          <Form.Label>Correo electrónico</Form.Label>
-                          <FinalFormField name="email">
-                            {({ input }) => (
-                              <Form.Control {...input} type="text" size="lg" />
-                            )}
-                          </FinalFormField>
-                        </Form.Group>
-                      </Col>
-
-                      <Col lg={12}>
-                        <h4>Dirección:</h4>
-                        <Form.Group>
-                          <Form.Label>Calle</Form.Label>
-                          <FinalFormField name="street">
-                            {({ input }) => (
-                              <Form.Control
-                                {...input}
-                                type="text"
-                                size="lg"
-                                placeholder="i.e. C Dr Mora 9"
-                              />
-                            )}
-                          </FinalFormField>
-                        </Form.Group>
-                      </Col>
-                      <Col lg={6}>
-                        <Form.Group>
-                          <Form.Label>Colonia</Form.Label>
-                          <FinalFormField name="neighborhood">
-                            {({ input }) => (
-                              <Form.Control
-                                {...input}
-                                type="text"
-                                size="lg"
-                                placeholder="i.e. Centro"
-                              />
-                            )}
-                          </FinalFormField>
-                        </Form.Group>
-                      </Col>
-
-                      <Col lg={6}>
-                        <Form.Group>
-                          <Form.Label>Alcaldía / Municipio</Form.Label>
-                          <FinalFormField name="city">
-                            {({ input }) => (
-                              <Form.Control
-                                {...input}
-                                type="text"
-                                size="lg"
-                                placeholder="i.e. Cuauhtémoc"
-                              />
-                            )}
-                          </FinalFormField>
-                        </Form.Group>
-                      </Col>
-
-                      <Col lg={6}>
-                        <Form.Group>
-                          <Form.Label>Código postal</Form.Label>
-                          <FinalFormField name="zipcode">
-                            {({ input }) => (
-                              <Form.Control
-                                {...input}
-                                type="text"
-                                size="lg"
-                                placeholder="i.e. 06000"
-                              />
-                            )}
-                          </FinalFormField>
-                        </Form.Group>
-                      </Col>
-
-                      <Col lg={6}>
-                        <Form.Group>
-                          <Form.Label>Estado</Form.Label>
-                          <FinalFormField name="state">
-                            {({ input }) => (
-                              <Form.Control
-                                {...input}
-                                type="text"
-                                size="lg"
-                                placeholder="i.e. Ciudad de México"
-                              />
-                            )}
-                          </FinalFormField>
-                        </Form.Group>
-                      </Col>
-                    </>
+                <Col lg={8} className="align-right mt-4">
+                  {values.products && values.products.length > 0 && (
+                    <h4>Total: </h4>
                   )}
+                </Col>
+                <Col lg={4} className="align-right mt-4">
+                  {values.products && values.products.length > 0 && (
+                    <h4> $ {getProductsSum(values.products)}</h4>
+                  )}
+                </Col>
 
-                  <Col lg={12}>
-                    <h2>Forma de pago:</h2>
-                  </Col>
+                <Col className="align-right">
+                  <h5 className="mt-3">
+                    <BsFillPeopleFill />
+                    &nbsp; Para [x] personas, recomendamos [x] kilos.
+                  </h5>
+                </Col>
 
-                  <Col lg={12}>
-                    <Form.Group>
-                      <Form.Label>Selecciona tu método de pago</Form.Label>
-                      <FinalFormField name="paymentMethod" component="select">
-                        {({ input }) => (
-                          <Form.Control {...input} as="select" custom>
-                            <option />
-                            <option>Tarjeta de débito/crédito</option>
-                            <option>PayPal</option>
-                            <option>Transferencia bancaria</option>
-                          </Form.Control>
-                        )}
-                      </FinalFormField>
-                    </Form.Group>
-                  </Col>
-                  <br />
-                  <Col lg={6} className='mt-4'>
-                    <Button variant="secondary" size='lg' href='/'>
-                      Cancelar
-                    </Button>
-                  </Col>
-                  <Col lg={6} className='align-right mt-4'>
-                    <Button variant='primary' size='lg' onClick={handleSubmit}>
-                      Guardar pedido
-                    </Button>
-                  </Col>
-                </Row>
-              </Form>
-            )}
-          </FinalForm>
-        
+                {userID < 0 && (
+                  <>
+                    <Col lg={12}>
+                      <h2>Tu información:</h2>
+                    </Col>
+                    <Col lg={6}>
+                      <Form.Group>
+                        <Form.Label>Nombre</Form.Label>
+                        <FinalFormField name="customerName">
+                          {({ input }) => (
+                            <Form.Control {...input} type="text" size="lg" />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+
+                      <Form.Group>
+                        <Form.Label>Apellidos</Form.Label>
+                        <FinalFormField name="customerLastName">
+                          {({ input }) => (
+                            <Form.Control {...input} type="text" size="lg" />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
+                    <Col lg={6}>
+                      <Form.Group>
+                        <Form.Label>Teléfono</Form.Label>
+                        <FinalFormField name="phone">
+                          {({ input }) => (
+                            <Form.Control {...input} type="text" size="lg" />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                      <Form.Group>
+                        <Form.Label>Correo electrónico</Form.Label>
+                        <FinalFormField name="email">
+                          {({ input }) => (
+                            <Form.Control {...input} type="text" size="lg" />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
+
+                    <Col lg={12}>
+                      <h4>Dirección:</h4>
+                      <Form.Group>
+                        <Form.Label>Calle</Form.Label>
+                        <FinalFormField name="street">
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type="text"
+                              size="lg"
+                              placeholder="i.e. C Dr Mora 9"
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
+                    <Col lg={6}>
+                      <Form.Group>
+                        <Form.Label>Colonia</Form.Label>
+                        <FinalFormField name="neighborhood">
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type="text"
+                              size="lg"
+                              placeholder="i.e. Centro"
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
+
+                    <Col lg={6}>
+                      <Form.Group>
+                        <Form.Label>Alcaldía / Municipio</Form.Label>
+                        <FinalFormField name="city">
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type="text"
+                              size="lg"
+                              placeholder="i.e. Cuauhtémoc"
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
+
+                    <Col lg={6}>
+                      <Form.Group>
+                        <Form.Label>Código postal</Form.Label>
+                        <FinalFormField name="zipcode">
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type="text"
+                              size="lg"
+                              placeholder="i.e. 06000"
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
+
+                    <Col lg={6}>
+                      <Form.Group>
+                        <Form.Label>Estado</Form.Label>
+                        <FinalFormField name="state">
+                          {({ input }) => (
+                            <Form.Control
+                              {...input}
+                              type="text"
+                              size="lg"
+                              placeholder="i.e. Ciudad de México"
+                            />
+                          )}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
+                  </>
+                )}
+
+                <Col lg={12}>
+                  <h2>Forma de pago:</h2>
+                </Col>
+
+                <Col lg={12}>
+                  <Form.Group>
+                    <Form.Label>Selecciona tu método de pago</Form.Label>
+                    <FinalFormField name="paymentMethod" component="select">
+                      {({ input }) => (
+                        <Form.Control {...input} as="select" custom>
+                          <option />
+                          <option>Tarjeta de débito/crédito</option>
+                          <option>PayPal</option>
+                          <option>Transferencia bancaria</option>
+                        </Form.Control>
+                      )}
+                    </FinalFormField>
+                  </Form.Group>
+                </Col>
+                <br />
+                <Col lg={6} className="mt-4">
+                  <Button variant="secondary" size="lg" href="/">
+                    Cancelar
+                  </Button>
+                </Col>
+                <Col lg={6} className="align-right mt-4">
+                  <Button variant="primary" size="lg" onClick={handleSubmit}>
+                    Guardar pedido
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          )}
+        </FinalForm>
+
         <hr />
         <Row className="pt-1 pb-5">
           <Col className="bold">Cocina Mary © 2020</Col>
