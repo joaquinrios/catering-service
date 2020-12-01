@@ -297,8 +297,8 @@ export const Products = ({ navigate }) => {
 
                   <Col lg={6}>
                     { image 
-                      ? (<><Form.Label className='sign-label full-width'>Imagen</Form.Label><Image src={image} fluid rounded /></>) 
-                      : product && product.filename && (<><Form.Label className='sign-label full-width'>Imagen</Form.Label><Image src={product.filename} fluid rounded /></>)
+                      ? (<><Form.Label className='sign-label full-width'>Imagen</Form.Label><Image src={image} fluid rounded className='cs-product' /></>) 
+                      : product && product.filename && (<><Form.Label className='sign-label full-width'>Imagen</Form.Label><Image src={product.filename} fluid rounded className='cs-product' /></>)
                     }
                     
                   </Col>
@@ -361,7 +361,7 @@ export const Products = ({ navigate }) => {
               </Form>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant='secondary' onClick={closeFormModal}> Cerrar </Button>
+              <Button variant='secondary' onClick={closeFormModal}> Cancelar </Button>
               { product && (<Button variant='danger' onClick={() => onSubmitDeleteProduct(values.id)}> Borrar producto </Button>)}
               <Button variant='success' onClick={handleSubmit}> { product ? 'Editar producto' : 'Crear producto'} </Button>
             </Modal.Footer>
