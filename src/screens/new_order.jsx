@@ -102,6 +102,7 @@ export const NewOrder = ({ uid, navigate }) => {
       order_date: values.date,
       order_time: values.time,
       order_event: values.eventName,
+      persons: values.persons,
       recurring: values.frequent,
       order_notes: values.eventNotes,
       amount_paid: '0',
@@ -150,10 +151,48 @@ export const NewOrder = ({ uid, navigate }) => {
   }
 
   const onSubmitUpdateOrder = (values) => {
+    console.log('to update', values);
+    const updatedOrder = {
+      order_event: values.eventName,
+      order_notes: values.eventNotes,
+      recurring: values.frequent,
+      people: values.persons,
+      products: values.products
+    }
+    const options = {
+      url: `/api/orders/${uid}`,
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+      data: updatedOrder
+    };
+    axios(options).then((response) => {
+      setPostModalMessage('El pedido se ha actualizado con éxito.');
+      setPostModalShow(true);
+      setTimeout(() => navigate('/orders'), 2000);
+    }).catch((error) => {
+      if (error.response) {
+        console.log(error.response);
+        setPostModalMessage('Ha habido un error. Por favor, intenta más tarde.');
+        setPostModalShow(true);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+      console.log(error.config);
+    });
 
   }
 
   useEffect(() => {
+    // pending
     let flag = false;
     if (uid !== 'new'){
       const optionsOrder = {
@@ -240,7 +279,7 @@ export const NewOrder = ({ uid, navigate }) => {
       <Container>
         <h1>Nuevo pedido</h1>
         <hr/>
-          <FinalForm onSubmit={order ? onSubmitUpdateOrder : onSubmitCreateOrder} initialValues={ order ? {eventName: order.order_event, newUser: false, frequent: order.recurring, products: order.products, eventNotes: order.order_notes } : { newUser: true } } mutators={{ ...arrayMutators }} decorators={[calculator]}>
+          <FinalForm onSubmit={order ? onSubmitUpdateOrder : onSubmitCreateOrder} initialValues={ order ? {eventName: order.order_event, newUser: false, frequent: order.recurring, products: order.products, eventNotes: order.order_notes, persons: 42 } : { newUser: true } } mutators={{ ...arrayMutators }} decorators={[calculator]}>
             {({ handleSubmit, submitting, values, form }) => (
               <Form>
                 <Row>
@@ -462,7 +501,7 @@ export const NewOrder = ({ uid, navigate }) => {
                         <Col lg={3} className='align-right'>
                           <Form.Group>
                             <Form.Label></Form.Label>
-                            { values.products[index] && values.products[index].id && (<h4>{parseFloat(values.products[index].quantity)} * {products.find(p => p.product_id == values.products[index].id).price} = $ {parseFloat(products.find(p => p.product_id == values.products[index].id).price) * parseFloat(values.products[index].quantity)}</h4>) }
+                            { false && values.products[index] && values.products[index].id && (<h4>{parseFloat(values.products[index].quantity)} * {products.find(p => p.product_id == values.products[index].id).price} = $ {parseFloat(products.find(p => p.product_id == values.products[index].id).price) * parseFloat(values.products[index].quantity)}</h4>) }
                           </Form.Group>
                         </Col>
                     </>))}
