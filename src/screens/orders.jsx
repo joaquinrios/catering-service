@@ -1,27 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Accordion, Card } from 'react-bootstrap';
+import { Container, Row, Col, Button, Accordion, Card, Modal } from 'react-bootstrap';
 import axios from 'axios';
+import { BsFillInfoCircleFill } from 'react-icons/bs';
 
 import { Navbar } from '../components/navbar';
 
-
-
-const onSubmitDeleteOrder = (id) => {
-  const options = {
-    url: `/api/orders/${id}`,
-    method: 'DELETE',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json;charset=UTF-8',
-    },
-  };
-
-  axios(options).then(response => {
-    setTimeout(() => window.location.reload(), 200);
-  }).catch(error => {
-    setTimeout(() => window.location.reload(), 200);
-  });
-}
 
 function formatAMPM(date) {
   var hours = date.getHours();
@@ -37,6 +20,29 @@ function formatAMPM(date) {
 export const Orders = (props) => {
   const [ready, setReady] = useState(false);
   const [orders, setOrders] = useState(null);
+  const [cancelModalShow, setCancelModalShow] = useState(false);
+  const [cancelModalMessage, setCancelModalMessage] = useState('');
+
+  const onSubmitDeleteOrder = (id) => {
+    const options = {
+      url: `/api/orders/${id}`,
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    };
+  
+    axios(options).then(response => {
+      // setTimeout(() => window.location.reload(), 200);
+      setCancelModalMessage('El pedido se ha borrado con éxito.');
+      setCancelModalShow(true);
+    }).catch(error => {
+      // setTimeout(() => window.location.reload(), 200);
+      setCancelModalMessage('Algo ha salido mal. Vuelve a intentarlo.');
+      setCancelModalShow(true);
+    });
+  }
 
   useEffect(() => {
     const options = {
@@ -62,6 +68,22 @@ export const Orders = (props) => {
   return ready && (
     <>
       <Navbar />
+
+      {/* Cancel order success or failure modal */}
+      <Modal size='sm' centered show={cancelModalShow} onHide={() => setCancelModalShow(true)}>
+          <Modal.Header>
+            <Modal.Title><BsFillInfoCircleFill />&nbsp;&nbsp;Aviso</Modal.Title>
+          </Modal.Header>
+            <Modal.Body>
+              <p>{cancelModalMessage}</p>
+            </Modal.Body>
+          <Modal.Footer>
+            <Button variant='secondary' onClick={() => window.location.reload()}>
+              Cerrar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
       <Container>
         <Row>
           <Col lg={6} md={6}>
