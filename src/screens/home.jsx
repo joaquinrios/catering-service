@@ -75,9 +75,9 @@ export const Home = (props) => {
   const [formStart, setFormStart] = useState('');
   const [formEnd, setFormEnd] = useState('');
   
-  const currentWeek = new Date(Date.now()).getWeek();
-  const currentMonth =  new Date(Date.now()).getMonth();
-  const today = new Date();
+  const [currentWeek, setCurrentWeek] = useState(new Date(Date.now()).getWeek());
+  const [currentMonth, setCurrentMonth] = useState(new Date(Date.now()).getMonth());
+  const [today, setToday] = useState(new Date());
 
   const onClickReset = () => {
     setFilteredEvents(events);
@@ -103,90 +103,106 @@ export const Home = (props) => {
     setFilteredEvents(_filteredEvents);
   };
 
-  useEffect(() => {
-    axios(options).then(response => {
-      const _orders = response.data.message;
-      const _eM = [];
-      const _eT = [];
-      const _eW = [];
-      const _events = [];
-      const _cM = {};
-      const _cT = {};
-      const _cW = {};
-      setOrders(_orders);
+  const onNavigateUpdateDates = (date) => {
+    setCurrentMonth(date.getMonth());
+    setCurrentWeek(date.getWeek());
+    setToday(date);
+  }
 
-      _orders.forEach(event => {
-        let startTime = new Date(event.order_date.replace(' ', 'T'));
-        let endTime = new Date(event.order_date.replace(' ', 'T')).addHours(4);
-        let e = {
-          id: event.order_id,
-          title: event.order_event,
-          start: startTime,
-          end: endTime,
-          notes: event.order_notes,
-        }
-        if (startTime.getWeek() == currentWeek && today.getFullYear() == startTime.getFullYear()){
-          _eW.push(e);
-          event.products.forEach(product => {
-            let productName = product.product_name;
-            if (_cW.hasOwnProperty(productName)) {
-              _cW[productName].amount += parseInt(product.amount);
-            } else {
-              _cW[productName] = {};
-              _cW[productName].amount = parseInt(product.amount);
-              _cW[productName].measure = product.product_measure;
-            }
-          })
-        }
-        if (startTime.getMonth() == currentMonth && today.getFullYear() == startTime.getFullYear()){
-          _eM.push(e);
-          event.products.forEach(product => {
-            var productName = product.product_name;
-            if (_cM.hasOwnProperty(productName)){
-              _cM[productName].amount += parseInt(product.amount);
-            } else {
-              _cM[productName] = {};
-              _cM[productName].amount = parseInt(product.amount);
-              _cM[productName].measure = product.product_measure;
-            }
-          })
-        }
-        if (startTime.getDay() == today.getDay() && startTime.getWeek() == currentWeek && today.getFullYear() == startTime.getFullYear()){
-          _eT.push(e);
-          event.products.forEach(product => {
-            let productName = product.product_name;
-            if (_cT.hasOwnProperty(productName)){
-              _cT[productName].amount += parseInt(product.amount);
-            } else {
-              _cT[productName] = {};
-              _cT[productName].amount = parseInt(product.amount);
-              _cT[productName].measure =  product.product_measure;
-            }
-          })
-        }
-        _events.push(e);
-      });
-      let _cMList = toArrayOfObjects(_cM);
-      let _cWList = toArrayOfObjects(_cW);
-      let _cTList = toArrayOfObjects(_cT);
-      _cMList.sort(compare);
-      _cWList.sort(compare);
-      _cTList.sort(compare);
-      
-      setEvents(_events);
-      setFilteredEvents(_events);
-      setEventsMonth(_eM);
-      setEventsWeek(_eW);
-      setEventsToday(_eT);
-      setCookMonth(_cMList);
-      setCookWeek(_cWList);
-      setCookToday(_cTList);
-      setReady(true);
-    }).catch(error => {
-      console.log(error);
-      setReady(true);
-    });    
-  }, [])
+  const filterEvents = (orders) => {
+    const _eM = [];
+    const _eT = [];
+    const _eW = [];
+    const _events = [];
+    const _cM = {};
+    const _cT = {};
+    const _cW = {};
+
+    orders.forEach(order => {
+      let startTime = new Date(order.order_date.replace(' ', 'T'));
+      let endTime = new Date(order.order_date.replace(' ', 'T')).addHours(4);
+      let event = {
+        id: order.order_id,
+        title: order.order_event,
+        start: startTime,
+        end: endTime,
+        notes: order.order_notes,
+      }
+      if (startTime.getWeek() == currentWeek && today.getFullYear() == startTime.getFullYear()){
+        _eW.push(event);
+        order.products.forEach(product => {
+          let productName = product.product_name;
+          if (_cW.hasOwnProperty(productName)) {
+            _cW[productName].amount += parseInt(product.amount);
+          } else {
+            _cW[productName] = {};
+            _cW[productName].amount = parseInt(product.amount);
+            _cW[productName].measure = product.product_measure;
+            _cW[productName].price = product.price;
+          }
+        })
+      }
+      if (startTime.getMonth() == currentMonth && today.getFullYear() == startTime.getFullYear()){
+        _eM.push(event);
+        order.products.forEach(product => {
+          var productName = product.product_name;
+          if (_cM.hasOwnProperty(productName)){
+            _cM[productName].amount += parseInt(product.amount);
+          } else {
+            _cM[productName] = {};
+            _cM[productName].amount = parseInt(product.amount);
+            _cM[productName].measure = product.product_measure;
+            _cM[productName].price = product.price;
+          }
+        })
+      }
+      if (startTime.getDay() == today.getDay() && startTime.getWeek() == currentWeek && today.getFullYear() == startTime.getFullYear()){
+        _eT.push(event);
+        order.products.forEach(product => {
+          let productName = product.product_name;
+          if (_cT.hasOwnProperty(productName)){
+            _cT[productName].amount += parseInt(product.amount);
+          } else {
+            _cT[productName] = {};
+            _cT[productName].amount = parseInt(product.amount);
+            _cT[productName].measure =  product.product_measure;
+            _cT[productName].price = product.price;
+          }
+        })
+      }
+      _events.push(event);
+    });
+    let _cMList = toArrayOfObjects(_cM);
+    let _cWList = toArrayOfObjects(_cW);
+    let _cTList = toArrayOfObjects(_cT);
+    _cMList.sort(compare);
+    _cWList.sort(compare);
+    _cTList.sort(compare);
+    
+    setEvents(_events);
+    setFilteredEvents(_events);
+    setEventsMonth(_eM);
+    setEventsWeek(_eW);
+    setEventsToday(_eT);
+    setCookMonth(_cMList);
+    setCookWeek(_cWList);
+    setCookToday(_cTList);
+  }
+
+  useEffect(() => {
+    if (!orders) {
+      axios(options).then(response => {
+        const _orders = response.data.message;
+        setOrders(_orders);
+        filterEvents(_orders);
+        setReady(true);
+      }).catch(error => {
+        console.log(error);
+      });  
+    } else {
+      filterEvents(orders);
+    }  
+  }, [today, currentMonth, currentWeek])
 
   return ready && (
     <>
@@ -197,7 +213,7 @@ export const Home = (props) => {
             <h1>Dashboard</h1>
           </Col>
           <Col lg={6} md={6} className='align-right'> 
-            <Button variant='primary' size='lg' href='/new-order'>Nuevo pedido</Button>
+            <Button variant='primary' size='lg' href='/order/new'>Nuevo pedido</Button>
           </Col>
         </Row>
         <hr/>
@@ -227,20 +243,15 @@ export const Home = (props) => {
               )}
             </Row>
             <Calendar
-              onNavigate={(date) => console.log("Navigate" + date)}
+              onNavigate={(date) => onNavigateUpdateDates(date)}
               onView={(view) => setCurrentView(view)}
+              onSelectSlot={(event, e) => console.log(event)}
               events={filteredEvents}
               startAccessor="start"
               endAccessor="end"
               onSelectEvent={(event, e) => console.log(event)}
               localizer={localizer}
-              messages={{
-                next: '>',
-                previous: '<',
-                today: 'Hoy',
-                month: 'Mes',
-                week: 'Semana',
-                day: 'Día'
+              messages={{ next: '>', previous: '<', today: 'Hoy', month: 'Mes', week: 'Semana', day: 'Día'
               }}
             />
           </Col>
@@ -248,71 +259,52 @@ export const Home = (props) => {
           { true && (<Col lg={3}>
             {
               currentView == 'month' && ( <>
+                <h4># Eventos: {cookMonth.length}</h4>
                 <h4>Por cocinar: </h4>
-                { cookMonth && cookMonth.map( (product, index) => {
-                  return(
-                  <div>
-                    {index+1}. {product.name}: {product.amount} {product.measure}
-                  </div>)
-                })
-                }
-
+                { cookMonth && cookMonth.map(product => (
+                  <div> <b>{product.amount} {product.measure}</b> - {product.name} </div>)
+                )}
+                <hr/>
+                <h4>Total venta: <br/> $ { cookMonth && cookMonth.reduce((total, product) => {return total + parseFloat(product.price)}, 0).toFixed(2) }</h4>
+                <hr/>
                 <h4> Este mes:</h4>
-                { eventsMonth && eventsMonth.map( (event, index) => (
-                    <div>
-                      <h6>Evento {index+1}: {event.title}</h6>
-                      <p>Notas: {event.notes}</p>
-                    </div>
-                  )
-                  )
-                }
+                { eventsMonth && eventsMonth.map((event, index) => (
+                  <p><b>Evento {index+1}: {event.title}</b><br/>Notas: {event.notes}</p>)
+                )}
                 </>)
               }
             
               {
                 currentView == 'week' && ( <>
-
+                  <h4># Eventos: {cookWeek.length}</h4>
                   <h4>Por cocinar: </h4>
-                  { cookWeek && cookWeek.map( (product, index) => {
-                  return(
-                  <div>
-                    {index+1}. {product.name}: {product.amount} {product.measure}
-                  </div>)
-                })
-                }
-                  
+                  { cookWeek && cookWeek.map(product => (
+                   <div> <b>{product.amount} {product.measure}</b> - {product.name} </div>)
+                  )}
+                  <hr/>
+                  <h4>Total venta: <br/> $ { cookWeek && cookWeek.reduce((total, product) => {return total + parseFloat(product.price)}, 0).toFixed(2) }</h4>
+                  <hr/>
                   <h4> Esta semana:</h4>
-                  { eventsWeek && eventsWeek.map(function (event, index){
-                    return(
-                      <div>
-                        <h6>Evento {index+1}: {event.title}</h6>
-                        <p>Notas: {event.notes}</p>
-                      </div>
-                    )
-                  })}
+                  { eventsWeek && eventsWeek.map((event, index) => (
+                    <p><b>Evento {index+1}: {event.title}</b><br/>Notas: {event.notes}</p>)
+                  )}
                 </>)
               }
             
               {
                 currentView == 'day' &&  ( <>
+                  <h4># Eventos: {cookToday.length}</h4>
                   <h4>Por cocinar: </h4>
-                  { cookToday && cookToday.map((product, index) => {
-                    return (
-                      <div>
-                        {index+1}. {product.name}: {product.amount} {product.measure}
-                      </div>
-                    )
-                      })
-                  }
+                  { cookToday && cookToday.map(product => (
+                   <div> <b>{product.amount} {product.measure}</b> - {product.name} </div>)
+                  )}
+                  <hr/>
+                  <h4>Total venta: <br/> $ { cookToday && cookToday.reduce((total, product) => {console.log(product); return total + parseFloat(product.price)}, 0).toFixed(2) }</h4>
+                  <hr/>
                   <h4> Hoy:</h4>
-                  {eventsToday && eventsToday.map((event, index) => {
-                    return (
-                      <div>
-                        <h6>Evento {index+1}: {event.title}</h6>
-                        <p>Notas: {event.notes}</p>
-                      </div>
-                    )
-                  })}
+                  { eventsToday && eventsToday.map((event, index) => (
+                    <p><b>Evento {index+1}: {event.title}</b><br/>Notas: {event.notes}</p>)
+                  )}
                 </>)
               }
             
