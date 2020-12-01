@@ -89,6 +89,7 @@ export const Home = (props) => {
     setFormEnd('');
   }
   const updateEvents = (filteredEvents) => {
+    console.log("heere");
     let _products = {};
     let _productList =  []
     let _total = 0;
@@ -111,8 +112,20 @@ export const Home = (props) => {
     _productList.sort(compare);
     setCookCalendar(_productList);
     setCookTotal(_total);
+    console.log(_productList);
+
 
   }
+
+  const initEvents = (events) => {
+    
+    const _pC = [];
+    events.forEach( event =>{
+      _pC.push(event.products);
+    })
+    updateEvents(_pC);
+  }
+
   const endDateOnChange = (event) => {
     const end = new Date(event.target.value);
     setFilteredEnd(end);
@@ -139,7 +152,25 @@ export const Home = (props) => {
     });
     updateEvents(_pC);
   };
+  const viewOnChange = (view => {
 
+    let today = new Date();
+    let next = new Date();
+
+    if(view == 'day') next.setDate(next.getDate() + 1);
+    if(view == 'week') next.setDate(next.getDate() + 7);
+    if(view == 'month') next.setDate(next.getDate() + 30);
+
+    let _filteredEvents = events.filter(event => event.start >= today && event.end  <= next);
+      console.log(_filteredEvents);
+      const _pC = [];
+      _filteredEvents.forEach(event  => {
+          _pC.push(event.products);
+          
+      });
+    updateEvents(_pC);
+
+  })
   const onNavigateUpdateDates = (date) => {
     setCurrentMonth(date.getMonth());
     setCurrentWeek(date.getWeek());
@@ -172,11 +203,11 @@ export const Home = (props) => {
     });
     
     setEvents(_events);
+    initEvents(_events);
     setFilteredEvents(_events);
     setEventsMonth(_eM);
     setEventsWeek(_eW);
     setEventsToday(_eT);
-    setCookCalendar();
   }
 
   useEffect(() => {
@@ -234,7 +265,7 @@ export const Home = (props) => {
             </Row>
             <Calendar
               onNavigate={(date) => onNavigateUpdateDates(date)}
-              onView={(view) => setCurrentView(view)}
+              onView={(view) => {setCurrentView(view); viewOnChange(view) }}
               onSelectSlot={(event, e) => console.log(event)}
               events={filteredEvents}
               startAccessor="start"
