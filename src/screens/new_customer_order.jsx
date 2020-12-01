@@ -10,7 +10,7 @@ import { RiUserSearchLine, RiUserHeartLine } from 'react-icons/ri';
 
 import { Navbar } from '../components/navbar';
 
-export const NewCustomerOrder = ({ props }) => {
+export const NewCustomerOrder = ({ props, navigate }) => {
   const [ready, setReady] = useState(false);
   const [products, setProducts] = useState([]);
   const [validationModalShow, setValidationModalShow] = useState(true);
@@ -29,6 +29,9 @@ export const NewCustomerOrder = ({ props }) => {
       <p>
         Te llamaremos pronto para confirmar tu orden y platicar detalles
         adicionales.
+      </p>
+      <p>
+        ¡Agradecemos tu preferencia!
       </p>
     </>
   );
@@ -149,7 +152,6 @@ export const NewCustomerOrder = ({ props }) => {
       .then((response) => {
         setPostModalMessage(successMessage);
         setPostModalShow(true);
-        setTimeout(() => (window.location.href = '/'), 2000);
       })
       .catch((error) => {
         if (error.response) {
@@ -320,7 +322,7 @@ export const NewCustomerOrder = ({ props }) => {
           <Button
             variant="info"
             href="/"
-            onClick={() => setPostModalShow(false)}
+            onClick={() => navigate('/')}
           >
             De acuerdo
           </Button>
@@ -535,12 +537,12 @@ export const NewCustomerOrder = ({ props }) => {
                   )}
                 </Col>
 
-                <Col className="align-right">
+                {/* <Col className="align-right">
                   <h5 className="mt-3">
                     <BsFillPeopleFill />
                     &nbsp; Para [x] personas, recomendamos [x] kilos.
                   </h5>
-                </Col>
+                </Col> */}
 
                 {userID < 0 && (
                   <>
@@ -588,7 +590,7 @@ export const NewCustomerOrder = ({ props }) => {
                     <Col lg={12}>
                       <h4>Dirección:</h4>
                       <Form.Group>
-                        <Form.Label>Calle</Form.Label>
+                        <Form.Label>Calle y número</Form.Label>
                         <FinalFormField name="street">
                           {({ input }) => (
                             <Form.Control
