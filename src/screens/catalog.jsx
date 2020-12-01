@@ -140,7 +140,7 @@ export const Catalog = () => {
                         <Card key={index} className='text-center no-border'>
                           <Container>
                             {' '}
-                            <Image src={product.filename} fluid />
+                            <Image src={product.filename} fluid rounded/>
                             {' '}
                             <Card.Title>
                               <Row>
@@ -214,7 +214,7 @@ export const Catalog = () => {
                         <Card key={index} className='text-center no-border'>
                           <Container>
                             {' '}
-                            <Image src={product.filename} fluid />
+                            <Image src={product.filename} fluid rounded/>
                             {' '}
                             <Card.Title>
                               <Row>
@@ -287,7 +287,7 @@ export const Catalog = () => {
                         <Card key={index} className='text-center no-border'>
                           <Container>
                             {' '}
-                            <Image src={product.filename} fluid />
+                            <Image src={product.filename} fluid rounded/>
                             {' '}
                             <Card.Title>
                               <Row>

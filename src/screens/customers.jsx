@@ -163,12 +163,7 @@ export const Customers = ({ navigate }) => {
         <Navbar />
 
         {/* Post success or failure modal */}
-        <Modal
-          size='sm'
-          centered
-          show={postModalShow}
-          onHide={() => setPostModalShow(false)}
-        >
+        <Modal size='sm' centered show={postModalShow} onHide={() => setPostModalShow(false)}>
           <Modal.Header closeButton>
             <Modal.Title><BsFillInfoCircleFill />&nbsp;&nbsp;Aviso</Modal.Title>
           </Modal.Header>

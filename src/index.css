@@ -60,3 +60,9 @@ code {
   object-fit: cover;
   width: 100%;
 }
+
+.cs-product {
+  height: 196px !important;
+  object-fit: cover;
+  width: 100%;
+}

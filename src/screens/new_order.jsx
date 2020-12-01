@@ -3,8 +3,10 @@ import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap';
 import { BsX, BsFillInfoCircleFill } from 'react-icons/bs';
 import { Form as FinalForm, Field as FinalFormField,  } from 'react-final-form';
 import { FieldArray as FinalFormFieldArray } from 'react-final-form-arrays';
-import axios from 'axios';
+import createDecorator  from 'final-form-calculate';
 import arrayMutators from 'final-form-arrays'
+import axios from 'axios';
+
 import Toggle from 'react-toggle';
 import Autosuggest from 'react-autosuggest';
 
@@ -15,28 +17,48 @@ Date.prototype.addDays = function(days) {
   return this;
 };
 
-export const NewOrder = ({props}) => {
+export const NewOrder = ({ uid, navigate }) => {
   const [ready, setReady] = useState(false);
+  const [order, setOrder] = useState(null);
   const [customers, setCustomers] = useState([]);
   const [products, setProducts] = useState([]);
+  const [total, setTotal] = useState(0);
   const [existingUser, setExistingUser] = useState(null);
   const [suggestions, setSuggestions] = useState(customers);
   const [postModalShow, setPostModalShow] = useState(false);
   const [postModalMessage, setPostModalMessage] = useState('');
+
+  const calculator = createDecorator({
+    field: /products\[\d+\]\.quantity/, // when a field matching this pattern changes...
+    updates: (value, name, values) => {
+      getProductsSum(values.products);
+      const fieldName = name.replace('.text', '.name');
+      return {
+          [fieldName]: value
+      };
+    }
+  }, {
+    field: /products\[\d+\]\.id/, // when a field matching this pattern changes...
+    updates: (value, name, values) => {
+      if (values.products) getProductsSum(values.products);
+      const fieldName = name.replace('.text', '.name');
+      return {
+          [fieldName]: value
+      };
+    }
+  })
   
   const getProductsSum = (selectedProducts) => {
-    const ids = selectedProducts.map((product) => {
-      if (product !== undefined && product.hasOwnProperty('id')) {
-        return product.id;
+    const filteredProducts = selectedProducts.map(product => product !== undefined && product.hasOwnProperty('id') && product);
+    let _total = 0
+    filteredProducts.forEach(product => {
+      let current = products.find(p => p.product_id == product.id);
+      if (current && current.price) {
+        _total += current.price * product.quantity;
       }
-    });
-    let total = 0
+    })
     
-    ids.forEach(id => {
-      let currentProduct = products.find(p =>  p.product_id == id);
-      total += currentProduct != undefined ? parseFloat(currentProduct.price) : 0
-    });
-    return total
+    setTotal(_total);
   }
 
   const getSuggestions = (value) => {
@@ -127,7 +149,44 @@ export const NewOrder = ({props}) => {
     });
   }
 
+  const onSubmitUpdateOrder = (values) => {
+
+  }
+
   useEffect(() => {
+    let flag = false;
+    if (uid !== 'new'){
+      const optionsOrder = {
+        url: `/api/orders/${uid}`,
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+        },
+      }
+      axios(optionsOrder).then((response) => {
+        const _order = response.data.order;
+        const _products = _order.products.map(p => {return {id: p.product_id, quantity: parseInt(p.amount)}});
+        _order.products = _products;
+        console.log(_order);
+        setOrder(_order);
+        setExistingUser({
+          city: _order.city,
+          county: _order.county,
+          last_name: _order.last_name,
+          first_name: _order.first_name,
+          email: _order.email,
+          customer_id: _order.customer_id,
+          phone: _order.phone,
+          state: _order.state,
+          street: _order.street,
+          zip_code: _order.zip_code
+        })
+      }).catch((error) => { });
+      flag = true;
+    } else {
+      flag = true;
+    }
     const optionsCustomers = {
       url: '/api/customers',
       method: 'GET',
@@ -146,13 +205,17 @@ export const NewOrder = ({props}) => {
     };
     axios(optionsCustomers).then((response) => {
       const _customers = response.data.customers;
+      console.log(_customers[0])
       setCustomers(_customers);
     }).catch((error) => { });
+
     axios(optionsProducts).then((response) => {
       const _products = response.data.products;
       setProducts(_products);
     }).catch((error) => { });
-    setReady(true);
+    if (flag) {
+      setReady(true);
+    }
   }, []);
 
   return ready && customers && products && (
@@ -177,7 +240,7 @@ export const NewOrder = ({props}) => {
       <Container>
         <h1>Nuevo pedido</h1>
         <hr/>
-          <FinalForm onSubmit={onSubmitCreateOrder} initialValues={{ newUser: true }} mutators={{ ...arrayMutators }}>
+          <FinalForm onSubmit={order ? onSubmitUpdateOrder : onSubmitCreateOrder} initialValues={ order ? {eventName: order.order_event, newUser: false, frequent: order.recurring, products: order.products, eventNotes: order.order_notes } : { newUser: true } } mutators={{ ...arrayMutators }} decorators={[calculator]}>
             {({ handleSubmit, submitting, values, form }) => (
               <Form>
                 <Row>
@@ -230,14 +293,16 @@ export const NewOrder = ({props}) => {
 
                   <Col lg={12}><h2>Cliente</h2></Col>
                   
-                  <Col lg={8} className='mb-3'>  
-                    <Form.Group>
-                      <Form.Label>¿Es nuevo cliente?</Form.Label>
-                      <FinalFormField name='newUser' type='checkbox'>
-                        {({ input }) => <Row><Col><Toggle {...input} /></Col></Row>}
-                      </FinalFormField>
-                    </Form.Group>
-                  </Col>
+                  { !order && (
+                    <Col lg={8} className='mb-3'>  
+                      <Form.Group>
+                        <Form.Label>¿Es nuevo cliente?</Form.Label>
+                        <FinalFormField name='newUser' type='checkbox'>
+                          {({ input }) => <Row><Col><Toggle {...input} /></Col></Row>}
+                        </FinalFormField>
+                      </Form.Group>
+                    </Col>
+                  )}
                     { values.newUser ? (<>
                     <Col lg={6}>
                       <Form.Group>
@@ -314,26 +379,28 @@ export const NewOrder = ({props}) => {
                       </Form.Group>
                     </Col>
                     </>) : (<>
-                    <Col lg={6}>
-                      <Form.Group>
-                        <Form.Label>Cliente</Form.Label>
-                        <FinalFormField name='customer'>
-                          {({ input }) => <>
-                          <Autosuggest suggestions={suggestions} 
-                            onSuggestionsFetchRequested={onSuggestionsFetchRequested} 
-                            onSuggestionsClearRequested={onSuggestionsClearRequested} 
-                            getSuggestionValue={getSuggestionValue}
-                            renderSuggestion={renderSuggestion}
-                            onSuggestionSelected={(_, { suggestionValue }) => {
-                              input.onChange(suggestionValue);
-                            }}
-                            inputProps={{name: input.name, value: input.value, onChange: input.onChange, className: 'form-control-lg form-control', placeholder: 'Escriba el nombre del cliente...'}}
-                            {...input}/>
-                          </>}
-                          
-                        </FinalFormField>
-                      </Form.Group>
-                      </Col>
+                      { !order && (
+                        <Col lg={6}>
+                          <Form.Group>
+                            <Form.Label>Cliente</Form.Label>
+                            <FinalFormField name='customer'>
+                              {({ input }) => <>
+                              <Autosuggest suggestions={suggestions} 
+                                onSuggestionsFetchRequested={onSuggestionsFetchRequested} 
+                                onSuggestionsClearRequested={onSuggestionsClearRequested} 
+                                getSuggestionValue={getSuggestionValue}
+                                renderSuggestion={renderSuggestion}
+                                onSuggestionSelected={(_, { suggestionValue }) => {
+                                  input.onChange(suggestionValue);
+                                }}
+                                inputProps={{name: input.name, value: input.value, onChange: input.onChange, className: 'form-control-lg form-control', placeholder: 'Escriba el nombre del cliente...'}}
+                                {...input}/>
+                              </>}
+                              
+                            </FinalFormField>
+                          </Form.Group>
+                        </Col>
+                      )}
 
                       <Col lg={6}>
                         <Row>
@@ -405,7 +472,7 @@ export const NewOrder = ({props}) => {
                   { values.products && values.products.length > 0 && (<h4>Total: </h4>)}
                   </Col>
                   <Col lg={4} className='align-right'>
-                    { values.products && values.products.length > 0 && (<h4> $ { getProductsSum(values.products)}</h4>)}
+                    { values.products && values.products.length > 0 && (<h4> $ { total }</h4>)}
                   </Col>
 
                   <Col lg={12} className='mb-5 mt-4'>

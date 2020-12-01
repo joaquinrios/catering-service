@@ -11,7 +11,6 @@ import { Navbar } from '../components/navbar';
 require('moment/locale/es.js');
 
 const localizer = momentLocalizer(moment);
-const allViews = Object.keys(Views).map(k => Views[k]);
 
 Date.prototype.getWeek = function(int) {
   var dt = new Date(this.getFullYear(),0,1);
@@ -253,8 +252,7 @@ export const Home = (props) => {
                 { cookMonth && cookMonth.map( (product, index) => {
                   return(
                   <div>
-                    {index}
-                    {product.name}: {product.amount} {product.measure}
+                    {index+1}. {product.name}: {product.amount} {product.measure}
                   </div>)
                 })
                 }
@@ -278,8 +276,7 @@ export const Home = (props) => {
                   { cookWeek && cookWeek.map( (product, index) => {
                   return(
                   <div>
-                    {index}
-                    {product.name}: {product.amount} {product.measure}
+                    {index+1}. {product.name}: {product.amount} {product.measure}
                   </div>)
                 })
                 }
@@ -299,17 +296,17 @@ export const Home = (props) => {
               {
                 currentView == 'day' &&  ( <>
                   <h4>Por cocinar: </h4>
-                  { Object.keys(cookToday).map(function(key) {
-                    return(
+                  { cookToday && cookToday.map((product, index) => {
+                    return (
                       <div>
-                      {key}: {cookToday[key].amount} {cookToday[key].measure}
-                    </div>
+                        {index+1}. {product.name}: {product.amount} {product.measure}
+                      </div>
                     )
                       })
                   }
                   <h4> Hoy:</h4>
-                  {eventsToday && eventsToday.map(function (event, index){
-                    return(
+                  {eventsToday && eventsToday.map((event, index) => {
+                    return (
                       <div>
                         <h6>Evento {index+1}: {event.title}</h6>
                         <p>Notas: {event.notes}</p>

@@ -21,7 +21,8 @@ export const Routing = ({ navigate }) => {
         <>
           <Home path='/' />
           <Orders path='/orders' />
-          <NewOrder path='/new-order' />
+          <NewOrder path='/order/new' uid={'new'}/>
+          <NewOrder path='/order/:uid'/>
           <Products path='/products' />
           <Customers path='/customers' />
         </>

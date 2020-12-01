@@ -28,22 +28,31 @@ export const Products = ({ navigate }) => {
   const [dishes, setDishes] = useState(null);
   const [filteredDishes, setFilteredDishes] = useState(null);
   const [sides, setSides] = useState(null);
-  const[seasonal, setSeasonal] = useState(null);
+  const [seasonal, setSeasonal] = useState(null);
+  const [filteredSeasonal, setFilteredSeasonal] = useState(null);
 
   const [image, setImage] = useState(null);
   const [product, setProduct] = useState(null);
 
   const dishesFilterOnChange = (event) => {
     const inputValue = event.target.value;
-    let filteredDishes = dishes.filter(dish => {
+    let _filteredDishes = dishes.filter(dish => {
       return dish.product_name.toLowerCase().includes(inputValue.toLowerCase())
     });
-    setFilteredDishes(!inputValue.length ? dishes : filteredDishes);
+    setFilteredDishes(!inputValue.length ? dishes : _filteredDishes);
   };
 
   const closeModals = () => {
     setPostModalShow(false);
     setModalShow(false);
+  };
+
+  const seasonFilterOnChange = (event) => {
+    const inputValue = event.target.value;
+    let _filteredSeasonal = seasonal.filter(dish => {
+      return dish.product_name.toLowerCase().includes(inputValue.toLowerCase())
+    });
+    setFilteredSeasonal(!inputValue.length ? seasonal : _filteredSeasonal);
   };
 
   const prepareProduct = (id) => {
@@ -210,6 +219,7 @@ export const Products = ({ navigate }) => {
       setFilteredDishes(_dishes);
       setSides(_sides);
       setSeasonal(_seasonal);
+      setFilteredSeasonal(_seasonal);
       setProducts(_products);
       setReady(true);
     }).catch(error => {
@@ -385,6 +395,7 @@ export const Products = ({ navigate }) => {
               </Form.Group>
               </Col>
             </Row>
+
             <Accordion defaultActiveKey='0'>
               { filteredDishes && filteredDishes.map((product, index) => (
                 <Card key={index}>
@@ -394,7 +405,7 @@ export const Products = ({ navigate }) => {
                         <h4>{product.product_name}</h4>
                       </Col>
                       <Col className='align-right' lg={4}>
-                        <h4>$ {product.price} por {product.measure}</h4>
+                        <h5>$ {product.price} por {product.measure}</h5>
                       </Col>
                     </Row>
                   </Accordion.Toggle>
@@ -407,7 +418,7 @@ export const Products = ({ navigate }) => {
                           </p>
                         </Col>
                         <Col lg={6}>
-                          <Image src={product.filename} fluid rounded/>
+                          <Image src={product.filename} fluid rounded className='cs-product'/>
                         </Col>
                         <Col lg={12}><hr/></Col>
                         <Col lg={6}>
@@ -425,6 +436,59 @@ export const Products = ({ navigate }) => {
                 </Card>
               ))}
             </Accordion>
+            
+            <Row className='mt-5'>
+              <Col lg={6}>
+                <h3>Platillos de temporada</h3>
+              </Col>
+
+              <Col lg={6} className='align-right'>
+              <Form.Group>
+                <Form.Control type='text' placeholder='Buscar un plato de temporada' onChange={seasonFilterOnChange} />
+              </Form.Group>
+              </Col>
+            </Row>
+            <Accordion defaultActiveKey='0'>
+              { filteredSeasonal && filteredSeasonal.map((product, index) => (
+                <Card key={index}>
+                  <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
+                    <Row>
+                      <Col lg={8}>
+                        <h4>{product.product_name}</h4>
+                      </Col>
+                      <Col className='align-right' lg={4}>
+                        <h5>$ {product.price} por {product.measure}</h5>
+                      </Col>
+                    </Row>
+                  </Accordion.Toggle>
+                  <Accordion.Collapse eventKey={`${index}`}>
+                    <Card.Body>
+                      <Row>
+                        <Col lg={6}>
+                          <p>
+                            {product.description}
+                          </p>
+                        </Col>
+                        <Col lg={6}>
+                          <Image src={product.filename} fluid rounded className='cs-product'/>
+                        </Col>
+                        <Col lg={12}><hr/></Col>
+                        <Col lg={6}>
+                          <h4>Precio por {product.measure}</h4>
+                        </Col>
+                        <Col lg={6} className='align-right'>
+                          <h4>$ {product.price}</h4>
+                        </Col>
+                        <Col lg={12} className='align-right'>
+                          <Button variant='primary' size='sm' onClick={() => prepareProduct(product.product_id)}> Editar producto </Button>
+                        </Col>
+                      </Row>
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              ))}
+            </Accordion>
+              
           </Col>
 
           <Col lg={4}>
@@ -443,7 +507,7 @@ export const Products = ({ navigate }) => {
                     <Card.Body>
                       <Row>
                         <Col lg={12}>
-                          <Image src={product.filename} rounded fluid className='mb-3'/>
+                          <Image src={product.filename} rounded fluid className='mb-3 cs-product'/>
                           <p>
                             {product.description}
                           </p>
@@ -466,60 +530,6 @@ export const Products = ({ navigate }) => {
             </Accordion>
           </Col>
 
-
-          <Col lg={8}>
-            <Row>
-              <Col lg={6}>
-                <h3>Platillos de temporada</h3>
-              </Col>
-
-              <Col lg={6} className='align-right'>
-              <Form.Group>
-                <Form.Control type='text' placeholder='Buscar un plato de temporada' onChange={dishesFilterOnChange} />
-              </Form.Group>
-              </Col>
-            </Row>
-            <Accordion defaultActiveKey='0'>
-              { seasonal && seasonal.map((product, index) => (
-                <Card key={index}>
-                  <Accordion.Toggle as={Card.Header} eventKey={`${index}`}>
-                    <Row>
-                      <Col lg={8}>
-                        <h4>{product.product_name}</h4>
-                      </Col>
-                      <Col className='align-right' lg={4}>
-                        <h4>$ {product.price} por {product.measure}</h4>
-                      </Col>
-                    </Row>
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey={`${index}`}>
-                    <Card.Body>
-                      <Row>
-                        <Col lg={6}>
-                          <p>
-                            {product.description}
-                          </p>
-                        </Col>
-                        <Col lg={6}>
-                          <Image src={product.filename} fluid rounded/>
-                        </Col>
-                        <Col lg={12}><hr/></Col>
-                        <Col lg={6}>
-                          <h4>Precio por {product.measure}</h4>
-                        </Col>
-                        <Col lg={6} className='align-right'>
-                          <h4>$ {product.price}</h4>
-                        </Col>
-                        <Col lg={12} className='align-right'>
-                          <Button variant='primary' size='sm' onClick={() => prepareProduct(product.product_id)}> Editar producto </Button>
-                        </Col>
-                      </Row>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              ))}
-            </Accordion>
-          </Col>
         </Row>
 
         <hr />

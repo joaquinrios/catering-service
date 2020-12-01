@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, Card, Image, Form, Modal } from 'react-bootstrap';
-import { Form as FinalForm, Field as FinalFormField } from 'react-final-form';
 import { BsArrowRight } from 'react-icons/bs';
 import { BiFoodMenu } from 'react-icons/bi';
 
@@ -184,11 +183,10 @@ export const Landing = () => {
             <h1 className='bold'>¡Siéntete en casa con Cocina Mary!</h1>
           </Col>
           <Col lg={4} md={4} className='align-right'>
-            <Button
-              variant='primary'
-              size='lg'
-              href='/order'
-            >
+            <Button variant='secondary' size='lg' href='/catalog'>
+              <BiFoodMenu />&nbsp; Menú
+            </Button> {' '}
+            <Button variant='primary' size='lg' href='/order'>
               Hacer mi pedido &nbsp; <BsArrowRight />
             </Button>
           </Col>
@@ -256,7 +254,7 @@ export const Landing = () => {
                     {' '}
                     <Image
                       src={carouselImage1}
-                      fluid
+                      fluid rounded
                     />{' '}
                   </Container>
                   <Card.Body>
@@ -273,7 +271,7 @@ export const Landing = () => {
                     {' '}
                     <Image
                       src={carouselImage2}
-                      fluid
+                      fluid rounded
                     />{' '}
                   </Container>
                   <Card.Body>
@@ -294,7 +292,7 @@ export const Landing = () => {
                     {' '}
                     <Image
                       src={carouselImage3}
-                      fluid
+                      fluid rounded
                     />{' '}
                   </Container>
                   <Card.Body>
@@ -314,7 +312,7 @@ export const Landing = () => {
                     {' '}
                     <Image
                       src={carouselImage4}
-                      fluid
+                      fluid rounded
                     />{' '}
                   </Container>
                   <Card.Body>
@@ -332,7 +330,7 @@ export const Landing = () => {
                     {' '}
                     <Image
                       src={carouselImage5}
-                      fluid
+                      fluid rounded
                     />{' '}
                   </Container>
                   <Card.Body>

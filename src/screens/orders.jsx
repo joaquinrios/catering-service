@@ -68,7 +68,7 @@ export const Orders = (props) => {
             <h1>Pedidos</h1>
           </Col>
           <Col lg={6} md={6} className='align-right'> 
-            <Button variant='primary' size='lg' href='/new-order'>Nuevo pedido</Button>
+            <Button variant='primary' size='lg' href='/order/new'>Nuevo pedido</Button>
           </Col>
         </Row>
         <hr/>
@@ -116,7 +116,7 @@ export const Orders = (props) => {
                         </Col>
                         <Col lg={12} className='align-right'>
                           <Button variant='danger' size='sm' onClick={() => onSubmitDeleteOrder(order.order_id)}>Cancelar pedido</Button> {' '}
-                          <Button variant='primary' size='sm'>Editar pedido</Button>
+                          <Button variant='primary' size='sm' href={`/order/${order.order_id}`}>Editar pedido</Button>
                         </Col>
                       </Row>
                     </Card.Body>
