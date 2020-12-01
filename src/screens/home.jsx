@@ -89,7 +89,6 @@ export const Home = (props) => {
     setFormEnd('');
   }
   const updateEvents = (filteredEvents) => {
-    console.log("heere");
     let _products = {};
     let _productList =  []
     let _total = 0;
@@ -112,13 +111,9 @@ export const Home = (props) => {
     _productList.sort(compare);
     setCookCalendar(_productList);
     setCookTotal(_total);
-    console.log(_productList);
-
-
   }
 
   const initEvents = (events) => {
-    
     const _pC = [];
     events.forEach( event =>{
       _pC.push(event.products);
@@ -133,7 +128,6 @@ export const Home = (props) => {
     let _filteredEvents = filteredStart ? events.filter(event => event.start >= filteredStart  && event.end <= end) : events.filter(event => event.end <= end);
     setFilteredEvents(_filteredEvents);
     const _pC = [];
-    console.log(_filteredEvents);
     _filteredEvents.forEach(event  => {
         _pC.push(event.products);
     });
@@ -153,16 +147,13 @@ export const Home = (props) => {
     updateEvents(_pC);
   };
   const viewOnChange = (view => {
-
-    let today = new Date();
-    let next = new Date();
+    let next = new Date(today);
 
     if(view == 'day') next.setDate(next.getDate() + 1);
     if(view == 'week') next.setDate(next.getDate() + 7);
     if(view == 'month') next.setDate(next.getDate() + 30);
 
     let _filteredEvents = events.filter(event => event.start >= today && event.end  <= next);
-      console.log(_filteredEvents);
       const _pC = [];
       _filteredEvents.forEach(event  => {
           _pC.push(event.products);
@@ -171,10 +162,30 @@ export const Home = (props) => {
     updateEvents(_pC);
 
   })
+
+  const updateOnNavigation = (today => {
+    let next = new Date(today);
+    if(currentView == 'day') next.setDate(next.getDate() + 1);
+    if(currentView == 'week') next.setDate(next.getDate() + 7);
+    if(currentView == 'month') next.setDate(next.getDate() + 30);
+    console.log("Fecha fin: ", next);
+
+    let _filteredEvents = events.filter(event => event.start >= today && event.end  <= next);
+      const _pC = [];
+      _filteredEvents.forEach(event  => {
+          _pC.push(event.products);
+          
+      });
+    updateEvents(_pC);
+
+  })
+
   const onNavigateUpdateDates = (date) => {
     setCurrentMonth(date.getMonth());
     setCurrentWeek(date.getWeek());
     setToday(date);
+    console.log("Fecha comienza: ", date);
+    updateOnNavigation(date);
   }
 
   const filterEvents = (orders) => {
@@ -276,8 +287,6 @@ export const Home = (props) => {
               }}
             />
           </Col>
-
-
 
           { true && (<Col lg={3}>
 
