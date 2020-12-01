@@ -171,7 +171,7 @@ export const NewOrder = ({ uid, navigate }) => {
     axios(options).then((response) => {
       setPostModalMessage('El pedido se ha actualizado con éxito.');
       setPostModalShow(true);
-      // setTimeout(() => window.location.reload(), 2000);
+      setTimeout(() => navigate('/orders'), 2000);
     }).catch((error) => {
       if (error.response) {
         console.log(error.response);
