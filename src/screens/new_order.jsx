@@ -102,6 +102,7 @@ export const NewOrder = ({ uid, navigate }) => {
       order_date: values.date,
       order_time: values.time,
       order_event: values.eventName,
+      persons: values.persons,
       recurring: values.frequent,
       order_notes: values.eventNotes,
       amount_paid: '0',
